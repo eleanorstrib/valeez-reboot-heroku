@@ -4,7 +4,7 @@ import datetime
 class Users(m.Model):
 	user_id = m.AutoField(primary_key=true)
 	username = m.CharField(max_length=25)
-	password = m.CharField(max_length=12)
+	password = m.CharField(max_length=20)
 	GENDER_CHOICES = (
 		(male, "male"),
 		(female, "female"),
@@ -13,6 +13,8 @@ class Users(m.Model):
 	email = m.CharField(max_length=75)
 	mobile = m.PositiveIntegerField(maxlength=11)
 	home_timezone = m.CharField(max_length=40)
+	trips = m.OneToMany(Trip)
+	valeez = m.OneToMany(Valeez)
 
 	def __str__(self):
 		return 'user_id %s username %s password %s gender %s email %s mobile %s timezone %s' 
