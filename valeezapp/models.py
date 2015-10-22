@@ -11,7 +11,7 @@ class User(m.Model):
 		)
 	gender = m.CharField(max_length=6, choices=GENDER_CHOICES)
 	email = m.CharField(max_length=75)
-	mobile = m.PositiveIntegerField
+	mobile = m.PositiveIntegerField()
 	home_timezone = m.CharField(max_length=40)
 
 	def __str__(self):
@@ -19,10 +19,10 @@ class User(m.Model):
 
 class Trip(m.Model):
 	trip_id = m.AutoField(primary_key=True)
-	user_id = m.ForeignKey('valeezapp.User.user_id')
+	user_id = m.ForeignKey(User)
 	destination = m.CharField(max_length=40)
-	depart_date = m.TimeField
-	return_date = m.TimeField
+	depart_date = m.TimeField()
+	return_date = m.TimeField()
 	TRIP_TYPE_CHOICES = (
 		('type_bformal', 'Business formal'),
 		('type_bcasual', 'Business casual'),
@@ -33,39 +33,39 @@ class Trip(m.Model):
 	def __str__(self):
 		return 'trip_id %s user_id %s destination %s depart_date %s return_date %s trip_type %s' % (self.trip_id, self.user_id, self.destination, self.depart_date, self.return_date, self.trip_type)
 
-class Garments(m.Model):
+class Garment(m.Model):
 	garment_id = m.AutoField(primary_key=True)
 	name = m.CharField(max_length=75)
-	male = m.BooleanField
-	female = m.BooleanField
-	layer = m.PositiveIntegerField
-	type_bformal = m.BooleanField
-	type_bcasual = m.BooleanField
-	type_vacation = m. BooleanField
-	rain = m.BooleanField
-	snow = m.BooleanField
+	male = m.BooleanField()
+	female = m.BooleanField()
+	layer = m.PositiveIntegerField()
+	type_bformal = m.BooleanField()
+	type_bcasual = m.BooleanField()
+	type_vacation = m.BooleanField()
+	rain = m.BooleanField()
+	snow = m.BooleanField()
 	icon = m.ImageField(height_field=100, width_field=100)
 
 	def __str__(self):
 		return 'name %s female %s layer %s type_bformal %s type_bcasual %s type_vacation' % (self.name, self.female, self.layer, self.type_bformal, self.type_bcasual, self.type_vacation)
 
-class Toiletries(m.Model):
+class Toiletry(m.Model):
 	toiletries_id = m.AutoField(primary_key=True)
 	name = m.CharField(max_length=50)
-	male = m.BooleanField
-	female = m.BooleanField
-	trip_duration = m.PositiveIntegerField
-	icon = m.ImageField
+	male = m.BooleanField()
+	female = m.BooleanField()
+	trip_duration = m.PositiveIntegerField()
+	icon = m.ImageField(height_field=100, width_field=100)
 
 	def __str__(self):
 		return 'name %s female %s trip_duration %s' % (self.name, self.female, self.trip_duration)
 
 class Valeez(m.Model):
 	valeez_id = m.AutoField(primary_key=True)
-	user_id = m.ForeignKey('valeezapp.User.user_id')
-	trip_id = m.ForeignKey('valeezapp.Trip.trip_id')
-	garments = m.ManyToManyField(Garments)
-	toiletries = m.ManyToManyField(Toiletries)
+	user_id = m.ForeignKey(User)
+	trip_id = m.ForeignKey(Trip)
+	garments = m.ManyToManyField(Garment)
+	toiletries = m.ManyToManyField(Toiletry)
 
 	def __str__(self):
 		return 'primary %s user_id %s trip_id %s garments %s toiletries %s' % (self.valeez_id, self.user_id, self.trip_id, self.garments, self.toiletries)

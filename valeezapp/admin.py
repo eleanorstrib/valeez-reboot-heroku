@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import User, Trip, Garment, Toiletry, Valeez
 
-# Register your models here.
+allModels = [User, Trip, Garment, Toiletry, Valeez]
+
+admin.site.register(allModels)
