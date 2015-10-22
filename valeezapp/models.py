@@ -44,7 +44,7 @@ class Garment(m.Model):
 	type_vacation = m.BooleanField()
 	rain = m.BooleanField()
 	snow = m.BooleanField()
-	icon = m.ImageField(height_field=100, width_field=100)
+	icon = m.ImageField()
 
 	def __str__(self):
 		return 'name %s female %s layer %s type_bformal %s type_bcasual %s type_vacation' % (self.name, self.female, self.layer, self.type_bformal, self.type_bcasual, self.type_vacation)
@@ -55,7 +55,7 @@ class Toiletry(m.Model):
 	male = m.BooleanField()
 	female = m.BooleanField()
 	trip_duration = m.PositiveIntegerField()
-	icon = m.ImageField(height_field=100, width_field=100)
+	icon = m.ImageField()
 
 	def __str__(self):
 		return 'name %s female %s trip_duration %s' % (self.name, self.female, self.trip_duration)
