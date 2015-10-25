@@ -11,14 +11,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.RemoveField(
             model_name='garment',
             name='icon',
-            field=models.ImageField(upload_to=''),
         ),
-        migrations.AlterField(
+        migrations.RemoveField(
             model_name='toiletry',
             name='icon',
-            field=models.ImageField(upload_to=''),
         ),
     ]
