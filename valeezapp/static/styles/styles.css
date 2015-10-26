@@ -1,21 +1,61 @@
 /*STYLE GUIDE
 
 COLORS
-white #FFFFFF
-pink #DF4B79 (rgb 223,75,121)
-blue #459FC7 (rgb 69, 159, 199)
-yellow #D2FF39 (rgb 210,255, 57)
-green #3FCC8C (rgb 63, 204, 140)
-brown orange #926C2F (rgb 146,108,47)
+from: http://www.colourlovers.com/group/1960s/colors
+Swiss Teal  AABBBB  170,187,187
+Fabric Pink FF8C80  255,140,128
+Conrad Gold FFDD00  255,221,0
+Fabric Blue 36D9D9  54,217,217
 
 FONTS
 
-font-family: 'Modern Antiqua', serif;
+font-family: 'Cherry Cream Soda', serif;
 font-family: 'Abel', sans-serif;
 */
 
 
-body {
+#navbar-custom {
+	background-color: #AABBBB ;
+	border-radius: 0;
+	font-family: 'Cherry Cream Soda', serif;
+	font-size: 1em;
+	margin-bottom: 0px;
+}
 
-	background-color: red;
+#navbar-custom a {
+	color: #FFFFFF;
+}
+
+#navbar-custom a:hover {
+	color: #FF8C80 ;
+}
+
+.navbar-brand {
+	font-size: 2em;
+	color: #FFFFFF !important;
+}
+
+
+.icon-bar {
+	background-color: #FFFFFF;
+}
+
+body {
+	font-family: 'Abel', sans-serif;
+	padding-top: 0px;
+}
+
+.title-text {
+	font-family: 'Cherry Cream Soda', serif;
+	font-size: 1.5em;
+}
+
+.jumbotron {
+	position: relative;
+    background: #000 url("../images/jumbotron.jpg") center center;
+    width: 100%;
+    min-height:400px;
+    background-size: cover !important;
+    overflow: hidden;
+    margin-bottom: 0px;
 }

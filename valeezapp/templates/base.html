@@ -12,7 +12,7 @@
 	<body>
 
 		<!-- navigation-->
-		<nav class="navbar navbar-default">
+		<nav class="navbar" id="navbar-custom">
 			<div class="container-fluid">
 				
 				<div class="navbar-header">
@@ -22,12 +22,13 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">valeez</a>
+					<a class="navbar-brand" href="#">valeez <i class="fa fa-suitcase"></i></a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="/login">Login<span class="sr-only">(current)</span></a></li>
+						<li class="active"><a href="/login">login/sign up<span class="sr-only">(current)</span></a></li>
+						<li><a href="#">make a valeez</a></li>
 						<li><a href="/about">about</a></li>
 					</ul>
 				</div>
@@ -42,7 +43,7 @@
 
 		<footer></footer>
 
-		
+
 		<!--jQuery-->
 			<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 			<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -59,7 +60,7 @@
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		
 		<!--google fonts-->
-			<link href='https://fonts.googleapis.com/css?family=Modern+Antiqua|Abel' rel='stylesheet' type='text/css'>
+			<link href='https://fonts.googleapis.com/css?family=Cherry+Cream+Soda|Abel' rel='stylesheet' type='text/css'>
 
 		<!--project resources-->
 			<link rel="stylesheet" href={% static 'styles/styles.css' %}
