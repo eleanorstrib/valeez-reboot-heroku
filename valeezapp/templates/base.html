@@ -6,32 +6,17 @@
 	
 	<head>
 		<title>valeez | get packing!</title>
-		<!--bootstrap-->
-			<!-- Latest compiled and minified CSS -->
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-
-			<!-- Optional theme -->
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
-
-			<!-- Latest compiled and minified JavaScript -->
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-		
-		<!--google fonts-->
-		<link href='https://fonts.googleapis.com/css?family=Modern+Antiqua|Abel' rel='stylesheet' type='text/css'>
-
-		<!--project resources-->
-		<link rel="stylesheet" href={% static 'styles/styles.css' %}
 	
 	</head>
 
 	<body>
 
 		<!-- navigation-->
-		<nav class = "navbar navbar-default">
+		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#valeez-nav" aria-expanded="false">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -40,7 +25,7 @@
 					<a class="navbar-brand" href="#">valeez</a>
 				</div>
 
-				<div class="collapse navbar-collapse" id="valeez-nav">
+				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="/login">Login<span class="sr-only">(current)</span></a></li>
 						<li><a href="/about">about</a></li>
@@ -54,8 +39,30 @@
 		{% block content %}
 		{% endblock %}
 
+
 		<footer></footer>
 
+		
+		<!--jQuery-->
+			<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+			<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		
+		<!--bootstrap-->		
+			<!-- Latest compiled and minified CSS -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+			<!-- Optional theme -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+			<!-- Latest compiled and minified JavaScript -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		
+		<!--Font Awesome-->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		
+		<!--google fonts-->
+			<link href='https://fonts.googleapis.com/css?family=Modern+Antiqua|Abel' rel='stylesheet' type='text/css'>
+
+		<!--project resources-->
+			<link rel="stylesheet" href={% static 'styles/styles.css' %}
 	</body>
 
 
