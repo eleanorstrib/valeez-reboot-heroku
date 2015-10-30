@@ -9,6 +9,11 @@ def index(request):
 
 def make_valeez(request):
 	form = VoyageForm()
+	if request.method == 'POST':
+		form = VoyageForm(request.POST)
+		if form.is_valid():
+			form.save()
+	
 	return render(request, 'valeezapp/make_valeez.html', {'form': form})
 
 def past_voyages(request):

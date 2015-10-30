@@ -25,7 +25,7 @@ class User(m.Model):
 		
 class Voyage(m.Model):
 	voyage_id = m.AutoField(primary_key=True)
-	user_id = m.ForeignKey(User)
+	user_id = m.ForeignKey(User, default=None, blank=True, null=True)
 	destination = m.CharField(max_length=40)
 	depart_date = m.DateField()
 	return_date = m.DateField()
