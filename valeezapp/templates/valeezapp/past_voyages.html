@@ -3,16 +3,26 @@
 {% block content %}
 
 PAST VOYAGES - TEST
-
-<div class="table-responsive">
-	<table class="table">
-
-{% for voyage in voyages %}
-	{{ voyage.destination }}
-	{{ voyage.depart_date }}
-	{{ voyage.return_date }}
-{% endfor %}
-	</table>
+<div class="container">
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Destination</td>
+					<td>Departure date</td>
+					<td>Return date</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% for voyage in voyages %}
+					<tr> 
+					<td>{{ voyage.destination }}</td>
+					<td>{{ voyage.depart_date }}</td>
+					<td>{{ voyage.return_date }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 </div>
-
 {% endblock %}
