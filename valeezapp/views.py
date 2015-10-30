@@ -1,10 +1,13 @@
 from django.shortcuts import render
-from valeezapp.models import User, Voyage, Garment, Toiletry, Valeez
+from django.http import HttpResponse
+from django.template import RequestContext, loader
+from valeezapp.models import Voyage
 
 def index(request):
 	return render(request, 'valeezapp/index.html', {})
 
 def past_voyages(request):
-	voyages = Voyage.objects.all()
-	return render(request, 'valeezapp/past_voyages.html', {'voyages' : voyages,
-		})
+	voyages = Voyage.objects.order_by('destination')
+	template = loader.get_template('valeezapp/past_voyages.html')
+	context = RequestContext(request, {'voyages' : voyages})
+	return HttpResponse(template.render(context))

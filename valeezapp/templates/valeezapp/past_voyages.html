@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+PAST VOYAGES - TEST
+
+<div class="table-responsive">
+	<table class="table">
+
+{% for voyage in voyages %}
+	{{ voyage.destination }}
+	{{ voyage.depart_date }}
+	{{ voyage.return_date }}
+{% endfor %}
+	</table>
+</div>
+
+{% endblock %}
