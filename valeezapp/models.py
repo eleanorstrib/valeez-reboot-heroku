@@ -37,7 +37,7 @@ class Voyage(m.Model):
 	voyage_type = m.CharField(max_length=15, choices=VOYAGE_TYPE_CHOICES)
 	
 	def __str__(self):
-		return '%s %s' % format(self.voyage_id, self.destination)
+		return self.destination
 
 class Garment(m.Model):
 	garment_id = m.AutoField(primary_key=True)

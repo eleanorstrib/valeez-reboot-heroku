@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for voyage in voyages %}
+	{{ voyage.destination }}
+	{{ voyage.depart_date }}
+	{{ voyage.return_date }}
+{% endfor %}
+
+{% endblock %}
