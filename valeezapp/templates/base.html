@@ -5,7 +5,7 @@
 <html lang="en">
 	
 	<head>
-	 <link rel='shortcut icon' href='../static/images/favicon.ico' type='image/icon'/ >
+	 <link rel='shortcut icon' href='../../static/images/favicon.ico' type='image/icon'/ >
 		<title>valeez | get packing!</title>
 	
 	</head>
@@ -29,7 +29,7 @@
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="/login">login/sign up<span class="sr-only">(current)</span></a></li>
-						<li><a href="#">make a valeez</a></li>
+						<li><a href="{% url 'make_valeez' %}">make a valeez</a></li>
 						<li><a href="/about">about</a></li>
 						<li><a href="{% url 'past_voyages' %}">past</a></li>
 					</ul>
