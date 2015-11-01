@@ -10,4 +10,4 @@ class VoyageForm(forms.ModelForm):
 class SignUpUserForm(forms.ModelForm):
 	class Meta:
 		model = User
-		fields = ('username', 'password', 'gender', 'email', 'mobile', 'home_timezone')
+		fields = ('username', 'password', 'gender', 'email', 'mobile', 'home_timezone',)

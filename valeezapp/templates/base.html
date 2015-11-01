@@ -28,10 +28,17 @@
 
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="{% url 'sign_up' %}">sign up<span class="sr-only">(current)</span></a></li>
-						<li><a href="{% url 'make_valeez' %}">make a valeez</a></li>
+						{% if user.is_authenticated %}
+							<li class="active"><a href="{% url 'auth_logout' %}">log out<span class="sr-only">(current)</span></a></li>
+							<li><a href="{% url 'make_valeez' %}">make a valeez</a></li>
+							<li><a href="{% url 'past_voyages' %}">past</a></li>
+						{% else %}
+							<li class="active"><a href="{% url 'auth_login' %}">log in<span class="sr-only">(current)</span></a></li>
+							<li><a href="{% url 'registration_register' %}">sign up</a>
+						{% endif %}
+						<li><a href="/about">how it works</a></li>
 						<li><a href="/about">about</a></li>
-						<li><a href="{% url 'past_voyages' %}">past</a></li>
+						
 					</ul>
 				</div>
 

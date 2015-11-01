@@ -2,7 +2,6 @@ from django.db import models as m
 import datetime
 
 class User(m.Model):
-	user_id = m.AutoField(primary_key=True)
 	username = m.CharField(max_length=25)
 	password = m.CharField(max_length=20)
 	GENDER_CHOICES = (
@@ -24,8 +23,7 @@ class User(m.Model):
 		return self.username
 		
 class Voyage(m.Model):
-	voyage_id = m.AutoField(primary_key=True)
-	user_id = m.ForeignKey(User, default=None, blank=True, null=True)
+	user_id = m.OneToOneField(User, primary_key=True, default=1)
 	destination = m.CharField(max_length=40)
 	depart_date = m.DateField()
 	return_date = m.DateField()
@@ -40,7 +38,6 @@ class Voyage(m.Model):
 		return self.destination
 
 class Garment(m.Model):
-	garment_id = m.AutoField(primary_key=True)
 	name = m.CharField(max_length=75)
 	male = m.BooleanField()
 	female = m.BooleanField()
@@ -63,7 +60,6 @@ class Garment(m.Model):
 		return  self.name
 
 class Toiletry(m.Model):
-	toiletries_id = m.AutoField(primary_key=True)
 	name = m.CharField(max_length=50)
 	male = m.BooleanField()
 	female = m.BooleanField()
@@ -73,8 +69,7 @@ class Toiletry(m.Model):
 		return self.name
 
 class Valeez(m.Model):
-	valeez_id = m.AutoField(primary_key=True)
-	user_id = m.ForeignKey(User)
+	user_id = m.OneToOneField(User, primary_key=True)
 	voyage_id = m.ForeignKey(Voyage)
 	garments = m.ManyToManyField(Garment)
 	toiletries = m.ManyToManyField(Toiletry)
