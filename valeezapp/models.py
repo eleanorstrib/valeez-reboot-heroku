@@ -49,7 +49,8 @@ class Toiletry(m.Model):
 		return self.name
 
 class Valeez(m.Model):
-	user = m.ForeignKey(User)
+	user = m.ForeignKey(User, null=True)
+	voyage = m.OneToOneField(Voyage, null=True)
 	garments = m.ManyToManyField(Garment)
 	toiletries = m.ManyToManyField(Toiletry)
 
