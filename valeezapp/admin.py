@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import User, Voyage, Garment, Toiletry, Valeez
+from .models import Voyage, Garment, Toiletry, Valeez
 
-allModels = [User, Voyage, Garment, Toiletry, Valeez]
+allModels = [Voyage, Garment, Toiletry, Valeez]
 
 admin.site.register(allModels)

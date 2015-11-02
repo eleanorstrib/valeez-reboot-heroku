@@ -1,29 +1,9 @@
 from django.db import models as m
+from django.contrib.auth.models import User
 import datetime
-
-class User(m.Model):
-	username = m.CharField(max_length=25)
-	password = m.CharField(max_length=20)
-	GENDER_CHOICES = (
-		("male", "male"),
-		("female", "female"),
-		)
-	gender = m.CharField(max_length=6, choices=GENDER_CHOICES)
-	email = m.CharField(max_length=75)
-	mobile = m.CharField(max_length=10)
-	TIMEZONE_CHOICES = (
-		('America/Los_Angeles', 'Pacific'),
-		('America/Denver', 'Mountain'),
-		('America/Chicago', 'Central'),
-		('America/New_York', 'Eastern'),
-	)
-	home_timezone = m.CharField(max_length=50, choices=TIMEZONE_CHOICES)
-
-	def __str__(self):
-		return self.username
 		
 class Voyage(m.Model):
-	user_id = m.OneToOneField(User, primary_key=True, default=1)
+	user = m.ForeignKey(User)
 	destination = m.CharField(max_length=40)
 	depart_date = m.DateField()
 	return_date = m.DateField()
@@ -69,8 +49,7 @@ class Toiletry(m.Model):
 		return self.name
 
 class Valeez(m.Model):
-	user_id = m.OneToOneField(User, primary_key=True)
-	voyage_id = m.ForeignKey(Voyage)
+	user = m.ForeignKey(User)
 	garments = m.ManyToManyField(Garment)
 	toiletries = m.ManyToManyField(Toiletry)
 
