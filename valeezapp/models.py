@@ -1,9 +1,25 @@
 from django.db import models as m
 from django.contrib.auth.models import User
+from phonenumber_field.modelfields import PhoneNumberField
+
 import datetime
+
+# this class creates a one to one relationship with the auth model's User
+# purpose is to add extra fields relevant to the user in this app
+class UserProfile(m.Model):
+	user = m.OneToOneField(User)
+	mobile = PhoneNumberField()
+	GENDER_PREF_CHOICES = (
+		('female', 'Female'),
+		('male', 'Male'),
+		)
+	gender = m.CharField(max_length=6, choices=GENDER_PREF_CHOICES)
+
+	def __str___(self):
+		return self.user
 		
 class Voyage(m.Model):
-	user = m.ForeignKey(User)
+	user = m.ForeignKey(UserProfile, null=True)
 	destination = m.CharField(max_length=40)
 	depart_date = m.DateField()
 	return_date = m.DateField()
@@ -49,7 +65,6 @@ class Toiletry(m.Model):
 		return self.name
 
 class Valeez(m.Model):
-	user = m.ForeignKey(User)
 	voyage = m.OneToOneField(Voyage, null=True)
 	garments = m.ManyToManyField(Garment)
 	toiletries = m.ManyToManyField(Toiletry)

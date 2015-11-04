@@ -1,5 +1,17 @@
 from django import forms
-from .models import Voyage, User
+from django.contrib.auth.models import User
+from .models import UserProfile, Voyage
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('mobile', 'gender')
 
 class VoyageForm(forms.ModelForm):
 	class Meta:
@@ -7,7 +19,3 @@ class VoyageForm(forms.ModelForm):
 		fields = ('destination', 'depart_date', 'return_date', 'voyage_type',)
 
 
-# class SignUpUserForm(forms.ModelForm):
-# 	class Meta:
-# 		model = User
-# 		fields = ('username', 'password', 'gender', 'email', 'mobile', 'home_timezone',)
