@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from valeezapp.models import Voyage, User
-from .forms import VoyageForm, SignUpUserForm
+from valeezapp.models import Voyage
+from .forms import VoyageForm
 
 
 def index(request):
@@ -18,13 +18,13 @@ def make_valeez(request):
 	return render(request, 'valeezapp/make_valeez.html', {'form': form})
 
 
-def sign_up(request):
-	form = SignUpUserForm()
-	if request.method == 'POST':
-		form = SignUpUserForm(request.POST)
-		if form.is_valid():
-			form.save()
-	return render(request, 'valeezapp/sign_up.html', {'form': form})
+# def sign_up(request):
+# 	form = SignUpUserForm()
+# 	if request.method == 'POST':
+# 		form = SignUpUserForm(request.POST)
+# 		if form.is_valid():
+# 			form.save()
+# 	return render(request, 'valeezapp/sign_up.html', {'form': form})
 
 
 def past_voyages(request):
