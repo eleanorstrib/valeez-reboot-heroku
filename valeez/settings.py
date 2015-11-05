@@ -110,8 +110,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 ACCOUNT_ACTIVATION_DAYS = 3
 
 # email login
+EMAIL_HOST='localhost'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FORM_EMAIL = os.environ.get('APP_EMAIL')
+DEFAULT_FROM_EMAIL = os.environ.get('APP_EMAIL')
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
