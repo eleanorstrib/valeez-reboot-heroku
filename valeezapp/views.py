@@ -26,8 +26,8 @@ def sign_up(request):
 	signed_up = False
 
 	if request.method == 'POST':
-		u_form = UserForm(request.POST)
-		uprofile_form = UserProfileForm(request.POST)
+		user_form = UserForm(request.POST)
+		user_profile_form = UserProfileForm(request.POST)
 
 		if user_form.is_valid() and user_profile_form.is_valid():
 			user = user_form.save()
@@ -40,7 +40,7 @@ def sign_up(request):
 		user_form = UserForm()
 		user_profile_form = UserProfileForm()
 
-	return render(request, 'registration_form.html', {'u_form': u_form, 'uprofile_form': uprofile_form, 'signed_up': signed_up})
+	return render(request, 'registration/registration_form.html', {'user_form': user_form, 'user_profile_form': user_profile_form, 'signed_up': signed_up})
 
 
 def past_voyages(request):
