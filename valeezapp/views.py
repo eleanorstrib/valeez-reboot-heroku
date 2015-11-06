@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from valeezapp.models import Voyage
+from django.contrib.auth.models import User
+from valeezapp.models import UserProfile, Voyage
 from .forms import UserForm, UserProfileForm, VoyageForm
 
 
@@ -14,7 +15,10 @@ def make_valeez(request):
 	if request.method == 'POST':
 		form = VoyageForm(request.POST)
 		if form.is_valid():
-			form.save()
+			# form.save()
+			link_user = form.save(commit=False)
+			link_user.user = request.user
+			link_user.save()
 	return render(request, 'valeezapp/make_valeez.html', {'form': form})
 
 

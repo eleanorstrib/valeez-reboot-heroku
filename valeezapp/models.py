@@ -7,7 +7,7 @@ import datetime
 # this class creates a one to one relationship with the auth model's User
 # purpose is to add extra fields relevant to the user in this app
 class UserProfile(m.Model):
-	user = m.OneToOneField(User)
+	user = m.OneToOneField(User, unique=True)
 	mobile = PhoneNumberField()
 	GENDER_PREF_CHOICES = (
 		('female', 'Female'),
@@ -19,7 +19,7 @@ class UserProfile(m.Model):
 		return self.user
 		
 class Voyage(m.Model):
-	user = m.ForeignKey(UserProfile, null=True)
+	user = m.OneToOneField(User, unique=True)
 	destination = m.CharField(max_length=40)
 	depart_date = m.DateField()
 	return_date = m.DateField()
@@ -65,7 +65,7 @@ class Toiletry(m.Model):
 		return self.name
 
 class Valeez(m.Model):
-	voyage = m.OneToOneField(Voyage, null=True)
+	voyage = m.OneToOneField(Voyage, related_name="voyage")
 	garments = m.ManyToManyField(Garment)
 	toiletries = m.ManyToManyField(Toiletry)
 
