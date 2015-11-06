@@ -6,7 +6,8 @@
 
     <form method="POST" class="post-form" action="" enctype="multipart/form-data">
     	{% csrf_token %}
-        {{ form.as_p }}
+        {{ u_form.as_table }}
+        {{ uprofile_form.as_table }
  <button type="submit" class="save btn btn-default">Sign up</button>
     </form>
 

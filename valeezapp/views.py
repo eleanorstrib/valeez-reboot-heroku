@@ -23,26 +23,24 @@ def make_valeez(request):
 
 
 def sign_up(request):
-	form = UserForm()
-	# user_profile_form = UserProfileForm()
+	signed_up = False
 
 	if request.method == 'POST':
-		form = UserForm(request.POST)
-		if form.is_valid():
-			form.save()
-	# 	user_profile_form = UserProfileForm(request.POST)
-	# 	if user_form.is_valid() and user_profile_form.is_valid():
-	# 		user = user_form.save()
-	# 		user.save()
-	# 		user_profile = user_profile_form.save(commit=False)
-	# 		user_profile.user = user
-	# 		user_profile.save()
-	# 		signed_up = True
-	# else:
-	# 	user_form = UserForm()
-	# 	user_profile_form = UserProfileForm()
+		u_form = UserForm(request.POST)
+		uprofile_form = UserProfileForm(request.POST)
 
-	return render(request, 'registration_form.html', {'form': form})
+		if user_form.is_valid() and user_profile_form.is_valid():
+			user = user_form.save()
+			user.save()
+			user_profile = user_profile_form.save(commit=False)
+			user_profile.user = user
+			user_profile.save()
+			signed_up = True
+	else:
+		user_form = UserForm()
+		user_profile_form = UserProfileForm()
+
+	return render(request, 'registration_form.html', {'u_form': u_form, 'uprofile_form': uprofile_form, 'signed_up': signed_up})
 
 
 def past_voyages(request):
