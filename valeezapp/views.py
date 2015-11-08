@@ -44,7 +44,8 @@ def sign_up(request):
 
 
 def past_voyages(request):
-	voyages = Voyage.objects.order_by('destination')
+	this_user = request.user
+	voyages = Voyage.objects.filter(user=this_user).order_by('depart_date', 'destination')
 	template = loader.get_template('valeezapp/past_voyages.html')
 	context = RequestContext(request, {'voyages' : voyages})
 	return HttpResponse(template.render(context))
