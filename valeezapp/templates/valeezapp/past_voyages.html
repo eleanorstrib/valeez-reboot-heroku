@@ -16,7 +16,7 @@ PAST VOYAGES - TEST
 			<tbody>
 				{% for voyage in voyages %}
 					<tr> 
-					<td>{{ voyage.destination }}</td>
+					<td>{{ voyage.get_destination_display }}</td>
 					<td>{{ voyage.depart_date }}</td>
 					<td>{{ voyage.return_date }}</td>
 					</tr>
