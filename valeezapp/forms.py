@@ -23,9 +23,16 @@ class VoyageForm(forms.ModelForm):
 
 	def clean(self):
 		cleaned_dates = super(VoyageForm, self).clean()
+		destination = cleaned_dates.get('destination')
 		depart_date = cleaned_dates.get('depart_date')
 		return_date = cleaned_dates.get('return_date')
+		trip_type = cleaned_dates.get('trip_type')
+		gender = cleaned_dates.get('gender')
 		today = dt.date.today()
+
+		# all conditions for validation
+		if destination == None or depart_date == None or return_date == None:
+			raise forms.ValidationError('Try again - all fields are required!')
 
 		if depart_date > return_date:
 			raise forms.ValidationError('Oops - try again! Your return date must be after your departure date.')

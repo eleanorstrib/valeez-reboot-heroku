@@ -44,7 +44,7 @@ class Voyage(m.Model):
 		('WA/Seattle', 'Seattle, WA'),
 		('DC/Washington', 'Washington, DC'),
 		)
-	destination = m.CharField(max_length=60, choices=DESTINATION_CHOICES)
+	destination = m.CharField(max_length=100, choices=DESTINATION_CHOICES)
 	depart_date = m.DateField()
 	return_date = m.DateField()
 	VOYAGE_TYPE_CHOICES = (
@@ -52,7 +52,7 @@ class Voyage(m.Model):
 		('type_bcasual', 'Business casual'),
 		('type_vacation', 'Vacation'),
 	)
-	voyage_type = m.CharField(max_length=15, choices=VOYAGE_TYPE_CHOICES)
+	voyage_type = m.CharField(max_length=100, choices=VOYAGE_TYPE_CHOICES, default='type_bcasual')
 	GENDER_PREF_CHOICES = (
 		('female', 'Female'),
 		('male', 'Male'),
@@ -98,6 +98,7 @@ class Valeez(m.Model):
 	voyage = m.OneToOneField(Voyage, related_name="voyage")
 	garments = m.ManyToManyField(Garment)
 	toiletries = m.ManyToManyField(Toiletry)
+	slug = m.SlugField(unique=True)
 
 	def __str__(self):
 		return self.valeez_id

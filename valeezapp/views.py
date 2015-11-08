@@ -42,7 +42,7 @@ def sign_up(request):
 
 	return render(request, 'registration/registration_form.html', {'user_form': user_form, 'user_profile_form': user_profile_form, 'signed_up': signed_up})
 
-
+# This view feeds into past_voyages.html
 def past_voyages(request):
 	this_user = request.user
 	voyages = Voyage.objects.filter(user=this_user).order_by('depart_date', 'destination')
