@@ -19,8 +19,32 @@ class UserProfile(m.Model):
 		return self.user
 		
 class Voyage(m.Model):
-	user = m.OneToOneField(User, unique=True)
-	destination = m.CharField(max_length=40)
+	user = m.ForeignKey(User, unique=False)
+	DESTINATION_CHOICES = (
+		('TX/Austin', 'Austin, TX'),
+		('NC/Charlotte', 'Charlotte, NC'),
+		('IL/Chicago', 'Chicago, IL'),
+		('OH/Columbus', 'Columbus, OH'),
+		('TX/Dallas', 'Dallas/Fort Worth, TX'),
+		('CO/Denver', 'Denver, CO'),
+		('MI/Detroit', 'Detroit, MI'),
+		('TX/El_Paso', 'El Paso, TX'),
+		('TX/Houston', 'Houston, TX'),
+		('IN/Indianapolis', 'Indianapolis, IN'),
+		('FL/Jacksonville', 'Jacksonville, FL'),
+		('NV/Las_Vegas', 'Las Vegas, NV'),
+		('CA/Los_Angeles', 'Los Angeles, CA'),
+		('AZ/Pheonix', 'Pheonix, AZ'),
+		('PA/Philadelphia', 'Philadelphia, PA'),
+		('NY/New_York', 'New York, NY'),
+		('TX/San_Antonio', 'San Antonio, TX'),
+		('CA/San_Diego', 'San Diego, CA'),
+		('CA/San_Francisco', 'San Francisco, CA'),
+		('CA/San_Jose', 'San Jose, CA'),
+		('WA/Seattle', 'Seattle, WA'),
+		('DC/Washington', 'Washington, DC'),
+		)
+	destination = m.CharField(max_length=60, choices=DESTINATION_CHOICES)
 	depart_date = m.DateField()
 	return_date = m.DateField()
 	VOYAGE_TYPE_CHOICES = (
