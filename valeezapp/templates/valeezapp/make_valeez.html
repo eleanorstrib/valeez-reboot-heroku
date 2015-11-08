@@ -6,4 +6,15 @@
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Make my valeez!</button>
     </form>
+
+
+<!-- Needed to reference jQuery again here to get datepicker working -->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- datepicker from jQuery UI -->
+<script>
+  $(document).ready(function() {
+    $( ".datepicker" ).datepicker();
+  });
+</script>
+
 {% endblock %}

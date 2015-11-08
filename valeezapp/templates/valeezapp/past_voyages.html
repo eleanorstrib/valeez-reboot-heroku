@@ -17,8 +17,8 @@ PAST VOYAGES - TEST
 				{% for voyage in voyages %}
 					<tr> 
 					<td>{{ voyage.destination }}</td>
-					<td>{{ voyage.depart_date }}</td>
-					<td>{{ voyage.return_date }}</td>
+					<td><input type="date" id="datepicker">{{ voyage.depart_date }}</td>
+					<td><input type="date" id="datepicker">{{ voyage.return_date }}</td>
 					</tr>
 				{% endfor %}
 			</tbody>

@@ -14,7 +14,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import sys
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
@@ -24,19 +23,21 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+SITE_ID = 2
 # Application definition
 
 INSTALLED_APPS = (
-    'registration',
-    'valeezapp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites.models',
+    'registration',
+    'valeezapp',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,8 +107,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# registration
+# registration redux
 ACCOUNT_ACTIVATION_DAYS = 3
+REGISTRATION_AUTO_LOGIN = True
 
 # email login
 EMAIL_HOST='localhost'

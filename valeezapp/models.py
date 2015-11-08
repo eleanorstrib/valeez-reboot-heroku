@@ -29,6 +29,12 @@ class Voyage(m.Model):
 		('type_vacation', 'Vacation'),
 	)
 	voyage_type = m.CharField(max_length=15, choices=VOYAGE_TYPE_CHOICES)
+	GENDER_PREF_CHOICES = (
+		('female', 'Female'),
+		('male', 'Male'),
+		)
+	gender = m.CharField(max_length=6, choices=GENDER_PREF_CHOICES, default="female")
+
 	
 	def __str__(self):
 		return self.destination
