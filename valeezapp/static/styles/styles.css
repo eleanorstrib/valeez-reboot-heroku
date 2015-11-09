@@ -53,23 +53,18 @@ body {
 }
 
 .btn-custom {
-	background-color: #AABBBB;
-	border: 5px #AABBBB;
+	font-family: 'Mohave', sans-serif;
 	color: white;
-	font-family: 'Cherry Cream Soda', serif;
-	font-size: 1em;
+	border: 5px solid white;
+	background-color: #AABBBB;
 }
 
 .btn-custom:hover {
-	background-color: #F5F7FA;
-	border: solid;
-	border-radius: 0px;
-	color: #FF8C80;
-	font-family: 'Cherry Cream Soda', serif;
-	font-size: 1em;
-	text-decoration: none;
+	font-family: 'Abel', sans-serif;
+	color: white;
+	border: 5px solid  #FF8C80;
+	background-color:  #E6E9ED;
 }
-
 .jumbotron {
 	position: relative;
     background: #000 url("../images/jumbotron.jpg") center center;
