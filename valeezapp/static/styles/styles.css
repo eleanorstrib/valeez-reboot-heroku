@@ -42,12 +42,32 @@ font-family: 'Abel', sans-serif;
 
 body {
 	font-family: 'Abel', sans-serif;
-	padding-top: 0px;
 }
 
+.container {
+	padding-top: 30px;
+}
 .title-text {
 	font-family: 'Cherry Cream Soda', serif;
+	font-size: 1.5em;
+}
+
+.btn-custom {
+	background-color: #AABBBB;
+	border: 5px #AABBBB;
+	color: white;
+	font-family: 'Cherry Cream Soda', serif;
 	font-size: 1em;
+}
+
+.btn-custom:hover {
+	background-color: #F5F7FA;
+	border: solid;
+	border-radius: 0px;
+	color: #FF8C80;
+	font-family: 'Cherry Cream Soda', serif;
+	font-size: 1em;
+	text-decoration: none;
 }
 
 .jumbotron {

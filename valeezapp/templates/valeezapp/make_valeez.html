@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>New valeez</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Make my valeez!</button>
-    </form>
+<div class="container" align="center">
+	<p><span class="title-text">Make A Valeez</span></p>
 
+		<form method="POST" class="post-form">
+			<table>
+				{% csrf_token %}
+				 {{ form.as_table }}
+			</table>
+			<button type="submit" class="save btn btn-default">Make my valeez!</button>
+		</form>
+
+</div>
 
 <!-- Needed to reference jQuery again here to get datepicker working -->
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<!-- datepicker from jQuery UI -->
+<!-- datepicker widget from jQuery UI -->
 <script>
   $(document).ready(function() {
     $( ".datepicker" ).datepicker();

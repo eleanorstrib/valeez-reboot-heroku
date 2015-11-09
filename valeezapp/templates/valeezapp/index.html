@@ -6,46 +6,17 @@
 
 				<div class="col-sm-8 col-lg-7">
 					<p><span class="title-text">Ready to get packing?</span></p>
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							    <label for="destination" class="col-sm-4 control-label">Destination</label>
-   								 <div class="col-sm-8">
-      								<select class="form-control">
-										  <option>1</option>
-										  <option>2</option>
-										  <option>3</option>
-										  <option>4</option>
-										  <option>5</option>
-									</select>
-								</div>
-						</div>
+					<p>Valeez is an app that helps you pack an optimal suitcase based on the length of your trip and your destination.</p>
+					<p>Get started now!</p>
 
-						<div class="form-group">
-							<label for="depart-date" class="col-sm-4 control-label">Departure date</label>
-							<div class="col-sm-8">
-								<input type="date" name="departure-date" min="2000-01-02"><br><br>
-							</div>
-						</div>
+					<div class="col-sm-6 col-lg-6">
+						<button type="button" class="btn btn-custom"><a href="{% url 'auth_login' %}">Log in - I have an account</a></button>
+					</div>
 
-						<div class="form-group">
-							<label for="return-date" class="col-sm-4 control-label">Return date</label>
-							<div class="col-sm-8">
-								<input type="date" name="return-date" min="2000-01-02"><br><br>
-							</div>
-						</div>
+					<div class="col-sm-6 col-lg-6">
+						<button type="button" class="btn btn-custom"><a href="{% url 'registration_register' %}">Sign me up - I need an account</a></button>
+					</div>
 
-						<div class="form-group">
-							<label for="gender" class="col-sm-4 control-label">Gender</label>
-   								 <div class="col-sm-8">
-      								<select class="form-control">
-										  <option>male</option>
-										  <option>female</option>
-									</select>
-								</div>
-						</div>
-					</form>
-				
-				</div>
 
 				<div class="col-sm-6 col-lg-3">
 				</div>

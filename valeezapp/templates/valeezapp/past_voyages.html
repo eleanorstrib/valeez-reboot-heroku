@@ -2,27 +2,34 @@
 
 {% block content %}
 
-PAST VOYAGES - TEST
-<div class="container">
-	<div class="table-responsive">
-		<table class="table">
-			<thead>
-				<tr>
-					<td>Destination</td>
-					<td>Departure date</td>
-					<td>Return date</td>
-				</tr>
-			</thead>
-			<tbody>
-				{% for voyage in voyages %}
-					<tr> 
-					<td>{{ voyage.get_destination_display }}</td>
-					<td>{{ voyage.depart_date }}</td>
-					<td>{{ voyage.return_date }}</td>
+<div class="container" align="center">
+	<p>
+	<span class="title-text">My Past Voyages</span>
+	</p>
+
+	<div class="container">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<td>Destination</td>
+						<td>Departure date</td>
+						<td>Return date</td>
+						<td>Valeez</td>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for voyage in voyages %}
+						<tr> 
+						<td>{{ voyage.get_destination_display }}</td>
+						<td>{{ voyage.depart_date }}</td>
+						<td>{{ voyage.return_date }}</td>
+						<td></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 {% endblock %}
