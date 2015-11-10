@@ -47,23 +47,42 @@ body {
 .container {
 	padding-top: 30px;
 }
+
+.table-padded {
+	padding:15px;
+}
+
 .title-text {
 	font-family: 'Cherry Cream Soda', serif;
 	font-size: 1.5em;
 }
 
 .btn-custom {
-	font-family: 'Mohave', sans-serif;
-	color: white;
-	border: 5px solid white;
+	font-family: 'Abel', sans-serif;
+	border: 5px solid #AABBBB;
 	background-color: #AABBBB;
+}
+
+.btn-custom a {
+	color: white;
+	text-decoration: none;
+}
+
+.btn-custom a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+.btn-custom a:focus {
+	color: white;
+	text-decoration: none;
 }
 
 .btn-custom:hover {
 	font-family: 'Abel', sans-serif;
-	color: white;
+	color: #FF8C80;
 	border: 5px solid  #FF8C80;
-	background-color:  #E6E9ED;
+	background-color:  #FF8C80;
 }
 .jumbotron {
 	position: relative;
