@@ -48,8 +48,16 @@ body {
 	padding-top: 30px;
 }
 
-.table-padded {
-	padding:15px;
+* {
+  border-radius: 0 !important;
+}
+
+table, td, th {
+	padding: 10px;
+}
+
+input, select {
+    width: 100%;
 }
 
 .title-text {

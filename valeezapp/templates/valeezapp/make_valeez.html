@@ -7,9 +7,11 @@
 		<form method="POST" class="post-form">
 			<table>
 				{% csrf_token %}
+				<p>
 				 {{ form.as_table }}
+				 </p>
 			</table>
-			<button type="submit" class="save btn btn-default">Make my valeez!</button>
+			<button type="submit" class="btn btn-custom">Make my valeez!</button>
 		</form>
 
 </div>
