@@ -1,9 +1,17 @@
+
+import os
+import time
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
-from valeezapp.models import UserProfile, Voyage
+from valeezapp.models import UserProfile, Voyage, Valeez, Garment, Toiletry
+from django.template.defaultfilters import slugify
 from .forms import UserForm, UserProfileForm, VoyageForm
+
+WU_KEY = os.environ.get('WU_API_KEY')
+API_URL = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
 
 
 def index(request):
@@ -20,6 +28,17 @@ def make_valeez(request):
 			link_user.user = request.user
 			link_user.save()
 	return render(request, 'valeezapp/make_valeez.html', {'form': form})
+
+
+def show_valeez(request):
+	this_user = request.user
+	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
+	destination = user_voyages[0].destination
+	depart_date = user_voyages[0].depart_date
+	return_date = user_voyages[0].return_date
+	api_date_range = str(depart_date.month) + str(depart_date.day) + str(return_date.month) + str(return_date.day)
+	api_call = API_URL % (WU_KEY, api_date_range, destination)
+	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination': destination, 'depart_date': depart_date, 'return_date': return_date, 'api_call': api_call})
 
 
 def sign_up(request):
@@ -42,6 +61,7 @@ def sign_up(request):
 
 	return render(request, 'registration/registration_form.html', {'user_form': user_form, 'user_profile_form': user_profile_form, 'signed_up': signed_up})
 
+
 # This view feeds into past_voyages.html
 def past_voyages(request):
 	this_user = request.user
@@ -49,3 +69,4 @@ def past_voyages(request):
 	template = loader.get_template('valeezapp/past_voyages.html')
 	context = RequestContext(request, {'voyages' : voyages})
 	return HttpResponse(template.render(context))
+

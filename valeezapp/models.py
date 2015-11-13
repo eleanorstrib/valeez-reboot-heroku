@@ -4,6 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 import datetime
 
+
 # this class creates a one to one relationship with the auth model's User
 # purpose is to add extra fields relevant to the user in this app
 class UserProfile(m.Model):
@@ -18,6 +19,7 @@ class UserProfile(m.Model):
 	def __str___(self):
 		return self.user
 		
+
 class Voyage(m.Model):
 	user = m.ForeignKey(User, unique=False)
 	DESTINATION_CHOICES = (
@@ -59,9 +61,9 @@ class Voyage(m.Model):
 		)
 	gender = m.CharField(max_length=6, choices=GENDER_PREF_CHOICES, default="female")
 
-	
 	def __str__(self):
 		return self.destination
+
 
 class Garment(m.Model):
 	name = m.CharField(max_length=75)
@@ -85,6 +87,7 @@ class Garment(m.Model):
 	def __str__(self):
 		return  self.name
 
+
 class Toiletry(m.Model):
 	name = m.CharField(max_length=50)
 	male = m.BooleanField()
@@ -93,6 +96,7 @@ class Toiletry(m.Model):
 
 	def __str__(self):
 		return self.name
+
 
 class Valeez(m.Model):
 	voyage = m.OneToOneField(Voyage, related_name="voyage")
