@@ -1,6 +1,7 @@
 
 import os
 import time
+import requests
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -36,9 +37,23 @@ def show_valeez(request):
 	destination = user_voyages[0].destination
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
+	duration = return_date-depart_date
 	api_date_range = str(depart_date.month) + str(depart_date.day) + str(return_date.month) + str(return_date.day)
 	api_call = API_URL % (WU_KEY, api_date_range, destination)
-	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination': destination, 'depart_date': depart_date, 'return_date': return_date, 'api_call': api_call})
+
+	api_data = requests.get(api_call).json()
+	forecast = {
+			'max_temp_f': int(api_data[u'trip'][u'temp_high'][u'max'][u'F']),
+			'max_temp_c': int(api_data[u'trip'][u'temp_high'][u'max'][u'C']),
+			'avg_temp_f': int(api_data[u'trip'][u'temp_high'][u'avg'][u'F']),
+			'avg_temp_c': int(api_data[u'trip'][u'temp_high'][u'avg'][u'C']),
+			'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'F']),
+			'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'C']),					
+			'precip': int(api_data[u'trip'][u'chance_of'][u'chanceofrainday'][u'percentage']),
+			'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
+			}
+
+	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination': destination, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast})
 
 
 def sign_up(request):
