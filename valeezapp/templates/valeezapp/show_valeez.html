@@ -3,9 +3,7 @@
 {% block content %}
 
 <div class="container" align="center">
-	<p><span class="title-text">{{ this_user }} get ready to pack your valeez for<br />
-
-	{{ destination }}!</span></p><br />
+	<p><span class="title-text">{{ this_user }} get ready to pack your valeez for {{ destination_pretty }}!</span></p><br />
 
 	<h4>{{ depart_date }} to {{ return_date }} -- {{ duration }} days
 	<p>The average temperature for these dates is {{ forecast.avg_temp_f }}&#8457 with a range of {{ forecast.min_temp_f}}&#8457 to {{ forecast.max_temp_f}}&#8457</p>

@@ -35,6 +35,7 @@ def show_valeez(request):
 	this_user = request.user
 	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
 	destination = user_voyages[0].destination
+	destination_pretty = str(destination)[3:]
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
 	duration = return_date-depart_date
@@ -53,7 +54,7 @@ def show_valeez(request):
 			'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
 			}
 
-	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination': destination, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast})
+	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast})
 
 
 def sign_up(request):
