@@ -32,16 +32,21 @@ def make_valeez(request):
 
 
 def show_valeez(request):
+	# user data for the view and to construct the API call
 	this_user = request.user
 	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
 	destination = user_voyages[0].destination
 	destination_pretty = str(destination)[3:]
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
-	duration = return_date-depart_date
+	duration = (return_date-depart_date)[:2]
+	duration_int = int(duration)
+	gender = user_voyages[0].gender
+	voyage_type = user_voyages[0].voyage_type
+
+	# put together variables for the API call 
 	api_date_range = str(depart_date.month) + str(depart_date.day) + str(return_date.month) + str(return_date.day)
 	api_call = API_URL % (WU_KEY, api_date_range, destination)
-
 	api_data = requests.get(api_call).json()
 	forecast = {
 			'max_temp_f': int(api_data[u'trip'][u'temp_high'][u'max'][u'F']),
@@ -54,7 +59,23 @@ def show_valeez(request):
 			'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
 			}
 
-	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast})
+	# categorize forecast variables
+	if forecast['avg_temp_f'] >= 90:
+		temp_cat = 'temp_high'
+	elif forecast['avg_temp_f'] < 90 and forecast['avg_temp_f'] >= 80:
+		temp_cat = 'temp_medhigh'
+	elif forecast['avg_temp_f'] < 80 and forecast['avg_temp_f'] >= 60:
+		temp_cat = 'temp_temp'
+	elif forecast['avg_temp_f'] < 60 and forecast['avg_temp_f'] >= 50:
+		temp_cat = 'temp_medcold'
+	else:
+		temp_cat = 'temp_cold'
+
+	valeez_garments = Garment.objects.filter(temp=temp_cat)
+
+
+
+	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'valeez_garments': valeez_garments})
 
 
 def sign_up(request):

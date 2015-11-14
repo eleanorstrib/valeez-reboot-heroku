@@ -3,10 +3,40 @@
 {% block content %}
 
 <div class="container" align="center">
-	<p><span class="title-text">{{ this_user }} get ready to pack your valeez for {{ destination_pretty }}!</span></p><br />
+	<p><span class="title-text">{{ this_user }} get ready to pack a valeez for your trip to {{ destination_pretty }}!</span></p>
 
-	<h4>{{ depart_date }} to {{ return_date }} -- {{ duration }} days
-	<p>The average temperature for these dates is {{ forecast.avg_temp_f }}&#8457 with a range of {{ forecast.min_temp_f}}&#8457 to {{ forecast.max_temp_f}}&#8457</p>
+	<p><h4>{{ depart_date }} to {{ return_date }}</h4></p>
+
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-2">
+			<span class="number">{{ duration }}</span><br />
+			<span class="number-title">days</span>
+		</div>
+		<div class="col-md-2">
+			<span class="number">{{ forecast.avg_temp_f }}&#8457</span><br />
+			<span class="number-title">average temperature</span>
+		</div>
+		<div class="col-md-2">
+			<span class="number">{{ forecast.min_temp_f}}&#8457</span><br />
+			<span class="number-title">average low</span>
+		</div>
+		<div class="col-md-2">
+			<span class="number">{{ forecast.max_temp_f }}&#8457</span><br />
+			<span class="number-title">average high</span>
+		</div>
+			<div class="col-md-2">
+			<span class="number">{{ forecast.precip }}%</span><br />
+			<span class="number-title">probability of percipitation</span>
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>
+
+	
+
+	Here's the valeez {{ valeez_garments }}
 </div>
 
 
