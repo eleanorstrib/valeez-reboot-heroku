@@ -82,6 +82,7 @@ class Garment(m.Model):
 		('temp_temp', 'Temperate'),
 		('temp_medcold', 'Cold'),
 		('temp_cold', 'Very cold'),
+		('temp_all', 'All temps'),
 	)
 	temp = m.CharField(max_length=25, choices=TEMP_CHOICES, default='temp_cold')
 	rain = m.BooleanField()

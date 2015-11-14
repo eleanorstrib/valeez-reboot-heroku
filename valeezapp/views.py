@@ -39,7 +39,7 @@ def show_valeez(request):
 	destination_pretty = str(destination)[3:]
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
-	duration = (return_date-depart_date)[:2]
+	duration = str(return_date-depart_date)[:2]
 	duration_int = int(duration)
 	gender = user_voyages[0].gender
 	voyage_type = user_voyages[0].voyage_type
@@ -71,10 +71,23 @@ def show_valeez(request):
 	else:
 		temp_cat = 'temp_cold'
 
-	valeez_garments = Garment.objects.filter(temp=temp_cat)
+	valeez_garments_basic = Garment.objects.filter(temp=temp_cat, gender=gender)
+	valeez_garments = {}
+	
+	for item in valeez_garments_basic:
+		if item.layer == 0 or item.layer == 1:
+			quantity = duration_int
+		elif item.layer == 2 or item.layer == 3:
+			if duration_int/2 < 1:
+				quantity = 1
+			else:
+				quantity = duration_int/2
+		else:
+				quantity = 1
+		valeez_garments[item.name] = quantity
 
 
-
+	
 	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'valeez_garments': valeez_garments})
 
 
