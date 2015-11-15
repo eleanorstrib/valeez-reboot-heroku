@@ -4,6 +4,7 @@ import time
 import requests
 
 from django.shortcuts import render
+from django.db.models import Q
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
@@ -41,8 +42,9 @@ def show_valeez(request):
 	return_date = user_voyages[0].return_date
 	duration = str(return_date-depart_date)[:2]
 	duration_int = int(duration)
-	gender = user_voyages[0].gender
+	
 	voyage_type = user_voyages[0].voyage_type
+
 
 	# put together variables for the API call 
 	api_date_range = str(depart_date.month) + str(depart_date.day) + str(return_date.month) + str(return_date.day)
@@ -71,24 +73,38 @@ def show_valeez(request):
 	else:
 		temp_cat = 'temp_cold'
 
-	valeez_garments_basic = Garment.objects.filter(temp=temp_cat, gender=gender)
-	valeez_garments = {}
+	valeez = {}
+	# all_temps = Q(garment__contains='temp_all')
+	# forecast_temp=Q(garment__contains=temp_cat)
+
+	if user_voyages[0].gender == "female":
+		valeez_garments = list(Garment.objects.filter(temp='temp_all', female=True))
+		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, female=True))
+		valeez_garments = valeez_garments + valeez_temp_spec
+	else:
+		valeez_garments= list(Garment.objects.filter(temp='temp_all', male=True))
+		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, male=True))
+		valeez_garments = valeez_garments + valeez_temp_spec
 	
-	for item in valeez_garments_basic:
+	
+	for item in valeez_garments:
 		if item.layer == 0 or item.layer == 1:
 			quantity = duration_int
 		elif item.layer == 2 or item.layer == 3:
 			if duration_int/2 < 1:
 				quantity = 1
 			else:
-				quantity = duration_int/2
+				quantity = int(duration_int/2)
 		else:
-				quantity = 1
-		valeez_garments[item.name] = quantity
+			quantity = 1
+		valeez[item.name] = quantity
 
+	toiletries = Toiletry.objects.filter(trip_duration__lte=duration_int)
 
-	
-	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'valeez_garments': valeez_garments})
+	for item in toiletries:
+		valeez[item.name] = 1
+
+	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'valeez': valeez})
 
 
 def sign_up(request):

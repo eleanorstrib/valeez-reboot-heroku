@@ -67,11 +67,8 @@ class Voyage(m.Model):
 
 class Garment(m.Model):
 	name = m.CharField(max_length=75)
-	GENDER_PREF_CHOICES = (
-		('female', 'Female'),
-		('male', 'Male'),
-		)
-	gender = m.CharField(max_length=6, choices=GENDER_PREF_CHOICES, default="female")
+	male = m.BooleanField()
+	female = m.BooleanField()
 	layer = m.IntegerField()
 	type_bformal = m.BooleanField()
 	type_bcasual = m.BooleanField()
@@ -84,7 +81,7 @@ class Garment(m.Model):
 		('temp_cold', 'Very cold'),
 		('temp_all', 'All temps'),
 	)
-	temp = m.CharField(max_length=25, choices=TEMP_CHOICES, default='temp_cold')
+	temp = m.CharField(max_length=25, choices=TEMP_CHOICES, default='temp_all')
 	rain = m.BooleanField()
 	snow = m.BooleanField()
 

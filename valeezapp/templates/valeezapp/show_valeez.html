@@ -3,9 +3,14 @@
 {% block content %}
 
 <div class="container" align="center">
-	<p><span class="title-text">{{ this_user }} get ready to pack a valeez for your trip to {{ destination_pretty }}!</span></p>
+	<div class="row destination">
+		<p><span class="title-text">{{ this_user }} get ready to pack a valeez for your trip to {{ destination_pretty }}!</span></p>
+		<p><h5>{{ depart_date }} to {{ return_date }}</h5></p>
+	</div>
 
-	<p><h4>{{ depart_date }} to {{ return_date }}</h4></p>
+	<div class="row title-text forecast">
+		Forecast
+	</div>
 
 	<div class="row">
 		<div class="col-md-1">
@@ -20,24 +25,22 @@
 		</div>
 		<div class="col-md-2">
 			<span class="number">{{ forecast.min_temp_f}}&#8457</span><br />
-			<span class="number-title">average low</span>
+			<span class="number-title">recorded low</span>
 		</div>
 		<div class="col-md-2">
 			<span class="number">{{ forecast.max_temp_f }}&#8457</span><br />
-			<span class="number-title">average high</span>
+			<span class="number-title">recorded high</span>
 		</div>
 			<div class="col-md-2">
 			<span class="number">{{ forecast.precip }}%</span><br />
-			<span class="number-title">probability of percipitation</span>
+			<span class="number-title">chance of percipitation</span>
 		</div>
 		<div class="col-md-1">
 		</div>
 	</div>
-
-	
-
-	Here's the valeez {{ valeez_garments }}
 </div>
 
-
+<div class="container valeez" align="center">
+	{{valeez}}
+</div>
 {% endblock %}
