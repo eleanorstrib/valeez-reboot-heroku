@@ -8,11 +8,11 @@
 		<p><h5>{{ depart_date }} to {{ return_date }}</h5></p>
 	</div>
 
-	<div class="row title-text forecast">
+	<div class="row title-text title-row forecast">
 		Forecast
 	</div>
 
-	<div class="row">
+	<div class="row forecast">
 		<div class="col-md-1">
 		</div>
 		<div class="col-md-2">
@@ -41,6 +41,17 @@
 </div>
 
 <div class="container valeez" align="center">
-	{{valeez}}
+	<div class="row title-row title-text">
+	Your valeez
+	</div>
+
+	<div class="row">
+		{% for key, value in valeez.items %}
+			<div class="col-md-2">
+					<span class="number">{{ value }}</span><br/>
+					<span class="number-title">{{ key }}</span>
+			</div>
+		{% endfor %}
+	</div>
 </div>
 {% endblock %}

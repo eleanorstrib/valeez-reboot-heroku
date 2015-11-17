@@ -4,7 +4,6 @@ import time
 import requests
 
 from django.shortcuts import render
-from django.db.models import Q
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
@@ -33,20 +32,39 @@ def make_valeez(request):
 
 
 def show_valeez(request):
-	# user data for the view and to construct the API call
+	""" 
+	This view runs the API call for the forecast and assembles a valeez for a new voyage.
+	"""
 	this_user = request.user
+	
+	# retrieving data about the last voyage created
 	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
+	voyage_id = user_voyages[0].id
 	destination = user_voyages[0].destination
 	destination_pretty = str(destination)[3:]
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
-	duration = str(return_date-depart_date)[:2]
-	duration_int = int(duration)
-	
+
+	# convert type of trip to boolean
+	type_bformal = False
+	type_bcasual = False
+	type_vacation = False
 	voyage_type = user_voyages[0].voyage_type
 
+	if voyage_type == "type_bformal":
+		type_bformal = True
+	elif voyage_type == "type_bcasual":
+		type_bcasual = True
+	else:
+		type_vacation = True
 
-	# put together variables for the API call 
+
+	#TODO: use the datetime delta attributes to get duration number
+	duration = str(return_date-depart_date)[:2]
+	duration_int = int(duration)
+
+	# put together variables for the API call and save to a dict
+	# TODO :add error handling if response != 200
 	api_date_range = str(depart_date.month) + str(depart_date.day) + str(return_date.month) + str(return_date.day)
 	api_call = API_URL % (WU_KEY, api_date_range, destination)
 	api_data = requests.get(api_call).json()
@@ -61,7 +79,7 @@ def show_valeez(request):
 			'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
 			}
 
-	# categorize forecast variables
+	# categorize forecast variables into temp categories
 	if forecast['avg_temp_f'] >= 90:
 		temp_cat = 'temp_high'
 	elif forecast['avg_temp_f'] < 90 and forecast['avg_temp_f'] >= 80:
@@ -73,17 +91,17 @@ def show_valeez(request):
 	else:
 		temp_cat = 'temp_cold'
 
+	# create a dict, valeez, to hold info shown in the view
 	valeez = {}
-	# all_temps = Q(garment__contains='temp_all')
-	# forecast_temp=Q(garment__contains=temp_cat)
 
+	# query database depending on gender specified
 	if user_voyages[0].gender == "female":
 		valeez_garments = list(Garment.objects.filter(temp='temp_all', female=True))
 		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, female=True))
 		valeez_garments = valeez_garments + valeez_temp_spec
 	else:
-		valeez_garments= list(Garment.objects.filter(temp='temp_all', male=True))
-		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, male=True))
+		valeez_garments= list(Garment.objects.filter(temp='temp_all', male=True, trip_type=voyage_type))
+		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, male=True, trip_type=voyage_type))
 		valeez_garments = valeez_garments + valeez_temp_spec
 	
 	
