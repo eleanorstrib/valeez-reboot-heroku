@@ -4,15 +4,15 @@
 
 <div class="container" align="center">
 	<div class="row destination">
-		<p><span class="title-text">{{ this_user }} get ready to pack a valeez for your trip to {{ destination_pretty }}!</span></p>
-		<p><h5>{{ depart_date }} to {{ return_date }}</h5></p>
+		<p><span class="title-text">{{ this_user }}, get ready for your trip to {{ destination_pretty }}!</span></p>
+		<p><h4>-- {{ depart_date }} to {{ return_date }} -- </h4></p>
 	</div>
 
 	<div class="row title-text title-row forecast">
 		Forecast
 	</div>
 
-	<div class="row forecast">
+	<div class="row">
 		<div class="col-md-1">
 		</div>
 		<div class="col-md-2">
@@ -40,15 +40,15 @@
 	</div>
 </div>
 
-<div class="container valeez" align="center">
+<div class="container" align="center">
 	<div class="row title-row title-text">
-	Your valeez
+	{{ item_count }} items in your valeez
 	</div>
 
 	<div class="row">
 		{% for key, value in valeez.items %}
 			<div class="col-md-2">
-					<span class="number">{{ value }}</span><br/>
+					<span class="number-blue">{{ value }}</span><br/>
 					<span class="number-title">{{ key }}</span>
 			</div>
 		{% endfor %}

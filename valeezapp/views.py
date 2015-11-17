@@ -122,7 +122,9 @@ def show_valeez(request):
 	for item in toiletries:
 		valeez[item.name] = 1
 
-	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'valeez': valeez})
+	item_count = sum(valeez.values())
+
+	return render(request, 'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
 
 
 def sign_up(request):
