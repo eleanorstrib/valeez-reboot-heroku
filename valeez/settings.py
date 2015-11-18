@@ -23,6 +23,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+APPEND_SLASH=True
+
 SITE_ID = 2
 # Application definition
 

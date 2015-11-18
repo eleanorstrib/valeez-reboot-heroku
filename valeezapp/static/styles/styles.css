@@ -89,6 +89,7 @@ input, select {
 .number-title {
 	font-family: 'Abel', sans-serif;
 	font-size: 1em;
+	text-transform: lowercase;
 }
 
 
