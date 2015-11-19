@@ -3,7 +3,16 @@
 
 
 {% block content %}
-<h1>Login</h1>
+
+<div class="container">
+	<div class="col-md-3" align="left">
+		<p><span class="title-text">Login</span></p>
+		<p>See your past trips or create a new valeez.</p>
+		<br />
+		<p>No account yet? <a href="{% url 'registration_register' %}">Register</a>!</p>
+		<p>Forgot your password? <a href="{% url 'registration_register' %}"> Reset it</a>!</p>
+	</div>
+	<div class="col-md-6">
         <form method="post" action=".">
                 {% csrf_token %}
                 {{ form.as_p }}
@@ -12,5 +21,10 @@
                 <input type="hidden" name="next" value="{{ next }}" />
                 </form>
 
-        <p>Not  a member? <a href="{% url 'registration_register' %}">Register</a>!</p>
+        
+     </div>
+     <div class="col-md-3">
+     </div>
+</div>
+        
 {% endblock %}

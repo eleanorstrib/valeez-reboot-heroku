@@ -1,7 +1,17 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load i18n %}
 
+{% block content %}
 
-{% block body_block %}
-<h1>Logged Out</h1>
-        <p>You are now logged out.</p>
+<div class="container">
+	<div class="col-md-3" align="left">
+	</div>
+	<div class="col-md-6" align="center">
+        <p><span class="title-text">You've logged out</span></p>
+        
+     </div>
+     <div class="col-md-3">
+     </div>
+</div>
+        
 {% endblock %}

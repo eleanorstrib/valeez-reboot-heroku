@@ -16,7 +16,8 @@ API_URL = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
 
 
 def index(request):
-	return render(request, 'valeezapp/index.html', {})
+	user = request.user
+	return render(request, 'valeezapp/index.html', {'user': user})
 
 
 def make_valeez(request):

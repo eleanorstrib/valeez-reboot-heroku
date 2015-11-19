@@ -1,4 +1,6 @@
 from django import forms
+from registration.forms import RegistrationForm
+from registration.models import RegistrationProfile
 from django.contrib.auth.models import User
 from .models import UserProfile, Voyage
 from functools import partial 
