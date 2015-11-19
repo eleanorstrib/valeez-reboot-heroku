@@ -4,7 +4,7 @@ import time
 import requests
 
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse 
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from valeezapp.models import UserProfile, Voyage, Valeez, Garment, Toiletry
@@ -125,7 +125,7 @@ def show_valeez(request):
 
 	item_count = sum(valeez.values())
 
-	return render_to_response('valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
+	return render(request,'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
 
 
 def sign_up(request):
@@ -146,8 +146,8 @@ def sign_up(request):
 		user_form = UserForm()
 		user_profile_form = UserProfileForm()
 
-	return render(request, 'registration/registration_form.html', {'user_form': user_form, 'user_profile_form': user_profile_form, 'signed_up': signed_up})
-
+	return HTTPResponseRedirect('registration/registration_form.html', {'user_form': user_form, 'user_profile_form': user_profile_form, 'signed_up': signed_up}, context)
+	# return render(request, 'valeezapp/make_valeez.html', {'form': form})
 
 # This view feeds into past_voyages.html
 def past_voyages(request):
