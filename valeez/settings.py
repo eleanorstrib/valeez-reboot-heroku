@@ -23,8 +23,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-APPEND_SLASH=True
-
 SITE_ID = 2
 # Application definition
 
@@ -37,9 +35,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites.models',
-    'registration',
     'valeezapp',
-
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -110,8 +107,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # registration redux
+REGISTRATION_OPEN = True
 ACCOUNT_ACTIVATION_DAYS = 3
 REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'accounts/login/'
 
 # email login
 EMAIL_HOST='localhost'

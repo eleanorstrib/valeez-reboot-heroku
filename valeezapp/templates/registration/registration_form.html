@@ -1,14 +1,23 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-    <h1>Sign up - reg</h1>
-    HI THERE!
 
-    <form method="POST" class="post-form" action="" enctype="multipart/form-data">
-    	{% csrf_token %}
-        {{ user_form.as_table }}
-        {{ user_profile_form.as_table }
- <button type="submit" class="save btn btn-default">Sign up</button>
-    </form>
-
+<div class="container">
+	<div class="col-md-3" align="left">
+		<p><span class="title-text">Create your account</span></p>
+		All fields are required.<br />
+		Sign up then start building your valeez!
+	</div>
+	<div class="col-md-6">
+        <form method="post" class="post-form">
+                {% csrf_token %}
+                {{ form.as_table }}
+                <br/>
+		<button type="submit" class="save btn btn-default">Sign up</button>
+        </form>
+     </div>
+     <div class="col-md-3">
+     </div>
+</div>
 {% endblock %}
