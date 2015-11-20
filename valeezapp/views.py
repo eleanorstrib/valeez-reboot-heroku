@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from valeezapp.models import UserProfile, Voyage, Valeez, Garment, Toiletry
 from django.template.defaultfilters import slugify
 from .forms import UserForm, UserProfileForm, VoyageForm
+# from forecast import forecast, temp_cat
 
 WU_KEY = os.environ.get('WU_API_KEY')
 API_URL = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
