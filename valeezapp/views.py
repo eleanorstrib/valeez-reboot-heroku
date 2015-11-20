@@ -4,7 +4,7 @@ import time
 import requests
 
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponse 
+from django.http import HttpResponseRedirect, HttpResponse 
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from valeezapp.models import UserProfile, Voyage, Valeez, Garment, Toiletry
@@ -29,6 +29,7 @@ def make_valeez(request):
 			link_user = form.save(commit=False)
 			link_user.user = request.user
 			link_user.save()
+			return HttpResponseRedirect('/show_valeez/')
 	return render(request, 'valeezapp/make_valeez.html', {'form': form})
 
 
