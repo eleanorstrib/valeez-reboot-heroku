@@ -8,6 +8,20 @@
 					<p><span class="title-text">Ready to get packing?</span></p>
 					<p>Valeez is an app that helps you pack an optimal suitcase based on the length of your trip and your destination.</p>
 
+					{% if user.is_authenticated %}
+					<div class="col-sm-6 col-lg-6" align="center">
+						<p>
+							<button type="button" class="btn btn-custom"><a href="{% url 'make_valeez' %}">&nbspmake a new valeez&nbsp</a></button>
+						</p>
+					</div>
+
+					<div class="col-sm-6 col-lg-6" align="center">
+						<p>
+							<button type="button" class="btn btn-custom"><a href="{% url 'past_voyages' %}">view past voyages</a></button>
+						</p>
+					</div>
+					
+					{% else %}
 					<div class="col-sm-6 col-lg-6" align="center">
 						<p>
 							<button type="button" class="btn btn-custom"><a href="{% url 'auth_login' %}">&nbsplog me in&nbsp</a></button>
@@ -19,7 +33,7 @@
 							<button type="button" class="btn btn-custom"><a href="{% url 'registration_register' %}">sign me up</a></button>
 						</p>
 					</div>
-
+					{% endif %}
 
 				<div class="col-sm-6 col-lg-3">
 				</div>
