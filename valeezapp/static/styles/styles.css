@@ -133,3 +133,15 @@ input, select {
     overflow: hidden;
     margin-bottom: 0px;
 }
+
+.log-out {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	position: relative;
+    background: #000 url("../images/nyc_cp.jpg") center center;
+    width: 100%;
+    min-height:600px;
+    background-size: cover !important;
+    overflow: hidden;
+    margin-bottom: 0px;
+}

@@ -27,6 +27,8 @@ SITE_ID = 2
 # Application definition
 
 INSTALLED_APPS = (
+    'valeezapp',
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,8 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites.models',
-    'valeezapp',
-    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
