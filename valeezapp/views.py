@@ -43,7 +43,8 @@ def show_valeez(request):
 	# retrieving data about the last voyage created
 	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
 	voyage_id = user_voyages[0].id
-	destination = user_voyages[0].destination
+	# destination = user_voyages[0].destination
+	destination = "AZ/Pheonix"
 	destination_pretty = (str(destination)[3:]).replace('_', ' ')
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
@@ -72,16 +73,19 @@ def show_valeez(request):
 	api_date_range = str(depart_date.month) + str(depart_date.day) + str(return_date.month) + str(return_date.day)
 	api_call = API_URL % (WU_KEY, api_date_range, destination)
 	api_data = requests.get(api_call).json()
-	forecast = {
-			'max_temp_f': int(api_data[u'trip'][u'temp_high'][u'max'][u'F']),
-			'max_temp_c': int(api_data[u'trip'][u'temp_high'][u'max'][u'C']),
-			'avg_temp_f': int(api_data[u'trip'][u'temp_high'][u'avg'][u'F']),
-			'avg_temp_c': int(api_data[u'trip'][u'temp_high'][u'avg'][u'C']),
-			'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'F']),
-			'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'C']),					
-			'precip': int(api_data[u'trip'][u'chance_of'][u'chanceofrainday'][u'percentage']),
-			'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
-			}
+	if api_data['response']['error']:
+		return render(request, 'valeezapp/error.html')
+	else: 
+		forecast = {
+				'max_temp_f': int(api_data[u'trip'][u'temp_high'][u'max'][u'F']),
+				'max_temp_c': int(api_data[u'trip'][u'temp_high'][u'max'][u'C']),
+				'avg_temp_f': int(api_data[u'trip'][u'temp_high'][u'avg'][u'F']),
+				'avg_temp_c': int(api_data[u'trip'][u'temp_high'][u'avg'][u'C']),
+				'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'F']),
+				'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'C']),					
+				'precip': int(api_data[u'trip'][u'chance_of'][u'chanceofrainday'][u'percentage']),
+				'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
+				}
 
 	# categorize forecast variables into temp categories
 	if forecast['avg_temp_f'] >= 90:
