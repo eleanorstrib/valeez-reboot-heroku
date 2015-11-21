@@ -36,7 +36,7 @@ class Voyage(m.Model):
 		('FL/Jacksonville', 'Jacksonville, FL'),
 		('NV/Las_Vegas', 'Las Vegas, NV'),
 		('CA/Los_Angeles', 'Los Angeles, CA'),
-		('AZ/Pheonix', 'Pheonix, AZ'),
+		('AZ/Phoenix', 'Phoenix, AZ'),
 		('PA/Philadelphia', 'Philadelphia, PA'),
 		('NY/New_York', 'New York, NY'),
 		('TX/San_Antonio', 'San Antonio, TX'),
