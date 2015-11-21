@@ -61,6 +61,7 @@ def show_valeez(request):
 	else:
 		type_vacation = True
 
+		# type_bcasual, type_bformal, type_vacation
 
 	#TODO: use the datetime delta attributes to get duration number
 	duration = str(return_date-depart_date)[:2]
@@ -99,12 +100,12 @@ def show_valeez(request):
 
 	# query database depending on gender specified
 	if user_voyages[0].gender == "female":
-		valeez_garments = list(Garment.objects.filter(temp='temp_all', female=True))
-		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, female=True))
+		valeez_garments = list(Garment.objects.filter(temp='temp_all', female=True, type_bcasual=type_bcasual, type_bformal=type_bformal, type_vacation=type_vacation))
+		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, female=True,  type_bcasual=type_bcasual, type_bformal=type_bformal, type_vacation=type_vacation))
 		valeez_garments = valeez_garments + valeez_temp_spec
 	else:
-		valeez_garments= list(Garment.objects.filter(temp='temp_all', male=True, trip_type=voyage_type))
-		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, male=True, trip_type=voyage_type))
+		valeez_garments= list(Garment.objects.filter(temp='temp_all', male=True, type_bcasual=type_bcasual, type_bformal=type_bformal, type_vacation=type_vacation))
+		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, male=True, type_bcasual=type_bcasual, type_bformal=type_bformal, type_vacation=type_vacation))
 		valeez_garments = valeez_garments + valeez_temp_spec
 	
 	

@@ -31,7 +31,7 @@
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
 						{% if user.is_authenticated %}
-							<li><span class="navbar-text user-login">bienvenue, {{ user }}!</span></li>
+							<li><span class="navbar-text user-login">&nbsp&nbspbienvenue, {{ user }}!</span></li>
 							<li class="active"><a href="{% url 'auth_logout' %}">log out<span class="sr-only">(current)</span></a></li>
 							<li><a href="{% url 'make_valeez' %}">make a valeez</a></li>
 							<li><a href="{% url 'past_voyages' %}">past voyages</a></li>
