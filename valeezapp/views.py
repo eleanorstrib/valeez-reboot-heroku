@@ -43,8 +43,7 @@ def show_valeez(request):
 	# retrieving data about the last voyage created
 	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
 	voyage_id = user_voyages[0].id
-	# destination = user_voyages[0].destination
-	destination = "AZ/Pheonix"
+	destination = user_voyages[0].destination
 	destination_pretty = (str(destination)[3:]).replace('_', ' ')
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
@@ -68,12 +67,13 @@ def show_valeez(request):
 	duration = str(return_date-depart_date)[:2]
 	duration_int = int(duration)
 
-	# put together variables for the API call and save to a dict
-	# TODO :add error handling if response != 200
+	# put together variables for the API call
 	api_date_range = str(depart_date.month) + str(depart_date.day) + str(return_date.month) + str(return_date.day)
 	api_call = API_URL % (WU_KEY, api_date_range, destination)
 	api_data = requests.get(api_call).json()
-	if api_data['response']['error']:
+
+	# add error handling - any issues adds a key called 'error' to response
+	if 'error' in api_data:
 		return render(request, 'valeezapp/error.html')
 	else: 
 		forecast = {
