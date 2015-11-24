@@ -18,7 +18,6 @@ class UserProfile(m.Model):
 
 	def __str___(self):
 		return self.user
-		
 
 class Voyage(m.Model):
 	user = m.ForeignKey(User, unique=False)
@@ -60,9 +59,17 @@ class Voyage(m.Model):
 		('male', 'Male'),
 		)
 	gender = m.CharField(max_length=6, choices=GENDER_PREF_CHOICES, default="female")
+	query = m.CharField(max_length=200, default="")
 
 	def __str__(self):
 		return self.destination
+
+class Valeez(m.Model):
+	voyage = m.OneToOneField(Voyage, related_name="voyage")
+	contents= m.CharField(max_length=2000, default=1)
+
+	def __str__(self):
+		return self.contents
 
 
 class Garment(m.Model):
@@ -99,11 +106,5 @@ class Toiletry(m.Model):
 		return self.name
 
 
-class Valeez(m.Model):
-	voyage = m.OneToOneField(Voyage, related_name="voyage")
-	contents= m.CharField(max_length=2000, default=1)
-	slug = m.SlugField(unique=True)
 
-	def __str__(self):
-		return self.valeez_id
 

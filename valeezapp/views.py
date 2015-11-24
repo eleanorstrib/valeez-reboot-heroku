@@ -159,12 +159,18 @@ def sign_up(request):
 		user_profile_form = UserProfileForm()
 
 	return HTTPResponseRedirect('registration/registration_form.html', {'user_form': user_form, 'user_profile_form': user_profile_form, 'signed_up': signed_up}, context)
-	# return render(request, 'valeezapp/make_valeez.html', {'form': form})
+	
 
 # This view feeds into past_voyages.html
 def past_voyages(request):
 	this_user = request.user
 	voyages = Voyage.objects.filter(user=this_user).order_by('depart_date', 'destination')
+	for voyage in voyages:
+		if voyage.id > 105:
+			voyage.query = "not found"
+		else:
+			voyage.query = Valeez.objects.filter(voyage=voyage.id)
+
 	template = loader.get_template('valeezapp/past_voyages.html')
 	context = RequestContext(request, {'voyages' : voyages})
 	return HttpResponse(template.render(context))

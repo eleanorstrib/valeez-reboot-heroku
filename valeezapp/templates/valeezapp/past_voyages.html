@@ -6,7 +6,6 @@
 	<p>
 	<span class="title-text">My Past Voyages</span>
 	</p>
-
 	<div class="container">
 		<div class="table-responsive">
 			<table class="table">
@@ -23,8 +22,44 @@
 						<tr> 
 						<td>{{ voyage.get_destination_display }}</td>
 						<td>{{ voyage.depart_date }}</td>
-						<td>{{ voyage.return_date }}</td>
-						<td></td>
+						<td>{{ voyage.query }}</td>
+						<td>
+							<button type="button" class="btn btn-custom" data-toggle="modal" data-target="#myModal">
+								  <i class="fa fa-suitcase"></i>
+								</button>
+
+							<!-- Modal -->
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title" id="myModalLabel">Valeez for your trip to {{ voyage.get_destination_display }} // {{ voyage.depart_date }} to {{ voyage.return_date }}</h4>
+								     </div>
+								    <div class="modal-body">
+												<table class="table">
+													<thead>
+														<tr>
+															<td>{{voyage.query}}/td>
+															<td>Quantity</td>
+														</tr>
+													</thead>
+													<tbody>
+													{% for key, value in voyage.query.items %}
+														<td>{{ key }}</td>
+														<td>{{ value }}</td>
+													{% endfor %}
+													</tbody>
+												</table>
+											</div>
+
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+						</td>
 						</tr>
 					{% endfor %}
 				</tbody>
