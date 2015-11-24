@@ -101,8 +101,7 @@ class Toiletry(m.Model):
 
 class Valeez(m.Model):
 	voyage = m.OneToOneField(Voyage, related_name="voyage")
-	garments = m.ManyToManyField(Garment)
-	toiletries = m.ManyToManyField(Toiletry)
+	contents= m.CharField(max_length=2000, default=1)
 	slug = m.SlugField(unique=True)
 
 	def __str__(self):

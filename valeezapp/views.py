@@ -42,7 +42,7 @@ def show_valeez(request):
 	
 	# retrieving data about the last voyage created
 	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
-	voyage_id = user_voyages[0].id
+	
 	destination = user_voyages[0].destination
 	destination_pretty = (str(destination)[3:]).replace('_', ' ')
 	depart_date = user_voyages[0].depart_date
@@ -132,7 +132,12 @@ def show_valeez(request):
 
 	item_count = sum(valeez.values())
 
-	return render(request,'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
+	# save the valeez object
+	vid = user_voyages[0].id
+	valeez_object = Valeez(voyage_id=vid, contents=valeez)
+	valeez_object.save()
+
+	return render(request,'valeezapp/show_valeez.html', {'voyage_id': vid, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
 
 
 def sign_up(request):
