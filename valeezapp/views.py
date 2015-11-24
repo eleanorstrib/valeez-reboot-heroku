@@ -104,8 +104,8 @@ def show_valeez(request):
 
 	# query database depending on gender specified
 	if user_voyages[0].gender == "female":
-		valeez_garments = list(Garment.objects.filter(temp='temp_all', female=True, type_bcasual=type_bcasual, type_bformal=type_bformal, type_vacation=type_vacation))
-		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, female=True,  type_bcasual=type_bcasual, type_bformal=type_bformal, type_vacation=type_vacation))
+		valeez_garments = list(Garment.objects.filter(temp='temp_all', female=True))
+		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, female=True))
 		valeez_garments = valeez_garments + valeez_temp_spec
 	else:
 		valeez_garments= list(Garment.objects.filter(temp='temp_all', male=True, type_bcasual=type_bcasual, type_bformal=type_bformal, type_vacation=type_vacation))
@@ -166,11 +166,7 @@ def past_voyages(request):
 	this_user = request.user
 	voyages = Voyage.objects.filter(user=this_user).order_by('depart_date', 'destination')
 	for voyage in voyages:
-		if voyage.id > 105:
-			voyage.query = "not found"
-		else:
-			voyage.query = Valeez.objects.filter(voyage=voyage.id)
-
+		voyage.query = Valeez.objects.get(voyage=voyage.id)
 	template = loader.get_template('valeezapp/past_voyages.html')
 	context = RequestContext(request, {'voyages' : voyages})
 	return HttpResponse(template.render(context))
