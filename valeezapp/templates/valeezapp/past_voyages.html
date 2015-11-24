@@ -38,6 +38,7 @@
 								        <h4 class="modal-title" id="myModalLabel">Valeez for your trip to {{ voyage.get_destination_display}}, {{ voyage.depart_date }} to {{ voyage.return_date }}</h4>
 								     </div>
 								    <div class="modal-body">
+								    {{ voyage.query }}
 												<table class="table">
 													<thead>
 														<tr>
@@ -46,10 +47,9 @@
 														</tr>
 													</thead>
 													<tbody>
-														
-															<td>{{ voyage.query }}</td>
-															<td>?</td>
-											
+														{% for item in voyage.query.iterator %}
+															{{ item }}
+														{% endfor %}
 													</tbody>
 												</table>
 											</div>

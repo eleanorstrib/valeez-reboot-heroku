@@ -133,8 +133,8 @@ input[type="submit"]:hover {
 .btn-custom:hover {
 	font-family: 'Abel', sans-serif;
 	color: white;
-	border: 5px solid  #FF8C80;
-	background-color:  #FF8C80;
+	border: 5px solid  #FF8C80 !important;
+	background-color:  #FF8C80 !important;
 }
 
 .jumbotron {
@@ -152,7 +152,7 @@ input[type="submit"]:hover {
 	filter: grayscale(100%);
 	position: relative;
     background: #000 url("../images/nyc_cp.jpg") center center;
-    width: 100%;
+    width: 66%;
     min-height:600px;
     background-size: cover !important;
     overflow: hidden;

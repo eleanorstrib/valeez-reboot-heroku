@@ -4,7 +4,7 @@
 
 <div class="container" align="center">
 	<div class="row destination">
-		<p><span class="title-text">{{ this_user }}, get ready for your trip to {{ destination_pretty }}!</span></p>
+		<p><span class="title-text">{{ this_user }}, get ready for your {{ duration }} day trip to {{ destination_pretty }}!</span></p>
 		<p><h4>-- {{ depart_date }} to {{ return_date }} -- </h4></p>
 	</div>
 
@@ -14,10 +14,6 @@
 
 	<div class="row">
 		<div class="col-md-1">
-		</div>
-		<div class="col-md-2">
-			<span class="number">{{ duration }}</span><br />
-			<span class="number-title">days</span>
 		</div>
 		<div class="col-md-2">
 			<span class="number">{{ forecast.avg_temp_f }}&#8457</span><br />
@@ -33,7 +29,11 @@
 		</div>
 			<div class="col-md-2">
 			<span class="number">{{ forecast.precip }}%</span><br />
-			<span class="number-title">chance of percipitation</span>
+			<span class="number-title">chance of rain</span>
+		</div>
+		<div class="col-md-2">
+			<span class="number">{{ forecast.snow }}%</span><br />
+			<span class="number-title">chance of snow</span>
 		</div>
 		<div class="col-md-1">
 		</div>

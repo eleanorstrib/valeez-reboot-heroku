@@ -1,7 +1,6 @@
 from django.db import models as m
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-
 import datetime
 
 
@@ -77,18 +76,17 @@ class Garment(m.Model):
 	male = m.BooleanField()
 	female = m.BooleanField()
 	layer = m.IntegerField()
+	# voyage type
 	type_bformal = m.BooleanField()
 	type_bcasual = m.BooleanField()
 	type_vacation = m.BooleanField()
-	TEMP_CHOICES = (
-		('temp_high', 'Hot'),
-		('temp_medhigh', 'Warm'),
-		('temp_temp', 'Temperate'),
-		('temp_medcold', 'Cold'),
-		('temp_cold', 'Very cold'),
-		('temp_all', 'All temps'),
-	)
-	temp = m.CharField(max_length=25, choices=TEMP_CHOICES, default='temp_all')
+	# temp
+	temp_high = m.BooleanField(default=False)
+	temp_medhigh = m.BooleanField(default=False)
+	temp_temp = m.BooleanField(default=False)
+	temp_medcold = m.BooleanField(default=False)
+	temp_cold = m.BooleanField(default=False)
+	# weather conditions
 	rain = m.BooleanField()
 	snow = m.BooleanField()
 

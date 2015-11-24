@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from valeezapp.models import UserProfile, Voyage, Valeez, Garment, Toiletry
 from django.template.defaultfilters import slugify
 from .forms import UserForm, UserProfileForm, VoyageForm
-# from forecast import forecast, temp_cat
+from django.db.models import Q
 
 WU_KEY = os.environ.get('WU_API_KEY')
 API_URL = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
@@ -48,20 +48,12 @@ def show_valeez(request):
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
 
-	# convert type of trip to boolean
-	type_bformal = False
-	type_bcasual = False
-	type_vacation = False
+	# create a dict for the voyage type
+	voyage_query = {}
+	#find actual voyage type
 	voyage_type = user_voyages[0].voyage_type
-
-	if voyage_type == "type_bformal":
-		type_bformal = True
-	elif voyage_type == "type_bcasual":
-		type_bcasual = True
-	else:
-		type_vacation = True
-
-		# type_bcasual, type_bformal, type_vacation
+	#set that value in dict to True
+	voyage_query[voyage_type] = True
 
 	#TODO: use the datetime delta attributes to get duration number
 	duration = str(return_date-depart_date)[:2]
@@ -104,13 +96,10 @@ def show_valeez(request):
 
 	# query database depending on gender specified
 	if user_voyages[0].gender == "female":
-		valeez_garments = list(Garment.objects.filter(temp='temp_all', female=True))
-		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, female=True))
-		valeez_garments = valeez_garments + valeez_temp_spec
+		valeez_garments = Garment.objects.filter(Q(female=True), Q(**voyage_query))
+
 	else:
-		valeez_garments= list(Garment.objects.filter(temp='temp_all', male=True, type_bcasual=type_bcasual, type_bformal=type_bformal, type_vacation=type_vacation))
-		valeez_temp_spec = list(Garment.objects.filter(temp=temp_cat, male=True, type_bcasual=type_bcasual, type_bformal=type_bformal, type_vacation=type_vacation))
-		valeez_garments = valeez_garments + valeez_temp_spec
+		valeez_garments = list(Garment.objects.filter(male=True))
 	
 	
 	for item in valeez_garments:
@@ -166,7 +155,7 @@ def past_voyages(request):
 	this_user = request.user
 	voyages = Voyage.objects.filter(user=this_user).order_by('depart_date', 'destination')
 	for voyage in voyages:
-		voyage.query = Valeez.objects.get(voyage=voyage.id)
+		voyage.query = Valeez.objects.filter(voyage=voyage.id)
 	template = loader.get_template('valeezapp/past_voyages.html')
 	context = RequestContext(request, {'voyages' : voyages})
 	return HttpResponse(template.render(context))
