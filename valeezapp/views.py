@@ -79,29 +79,29 @@ def show_valeez(request):
 				'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
 				}
 
-	# categorize forecast variables into temp categories
+	# categorize forecast variables into temp categories, add  appropriate value to dict
+	temperature_query = {}
+
 	if forecast['avg_temp_f'] >= 90:
-		temp_cat = 'temp_high'
+		temperature_query['temp_high'] = True
 	elif forecast['avg_temp_f'] < 90 and forecast['avg_temp_f'] >= 80:
-		temp_cat = 'temp_medhigh'
+		temperature_query['temp_medhigh'] = True
 	elif forecast['avg_temp_f'] < 80 and forecast['avg_temp_f'] >= 60:
-		temp_cat = 'temp_temp'
+		temperature_query['temp_temp'] = True
 	elif forecast['avg_temp_f'] < 60 and forecast['avg_temp_f'] >= 50:
-		temp_cat = 'temp_medcold'
+		temperature_query['temp_medcold'] = True
 	else:
-		temp_cat = 'temp_cold'
+		temperature_query['temp_cold'] = True
 
 	# create a dict, valeez, to hold info shown in the view
 	valeez = {}
 
-	# query database depending on gender specified
+	# query database
 	if user_voyages[0].gender == "female":
-		valeez_garments = Garment.objects.filter(Q(female=True), Q(**voyage_query))
-
+		valeez_garments = list(Garment.objects.filter(Q(female=True), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
 	else:
-		valeez_garments = list(Garment.objects.filter(male=True))
-	
-	
+		valeez_garments = list(Garment.objects.filter(Q(male=True), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
+
 	for item in valeez_garments:
 		if item.layer == 0 or item.layer == 1:
 			quantity = duration_int
@@ -117,6 +117,18 @@ def show_valeez(request):
 	toiletries = Toiletry.objects.filter(trip_duration__lte=duration_int)
 
 	for item in toiletries:
+		valeez[item.name] = 1
+
+	# rain and snow items searched and added to another list if POP > 50%
+	rain_snow_items = []
+	if forecast['precip'] > 50:
+		rain_items = list(Garment.objects.filter(rain=True))
+		rain_snow_items = rain_snow_items + rain_items
+	if forecast['snow'] > 50:
+		snow_items = list(Garment.objects.filter(snow=True))
+		rain_snow_items = rain_snow_items + snow_items
+
+	for item in rain_snow_items:
 		valeez[item.name] = 1
 
 	item_count = sum(valeez.values())
