@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container">
+	<div class="col-md-3" align="left">
+		<p><span class="title-text">Oops!</span></p>	
+	</div>
+	
+	<div class="col-md-6" align="center">
+		<p><h3>Looks like you've already created a valeez for this trip.</h3></p>
+		
+		<p>But not to worry, this is an easy problem to solve.</p>
+		<div class="container">
+			<div class="col-md-3">
+				<p>review your past voyages</p>
+				<p><button type="button" class="btn btn-custom"><a href="{% url 'past_voyages' %}">go!</a></button></p>
+			</div>
+			<div class="col-md-3">
+				<p>make a new valeez</p>
+				<p><button type="button" class="btn btn-custom"><a href="{% url 'make_valeez' %}">go!</a></button></p>
+			</div>
+    	</div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+{% endblock %}

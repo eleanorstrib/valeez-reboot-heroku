@@ -7,6 +7,7 @@
 	<span class="title-text">My Past Voyages</span>
 	</p>
 	<div class="container">
+		{% if any_voyages %}
 		<div class="table-responsive">
 			<table class="table">
 				<thead>
@@ -68,6 +69,25 @@
 					{% endfor %}
 				</tbody>
 			</table>
+			{% else %}
+			<div class="col-md-3"></div>
+			<div class="col-md-6" align="center">
+				<p><h3>Looks like you haven't created any voyages yet.</h3></p>
+				<p>Because your valeez will be based on the duration of your trip and the weather at the destination, specifying the details of your voyage are an important first step.</p>
+				<p>But take heart, this is easy to fix!</p>
+				<div class="container">
+					<div class="col-md-3">
+						<p>tell us about your upcoming voyage</p>
+						<p><button type="button" class="btn btn-custom"><a href="{% url 'make_valeez' %}">go!</a></button></p>
+					</div>
+					<div class="col-md-3">
+						<p>learn more about how it works</p>
+						<p><button type="button" class="btn btn-custom"><a href="{% url 'make_valeez' %}">go!</a></button></p>
+					</div>
+		    	</div>
+	    	</div>
+	    	<div class="col-md-3"></div>
+			{% endif %}
 		</div>
 	</div>
 </div>

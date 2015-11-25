@@ -11,6 +11,7 @@ from valeezapp.models import UserProfile, Voyage, Valeez, Garment, Toiletry
 from django.template.defaultfilters import slugify
 from .forms import UserForm, UserProfileForm, VoyageForm
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 
 WU_KEY = os.environ.get('WU_API_KEY')
 API_URL = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
@@ -137,10 +138,21 @@ def show_valeez(request):
 	# save the valeez object
 	vid = user_voyages[0].id
 	valeez_object = Valeez(voyage_id=vid, contents=valeez)
-	valeez_object.save()
+	# check if vid is in db
+	try:
+		check_vid = Valeez.objects.get(voyage_id=vid)
+	except ObjectDoesNotExist:
+		check_vid = None
+	
+	if check_vid is None:
+		valeez_object.save()
+	else:
+		return HttpResponseRedirect('/valeez_exists/', {})
 
 	return render(request,'valeezapp/show_valeez.html', {'voyage_id': vid, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
 
+def valeez_exists(request):
+	return render(request, 'valeezapp/valeez_exists.html', {})
 
 def sign_up(request):
 	signed_up = False
@@ -167,9 +179,13 @@ def sign_up(request):
 def past_voyages(request):
 	this_user = request.user
 	voyages = Voyage.objects.filter(user=this_user).order_by('depart_date', 'destination')
-	for voyage in voyages:
-		voyage.query = Valeez.objects.filter(voyage=voyage.id)
+	if not voyages:
+		any_voyages = False
+	else: 
+		any_voyages = True
+		for voyage in voyages:
+			voyage.query = Valeez.objects.filter(voyage=voyage.id)
 	template = loader.get_template('valeezapp/past_voyages.html')
-	context = RequestContext(request, {'voyages' : voyages})
+	context = RequestContext(request, {'voyages' : voyages, 'any_voyages': any_voyages})
 	return HttpResponse(template.render(context))
 
