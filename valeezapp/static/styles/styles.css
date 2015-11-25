@@ -147,6 +147,11 @@ input[type="submit"]:hover {
     margin-bottom: 0px;
 }
 
+.img-control {
+	opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
 .log-out {
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
