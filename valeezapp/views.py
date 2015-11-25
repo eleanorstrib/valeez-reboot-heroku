@@ -189,3 +189,8 @@ def past_voyages(request):
 	context = RequestContext(request, {'voyages' : voyages, 'any_voyages': any_voyages})
 	return HttpResponse(template.render(context))
 
+def how_it_works(request):
+	return render(request, 'valeezapp/how_it_works.html', {})
+
+def about(request):
+	return render(request, 'valeezapp/about.html', {})

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container">
+	<div class="col-md-3" align="left">
+		<p><span class="title-text">About this site</span></p>
+	</div>
+	<div class="col-md-6">
+        <p><h3>Hi, my name is Eleanor.<br />I made this and I hope you like it!</h3></p>
+
+        <p>I've been in the tech industry since 2008, as a consultant, client services director, and product executive.  And I can code too.  Give me coffee and an internet connection and I will figure it out.  More about me on <a href="http://www.eleanorstrib.com" target="_blank">my portfolio site</a>.</p>
+        
+        <p>In 2014, I took an evening course in Python and created the first version of valeez as a command line program.  In late 2015, I decided to take it further by rebuilding and refactoring it as and object-oriented program and a full-fledged web app using Django as the framework, which is what you see before you today.  Learn more about how it works <a href="{% url 'how_it_works' %}">here</a>.</p>
+        
+        <p>Thanks for stopping by!</p>
+        <div class="col-md-5" align="center">
+            <p><h4>connect</h4></p>
+            <a href="https://github.com/eleanorstrib" target="_blank" alt="GitHub"><i class="fa fa-github fa-2x"></i></a>&nbsp&nbsp
+            <a href="https://angel.co/eleanorstrib" target="_blank" alt="AngelList"><i class="fa fa-angellist fa-2x"></i></a>&nbsp&nbsp
+            <a href="https://www.linkedin.com/in/eleanorstrib" target="_blank" alt="LinkedIn"><i class="fa fa-linkedin fa-2x"></i></a>&nbsp&nbsp
+            <a href="https://twitter.com/eleanorstrib" target="_blank" alt="Twitter"><i class="fa fa-twitter fa-2x"></i></a>&nbsp&nbsp
+        </div>
+        
+        <div class="col-md-2">
+        </div>
+        
+        <div class="col-md-5" align="center">
+            <p><h4>feedback/bug report</h4></p>
+            <a href="mailto:hello@eleanorstrib.com?Subject=valeez.com%20-%20Bug%20Report" target="_blank"><i class="fa fa-envelope-o fa-2x"></i></a>
+        </div>
+     </div>
+     <div class="col-md-3">
+
+     </div>
+</div>
+
+{% endblock %}

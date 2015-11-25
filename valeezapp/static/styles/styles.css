@@ -147,10 +147,6 @@ input[type="submit"]:hover {
     margin-bottom: 0px;
 }
 
-.title-bg {
-	background-color: #FF8C80;
-}
-
 .log-out {
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);

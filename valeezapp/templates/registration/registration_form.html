@@ -6,10 +6,11 @@
 <div class="container">
 	<div class="col-md-3" align="left">
 		<p><span class="title-text">Create your account</span></p>
-		All fields are required.<br />
-		Sign up then start building your valeez!
+		<p>All fields are required.</p>
 	</div>
 	<div class="col-md-6">
+        <p><h3>Sign up then start building your valeez!</h3></p>
+        <p>If you already have an account, <a href="{% url 'login' %}">log in</a> or <a href="{% url 'password_reset' %}">reset your password</a>.</p>
         <form method="post" class="post-form">
             <div class="table-responsive">
                 <table class="table">

@@ -38,8 +38,8 @@
 							<li class="active"><a href="{% url 'auth_login' %}">log in<span class="sr-only">(current)</span></a></li>
 							<li><a href="{% url 'registration_register' %}">sign up</a>
 						{% endif %}
-						<li><a href="/about">how it works</a></li>
-						<li><a href="/about">about</a></li>
+						<li><a href="{% url 'how_it_works' %}">how it works</a></li>
+						<li><a href="{% url 'about' %}">about</a></li>
 					</ul>
 				</div>
 			</div>

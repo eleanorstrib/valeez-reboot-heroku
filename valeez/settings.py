@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites.models',
-    'multiselectfield',
 )
 
 MIDDLEWARE_CLASSES = (
