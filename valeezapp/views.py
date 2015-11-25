@@ -48,6 +48,10 @@ def show_valeez(request):
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
 
+	gender_query = {}
+	gender = user_voyages[0].gender
+	gender_query[gender] = True
+
 	# create a dict for the voyage type
 	voyage_query = {}
 	#find actual voyage type
@@ -97,10 +101,7 @@ def show_valeez(request):
 	valeez = {}
 
 	# query database
-	if user_voyages[0].gender == "female":
-		valeez_garments = list(Garment.objects.filter(Q(female=True), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
-	else:
-		valeez_garments = list(Garment.objects.filter(Q(male=True), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
+	valeez_garments = list(Garment.objects.filter(Q(**gender_query), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
 
 	for item in valeez_garments:
 		if item.layer == 0 or item.layer == 1:
@@ -114,7 +115,7 @@ def show_valeez(request):
 			quantity = 1
 		valeez[item.name] = quantity
 
-	toiletries = Toiletry.objects.filter(trip_duration__lte=duration_int)
+	toiletries = Toiletry.objects.filter(Q(**gender_query), trip_duration__lte=duration_int)
 
 	for item in toiletries:
 		valeez[item.name] = 1
