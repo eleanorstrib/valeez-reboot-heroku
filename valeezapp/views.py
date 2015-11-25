@@ -2,7 +2,7 @@
 import os
 import time
 import requests
-
+import ast
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse 
 from django.template import RequestContext, loader
@@ -149,7 +149,7 @@ def show_valeez(request):
 	else:
 		return HttpResponseRedirect('/valeez_exists/', {})
 
-	return render(request,'valeezapp/show_valeez.html', {'voyage_id': vid, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
+	return render(request,'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
 
 def valeez_exists(request):
 	return render(request, 'valeezapp/valeez_exists.html', {})
@@ -181,12 +181,16 @@ def past_voyages(request):
 	voyages = Voyage.objects.filter(user=this_user).order_by('depart_date', 'destination')
 	if not voyages:
 		any_voyages = False
+		voyage_query=[]
 	else: 
 		any_voyages = True
 		for voyage in voyages:
-			voyage.query = Valeez.objects.filter(voyage=voyage.id)
+			voyage_query = Valeez.objects.filter(voyage=voyage.id)
+		for item in voyage_query:
+			vquery =item.__dict__
+			vquery = ast.literal_eval(vquery['contents'])
 	template = loader.get_template('valeezapp/past_voyages.html')
-	context = RequestContext(request, {'voyages' : voyages, 'any_voyages': any_voyages})
+	context = RequestContext(request, {'voyages' : voyages, 'any_voyages': any_voyages, 'vquery': vquery})
 	return HttpResponse(template.render(context))
 
 def how_it_works(request):

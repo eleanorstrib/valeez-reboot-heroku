@@ -41,7 +41,9 @@
 								        <h4 class="modal-title" id="myModalLabel">Valeez for your trip to {{ voyage.get_destination_display}}, {{ voyage.depart_date }} to {{ voyage.return_date }}</h4>
 								     </div>
 								    <div class="modal-body">
-								    {{ voyage.query }}
+								    	{{vquery}}
+
+
 												<table class="table">
 													<thead>
 														<tr>
@@ -50,9 +52,12 @@
 														</tr>
 													</thead>
 													<tbody>
-														{% for item in voyage.query.iterator %}
-															{{ item }}
-														{% endfor %}
+															{% for key, value in vquery.items %}
+															<tr>
+																<td>{{ key }}</td>
+																<td> {{ value }}</td>
+															</tr>
+															{% endfor %}
 													</tbody>
 												</table>
 											</div>
@@ -81,7 +86,7 @@
 				<p><h3>Looks like you haven't created any voyages yet.</h3></p>
 				<p>Because your valeez will be based on the duration of your trip and the weather at the destination, specifying the details of your voyage are an important first step.</p>
 				<p>But take heart, this is easy to fix!</p>
-				<div class="container col-md-12">
+				<div class="containercol-md-12">
 					<div class="col-md-6">
 						<p>tell us about your upcoming voyage</p>
 						<p><button type="button" class="btn btn-custom"><a href="{% url 'make_valeez' %}">go!</a></button></p>
