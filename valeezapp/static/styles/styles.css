@@ -60,6 +60,12 @@ table, td, th {
 	padding: 10px;
 }
 
+thead {
+	font-weight: bold;
+	color: #AABBBB;
+	font-size: 1.2em;
+}
+
 input, select {
     width: 100%;
 }
@@ -87,6 +93,13 @@ input, select {
 .number-blue {
 	font-family: 'Abel', sans-serif;
 	font-size: 2em;
+	color: #36D9D9;
+	text-align: right;
+}
+
+.number-blue-sm {
+	font-family: 'Abel', sans-serif;
+	font-weight: bold;
 	color: #36D9D9;
 }
 
