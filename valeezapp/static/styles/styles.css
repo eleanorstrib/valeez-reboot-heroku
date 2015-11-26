@@ -160,9 +160,16 @@ input[type="submit"]:hover {
     margin-bottom: 0px;
 }
 
-.img-control {
-	opacity: 0.4;
-    filter: alpha(opacity=40);
+.jumbotron-code {
+	position: relative;
+    background: #000 url("../images/valeez_cmdline.png") center center;
+    width: 100%;
+    min-height:400px;
+    background-size: cover !important;
+    overflow: hidden;
+    margin-bottom: 0px;
+    opacity: 0.3;
+
 }
 
 .log-out {

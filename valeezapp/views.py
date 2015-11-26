@@ -65,7 +65,7 @@ def show_valeez(request):
 	duration_int = int(duration)
 
 	# put together variables for the API call
-	api_date_range = str(depart_date.month) + str(depart_date.day) + str(return_date.month) + str(return_date.day)
+	api_date_range = ("%02d" % depart_date.month) + ("%02d" % depart_date.day) + ("%02d" % return_date.month) + ("%02d" % return_date.day)
 	api_call = API_URL % (WU_KEY, api_date_range, destination)
 	api_data = requests.get(api_call).json()
 
@@ -192,8 +192,10 @@ def past_voyages(request):
 	context = RequestContext(request, {'voyages' : voyages, 'any_voyages': any_voyages, 'vquery': vquery})
 	return HttpResponse(template.render(context))
 
+
 def how_it_works(request):
 	return render(request, 'valeezapp/how_it_works.html', {})
+
 
 def about(request):
 	return render(request, 'valeezapp/about.html', {})
