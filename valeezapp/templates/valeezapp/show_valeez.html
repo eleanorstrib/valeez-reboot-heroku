@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="jumbotron-packed">
 <div class="container" align="center">
 	<div class="row destination">
 		<p><span class="title-text">{{ this_user }}, get ready for your {{ duration }} day trip to {{ destination_pretty }}!</span></p>
@@ -54,5 +54,6 @@
 			</div>
 		{% endfor %}
 	</div>
+</div>
 </div>
 {% endblock %}

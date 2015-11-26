@@ -162,14 +162,32 @@ input[type="submit"]:hover {
 
 .jumbotron-code {
 	position: relative;
-    background: #000 url("../images/valeez_cmdline.png") center center;
+    background: url("../images/valeez_cmdline_op40.png") center center;
     width: 100%;
     min-height:400px;
     background-size: cover !important;
     overflow: hidden;
     margin-bottom: 0px;
-    opacity: 0.3;
+}
 
+.jumbotron-open {
+	position: relative;
+    background: url("../images/packed_suitcase_op40.png") center center;
+    width: 100%;
+    min-height:600px;
+    background-size: cover !important;
+    overflow: hidden;
+    margin-bottom: 0px;
+}
+
+.jumbotron-packed {
+	position: relative;
+    background: url("../images/row_suitcases_op40.png") center center;
+    width: 100%;
+    min-height:600px;
+    background-size: cover !important;
+    overflow: hidden;
+    margin-bottom: 0px;
 }
 
 .log-out {
