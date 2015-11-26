@@ -201,3 +201,9 @@ input[type="submit"]:hover {
     overflow: hidden;
     margin-bottom: 0px;
 }
+
+footer {
+	background-color: #FF8C80;
+	color: white;
+	text-align: right;
+}

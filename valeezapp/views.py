@@ -178,9 +178,10 @@ def sign_up(request):
 def past_voyages(request):
 	this_user = request.user
 	voyages = Voyage.objects.filter(user=this_user).order_by('depart_date', 'destination')
+	vquery=''
 	if not voyages:
 		any_voyages = False
-		voyage_query=[]
+		vquery=[]
 	else: 
 		any_voyages = True
 		for voyage in voyages:

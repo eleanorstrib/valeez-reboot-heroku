@@ -3,16 +3,16 @@
 
 
 {% block content %}
-
+<div class="jumbotron">
 <div class="container">
-	<div class="col-md-3" align="left">
+	<div class="col-md-2" align="left">
 		<p><span class="title-text">Login</span></p>
-		<p>See your past trips or create a new valeez.</p>
+		<h6><p>See your past trips or create a new valeez.</p>
 		<br />
-		<p>No account yet? <a href="{% url 'registration_register' %}">Register</a>!</p>
-		<p>Forgot your password? <a href="{% url 'password_reset' %}"> Reset it</a>!</p>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-5">
+         <p>No account yet? <a href="{% url 'registration_register' %}">Register</a>!</p>
+        <p>Forgot your password? <a href="{% url 'password_reset' %}"> Reset it</a>!</p></h6>
         <form method="post" action=".">
             <div class="table-responsive">
                 <table class="table">
@@ -26,8 +26,8 @@
 
          </form>
      </div>
-     <div class="col-md-3">
+     <div class="col-md-5">
      </div>
 </div>
-        
+</div>      
 {% endblock %}
