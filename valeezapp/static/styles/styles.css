@@ -4,7 +4,6 @@ COLORS
 from: http://www.colourlovers.com/group/1960s/colors
 Swiss Teal  AABBBB  170,187,187
 Fabric Pink FF8C80  255,140,128
-Conrad Gold FFDD00  255,221,0
 Fabric Blue 36D9D9  54,217,217
 
 FONTS
@@ -62,7 +61,6 @@ table, td, th {
 
 thead {
 	font-weight: bold;
-	color: #AABBBB;
 	font-size: 1.2em;
 }
 
@@ -152,9 +150,9 @@ input[type="submit"]:hover {
 
 .jumbotron {
 	position: relative;
-    background: #000 url("../images/jumbotron.jpg") center center;
+    background: #000 url("../images/jumbotron_large.jpg") center center;
     width: 100%;
-    min-height:400px;
+    min-height:600px;
     background-size: cover !important;
     overflow: hidden;
     margin-bottom: 0px;
@@ -164,7 +162,7 @@ input[type="submit"]:hover {
 	position: relative;
     background: url("../images/valeez_cmdline_op40.png") center center;
     width: 100%;
-    min-height:400px;
+    min-height:600px;
     background-size: cover !important;
     overflow: hidden;
     margin-bottom: 0px;
@@ -176,7 +174,7 @@ input[type="submit"]:hover {
     width: 100%;
     min-height:600px;
     background-size: cover !important;
-    overflow: hidden;
+/*    overflow: hidden;*/
     margin-bottom: 0px;
 }
 
@@ -202,8 +200,3 @@ input[type="submit"]:hover {
     margin-bottom: 0px;
 }
 
-footer {
-	background-color: #FF8C80;
-	color: white;
-	text-align: right;
-}
