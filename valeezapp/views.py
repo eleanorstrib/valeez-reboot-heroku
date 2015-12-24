@@ -3,6 +3,7 @@ import os
 import time
 import requests
 import ast
+import datetime
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse 
 from django.template import RequestContext, loader
@@ -40,6 +41,7 @@ def show_valeez(request):
 	This view runs the API call for the forecast and assembles a valeez for a new voyage.
 	"""
 	this_user = request.user
+	user_today_date = datetime.date.today()
 	
 	# retrieving data about the last voyage created
 	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
@@ -48,6 +50,13 @@ def show_valeez(request):
 	destination_pretty = (str(destination)[3:]).replace('_', ' ')
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
+
+	depart_delta = (depart_date - user_today_date).days
+	return_delta = (return_date - user_today_date).days
+	if depart_delta > 10 or return_delta > 10:
+		delta = True
+	else:
+		delta = False
 
 	gender_query = {}
 	gender = user_voyages[0].gender
@@ -149,7 +158,7 @@ def show_valeez(request):
 	else:
 		return HttpResponseRedirect('/valeez_exists/', {})
 
-	return render(request,'valeezapp/show_valeez.html', {'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
+	return render(request,'valeezapp/show_valeez.html', {'user_today_date': user_today_date,'delta': delta,  'depart_delta': depart_delta, 'return_delta': return_delta, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
 
 def valeez_exists(request):
 	return render(request, 'valeezapp/valeez_exists.html', {})
