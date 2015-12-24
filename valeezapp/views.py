@@ -54,10 +54,7 @@ def show_valeez(request):
 
 	depart_delta = (depart_date - user_today_date).days
 	return_delta = (return_date - user_today_date).days
-	if depart_delta > 10 or return_delta > 10:
-		delta = True
-	else:
-		delta = False
+
 
 	gender_query = {}
 	gender = user_voyages[0].gender
@@ -75,14 +72,20 @@ def show_valeez(request):
 	duration_int = int(duration)
 
 	# put together variables for the API call
-	api_date_range = ("%02d" % depart_date.month) + ("%02d" % depart_date.day) + ("%02d" % return_date.month) + ("%02d" % return_date.day)
-	api_call = API_URL_PLAN % (WU_KEY, api_date_range, destination)
-	api_data = requests.get(api_call).json()
+	
 
 	# add error handling - any issues adds a key called 'error' to response
-	if 'error' in api_data:
-		return render(request, 'valeezapp/error.html')
+
+
+	if depart_delta < 10 and return_delta < 10:
+		delta = True
+		api_data = 'error'
+		if 'error' in api_data:
+			return render(request, 'valeezapp/error.html')
 	else: 
+		api_date_range = ("%02d" % depart_date.month) + ("%02d" % depart_date.day) + ("%02d" % return_date.month) + ("%02d" % return_date.day)
+		api_call = API_URL_PLAN % (WU_KEY, api_date_range, destination)
+		api_data = requests.get(api_call).json()
 		forecast = {
 				'max_temp_f': int(api_data[u'trip'][u'temp_high'][u'max'][u'F']),
 				'max_temp_c': int(api_data[u'trip'][u'temp_high'][u'max'][u'C']),
@@ -93,6 +96,8 @@ def show_valeez(request):
 				'precip': int(api_data[u'trip'][u'chance_of'][u'chanceofrainday'][u'percentage']),
 				'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
 				}
+		if 'error' in api_data:
+			return render(request, 'valeezapp/error.html')
 
 	# categorize forecast variables into temp categories, add  appropriate value to dict
 	temperature_query = {}
@@ -159,7 +164,7 @@ def show_valeez(request):
 	else:
 		return HttpResponseRedirect('/valeez_exists/', {})
 
-	return render(request,'valeezapp/show_valeez.html', {'user_today_date': user_today_date,'delta': delta,  'depart_delta': depart_delta, 'return_delta': return_delta, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
+	return render(request,'valeezapp/show_valeez.html', {'user_today_date': user_today_date,'depart_delta': depart_delta, 'return_delta': return_delta, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'item_count': item_count,'forecast': forecast, 'valeez': valeez})
 
 def valeez_exists(request):
 	return render(request, 'valeezapp/valeez_exists.html', {})
