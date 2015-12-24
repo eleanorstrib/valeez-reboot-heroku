@@ -15,7 +15,8 @@ from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 
 WU_KEY = os.environ.get('WU_API_KEY')
-API_URL = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
+API_URL_TEN_DAY = "http://api.wunderground.com/api/%s/forecast10day/q/%s.json"
+API_URL_PLAN = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
 
 
 def index(request):
@@ -75,7 +76,7 @@ def show_valeez(request):
 
 	# put together variables for the API call
 	api_date_range = ("%02d" % depart_date.month) + ("%02d" % depart_date.day) + ("%02d" % return_date.month) + ("%02d" % return_date.day)
-	api_call = API_URL % (WU_KEY, api_date_range, destination)
+	api_call = API_URL_PLAN % (WU_KEY, api_date_range, destination)
 	api_data = requests.get(api_call).json()
 
 	# add error handling - any issues adds a key called 'error' to response
