@@ -13,6 +13,12 @@
 		Forecast
 	</div>
 
+	{% if use_ten_day_forecast %}
+
+		{{ forecast }}
+
+	{% else %}
+	
 	<div class="row">
 		<div class="col-md-1">
 		</div>
@@ -39,6 +45,8 @@
 		<div class="col-md-1">
 		</div>
 	</div>
+
+	{% endif %}
 </div>
 
 <div class="container" align="center">
