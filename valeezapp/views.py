@@ -15,7 +15,7 @@ from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 
 WU_KEY = os.environ.get('WU_API_KEY')
-API_URL_TEN_DAY = "http://api.wunderground.com/api/%s/forecast10day/q/%s.json"
+API_URL_TEN_DAY = "http://api.wunderground.com/api/%s/forecast10day/%s.json"
 API_URL_PLAN = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
 
 
@@ -78,7 +78,9 @@ def show_valeez(request):
 		api_call = API_URL_TEN_DAY % (WU_KEY, destination)
 		api_data = requests.get(api_call).json()
 		forecast = api_data
-		if 'error' in api_data:
+
+
+		if api_data[u'response'][u'error']:
 			return render(request, 'valeezapp/error.html')
 	else: 
 		use_ten_day_forecast = False
