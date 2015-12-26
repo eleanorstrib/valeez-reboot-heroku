@@ -83,8 +83,10 @@ def show_valeez(request):
 		# 	return render(request, 'valeezapp/error.html')
 
 		# else:
+		forecast_alldays = {}
+		# get daily data for duration of trip if return date is 10 days or less in the future
 		for day in range(depart_delta, return_delta):
-			forecast[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
+			forecast_alldays[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
 				'low_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'fahrenheit']),
 				'high_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'celsius']),
 				'low_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'celsius']),
@@ -93,6 +95,21 @@ def show_valeez(request):
 				'snow_cm': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'cm']), 
 				}
 			day = day + 1
+
+		for day in forecast_alldays:
+			forecast['all_high_temp_f'] = forecast.get('all_high_temp_f', []) + [forecast_alldays[day]['high_temp_f']]
+			forecast['high_temp_f'] = max(forecast['all_high_temp_f'])
+			forecast['all_low_temp_f'] = forecast.get('all_low_temp_f', []) + [forecast_alldays[day]['low_temp_f']]
+			forecast['low_temp_f'] = min(forecast['all_low_temp_f'])
+			forecast['all_high_temp_c'] = forecast.get('all_high_temp_c', []) + [forecast_alldays[day]['high_temp_c']]
+			forecast['high_temp_c'] = max(forecast['all_high_temp_c'])
+			forecast['all_low_temp_c'] = forecast.get('all_low_temp_c', []) + [forecast_alldays[day]['low_temp_c']]
+			forecast['low_temp_c'] = min(forecast['all_low_temp_c'])
+			forecast['all_pop'] = forecast.get('all_pop', []) + [forecast_alldays[day]['pop_percent']]
+			forecast['precip'] = max(forecast['all_pop'])
+			forecast['all_snow'] = forecast.get('all_snow', []) + [forecast_alldays[day]['snow_in']]
+			forecast['snow'] = max(forecast['all_snow'])
+
 
 	else: 
 		use_ten_day_forecast = False
