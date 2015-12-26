@@ -15,7 +15,7 @@ from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 
 WU_KEY = os.environ.get('WU_API_KEY')
-API_URL_TEN_DAY = "http://api.wunderground.com/api/%s/forecast10day/%s.json"
+API_URL_TEN_DAY = "http://api.wunderground.com/api/%s/forecast10day/q/%s.json"
 API_URL_PLAN = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
 
 
@@ -72,16 +72,28 @@ def show_valeez(request):
 	duration_int = int(duration)
 
 	# put together variables for the API call
-
+	forecast = {}
 	if depart_delta < 10 and return_delta < 10:
 		use_ten_day_forecast = True
 		api_call = API_URL_TEN_DAY % (WU_KEY, destination)
 		api_data = requests.get(api_call).json()
-		forecast = api_data
 
+		# TODO: add back error handling
+		# if api_data[u'response'][u'error']:
+		# 	return render(request, 'valeezapp/error.html')
 
-		if api_data[u'response'][u'error']:
-			return render(request, 'valeezapp/error.html')
+		# else:
+		for day in range(depart_delta, return_delta):
+			forecast[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
+				'low_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'fahrenheit']),
+				'high_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'celsius']),
+				'low_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'celsius']),
+				'pop_percent': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'pop']),
+				'snow_in': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'in']), 
+				'snow_cm': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'cm']), 
+				}
+			day = day + 1
+
 	else: 
 		use_ten_day_forecast = False
 		api_call = API_URL_PLAN % (WU_KEY, api_date_range, destination)
