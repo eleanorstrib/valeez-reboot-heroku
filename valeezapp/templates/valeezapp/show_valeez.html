@@ -8,17 +8,73 @@
 		<p><h4>-- {{ depart_date }} to {{ return_date }} -- </h4></p>
 		start: {{depart_delta}} return: {{return_delta}} tf: {{ delta }}
 	</div>
-
+	{% if use_ten_day_forecast %}
 	<div class="row title-text title-row forecast">
-		Forecast
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			Weather Forecast
+		</div>
+		<div class="col-md-4 number">
+		</div>
 	</div>
 
-	{% if use_ten_day_forecast %}
+		
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-2">
+			<span class="number">{{ forecast.low_temp_f}}&#8457</span><br />
+			<span class="number-title">forecast low</span>
+		</div>
+		<div class="col-md-2">
+			<span class="number">{{ forecast.high_temp_f }}&#8457</span><br />
+			<span class="number-title">forecast high</span>
+		</div>
+			<div class="col-md-2">
+			<span class="number">{{ forecast.precip }}%</span><br />
+			<span class="number-title">chance of rain</span>
+		</div>
+		<div class="col-md-2">
+			<span class="number">{{ forecast.snow }}"</span><br />
+			<span class="number-title">forecast snow</span>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
 
-		{{ forecast }}
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<button type="button" class="btn btn-custom" data-toggle="modal" data-target="#dailyForecast">Daily Forecast</button>
+
+			<!-- Modal -->
+			<div id="dailyForecast" class="modal fade" role="dialog">
+			  <div class="modal-dialog">
+
+			    <!-- Modal content-->
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <div class="modal-title">Daily forecast for {{ destination_pretty }} </div>
+			      </div>
+			      <div class="modal-body">
+			        <p>{{forecast}}</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+
+			  </div>
+			</div>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
 
 	{% else %}
-	
+	<div class="row title-text title-row forecast">
+		Historical Weather Forecast
+	</div>
 	<div class="row">
 		<div class="col-md-1">
 		</div>

@@ -93,6 +93,7 @@ def show_valeez(request):
 				'pop_percent': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'pop']),
 				'snow_in': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'in']), 
 				'snow_cm': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'cm']), 
+				'icon': (api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'icon_url'])
 				}
 			day = day + 1
 
@@ -109,6 +110,8 @@ def show_valeez(request):
 			forecast['precip'] = max(forecast['all_pop'])
 			forecast['all_snow'] = forecast.get('all_snow', []) + [forecast_alldays[day]['snow_in']]
 			forecast['snow'] = max(forecast['all_snow'])
+			forecast['icon'] = forecast.get('icon', []) + [forecast_alldays[day]['icon']]
+
 
 
 	else: 
