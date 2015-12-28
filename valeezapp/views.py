@@ -97,6 +97,7 @@ def show_valeez(request):
 				}
 			day = day + 1
 
+		day_pretty = 1
 		for day in forecast_alldays:
 			forecast['all_high_temp_f'] = forecast.get('all_high_temp_f', []) + [forecast_alldays[day]['high_temp_f']]
 			forecast['high_temp_f'] = max(forecast['all_high_temp_f'])
@@ -111,6 +112,8 @@ def show_valeez(request):
 			forecast['all_snow'] = forecast.get('all_snow', []) + [forecast_alldays[day]['snow_in']]
 			forecast['snow'] = max(forecast['all_snow'])
 			forecast['icon'] = forecast.get('icon', []) + [forecast_alldays[day]['icon']]
+			forecast['day_pretty'] = forecast.get('day_pretty', []) + [day_pretty]
+			day_pretty = day_pretty + 1
 
 
 
@@ -200,7 +203,7 @@ def show_valeez(request):
 
 		# TODO add back item_count and valeez to return statement
 
-	return render(request,'valeezapp/show_valeez.html', {'user_today_date': user_today_date,'depart_delta': depart_delta, 'return_delta': return_delta, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'use_ten_day_forecast': use_ten_day_forecast})
+	return render(request,'valeezapp/show_valeez.html', {'user_today_date': user_today_date,'depart_delta': depart_delta, 'return_delta': return_delta, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'forecast_alldays': forecast_alldays, 'use_ten_day_forecast': use_ten_day_forecast})
 
 def valeez_exists(request):
 	return render(request, 'valeezapp/valeez_exists.html', {})

@@ -45,7 +45,7 @@
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
-			<button type="button" class="btn btn-custom" data-toggle="modal" data-target="#dailyForecast">Daily Forecast</button>
+			<button type="button" class="btn-custom" data-toggle="modal" data-target="#dailyForecast">Daily Forecast</button>
 
 			<!-- Modal -->
 			<div id="dailyForecast" class="modal fade" role="dialog">
@@ -55,13 +55,18 @@
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal">&times;</button>
-			        <div class="modal-title">Daily forecast for {{ destination_pretty }} </div>
+			        <div class="modal-title">Daily Forecast for {{ destination_pretty }}</div>
 			      </div>
 			      <div class="modal-body">
-			        <p>{{forecast}}</p>
+			      	<div class="row">
+					{% for key, value in forecast_alldays.items %}
+						{{ key }}
+						{{ value }}
+					{% endfor %}
 			      </div>
+
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn-custom" data-dismiss="modal">Close</button>
 			      </div>
 			    </div>
 
