@@ -5,9 +5,9 @@
 <div class="container" align="center">
 	<div class="row destination">
 		<p><span class="title-text">{{ this_user }}, get ready for your {{ duration }} day trip to {{ destination_pretty }}!</span></p>
-		<p><h4>-- {{ depart_date }} to {{ return_date }} -- </h4></p>
-		start: {{depart_delta}} return: {{return_delta}} tf: {{ delta }}
+		<p><h4>{{ depart_date }} to {{ return_date }}</h4></p>
 	</div>
+
 	{% if use_ten_day_forecast %}
 	<div class="row title-text title-row forecast">
 		<div class="col-md-4"></div>
@@ -54,16 +54,36 @@
 			    <!-- Modal content-->
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal">&times;</button>
-			        <div class="modal-title">Daily Forecast for {{ destination_pretty }}</div>
+			        <h3><i class="fa fa-suitcase"></i>&nbsp&nbsp<span class="modal-title">Daily Forecast for {{ destination_pretty }}</span></h3>
 			      </div>
 			      <div class="modal-body">
-			      	<div class="row">
 					{% for key, value in forecast_alldays.items %}
-						{{ key }}
-						{{ value }}
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-2">
+							<img src="{{ value.icon }}"><br />
+							<span class="title-text">day {{ key|add:"+1" }}</span>
+						</div>
+						<div class="col-md-2">
+							<span class="number">{{ value.high_temp_f }}&#8457</span><br />
+							<span class="number-title">high</span>
+						</div>
+						<div class="col-md-2">
+							<span class="number">{{ value.low_temp_f }}&#8457</span><br />
+							<span class="number-title">low</span>
+						</div>
+						<div class="col-md-2">
+							<span class="number">{{ value.pop_percent }}%</span><br />
+							<span class="number-title">chance of precipitation</span>
+						</div>
+						<div class="col-md-2">
+							<span class="number">{{ value.snow_in }}"</span><br />
+							<span class="number-title">inches of snow</span>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
 					{% endfor %}
-			      </div>
+			      
 
 			      <div class="modal-footer">
 			        <button type="button" class="btn-custom" data-dismiss="modal">Close</button>

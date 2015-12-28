@@ -83,7 +83,7 @@ def show_valeez(request):
 		# 	return render(request, 'valeezapp/error.html')
 
 		# else:
-		forecast_alldays = {}
+		
 		# get daily data for duration of trip if return date is 10 days or less in the future
 		for day in range(depart_delta, return_delta):
 			forecast_alldays[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
@@ -116,7 +116,6 @@ def show_valeez(request):
 			day_pretty = day_pretty + 1
 
 
-
 	else: 
 		use_ten_day_forecast = False
 		api_call = API_URL_PLAN % (WU_KEY, api_date_range, destination)
@@ -131,6 +130,8 @@ def show_valeez(request):
 				'precip': int(api_data[u'trip'][u'chance_of'][u'chanceofrainday'][u'percentage']),
 				'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
 				}
+		# empty since we only use this variable for trips being completed in the next 10 days
+		forecast_alldays = {}
 		# TODO: factor out this code block later
 		temperature_query = {}
 
