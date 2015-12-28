@@ -9,10 +9,10 @@
 	</div>
 
 	{% if use_ten_day_forecast %}
-	<div class="row title-text title-row forecast">
+	<div class="row title-row forecast">
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
-			Weather Forecast
+			<span class="title-text"> Weather Forecast&nbsp<a href="#" data-toggle="tooltip" data-placement="right" title="Recommendations for your valeez are based on the 10 day forecast for your destination -- see the 'how it works' section for details"><span class="glyphicon glyphicon-question-sign"></a></span>
 		</div>
 		<div class="col-md-4 number">
 		</div>
@@ -32,11 +32,11 @@
 		</div>
 			<div class="col-md-2">
 			<span class="number">{{ forecast.precip }}%</span><br />
-			<span class="number-title">chance of rain</span>
+			<span class="number-title">probability of precipitation</span>
 		</div>
 		<div class="col-md-2">
 			<span class="number">{{ forecast.snow }}"</span><br />
-			<span class="number-title">forecast snow</span>
+			<span class="number-title">forecast snow (in)</span>
 		</div>
 		<div class="col-md-2">
 		</div>
@@ -74,11 +74,11 @@
 						</div>
 						<div class="col-md-2">
 							<span class="number">{{ value.pop_percent }}%</span><br />
-							<span class="number-title">chance of precipitation</span>
+							<span class="number-title">pop</span>
 						</div>
 						<div class="col-md-2">
 							<span class="number">{{ value.snow_in }}"</span><br />
-							<span class="number-title">inches of snow</span>
+							<span class="number-title">snow (in)</span>
 						</div>
 						<div class="col-md-1"></div>
 					</div>
@@ -97,8 +97,8 @@
 	</div>
 
 	{% else %}
-	<div class="row title-text title-row forecast">
-		Historical Weather Forecast
+	<div class="row title-row forecast">
+		<span class="title-text">Historical Weather Forecast&nbsp<a href="#" data-toggle="tooltip" data-placement="right" title="Recommendations for your valeez are based on historical data as a forecast is not available more than 10 days from today's date -- see the 'how it works' section for details"><span class="glyphicon glyphicon-question-sign"></a></span>
 	</div>
 	<div class="row">
 		<div class="col-md-1">
@@ -117,11 +117,11 @@
 		</div>
 			<div class="col-md-2">
 			<span class="number">{{ forecast.precip }}%</span><br />
-			<span class="number-title">chance of rain</span>
+			<span class="number-title">probability of rain</span>
 		</div>
 		<div class="col-md-2">
 			<span class="number">{{ forecast.snow }}%</span><br />
-			<span class="number-title">chance of snow</span>
+			<span class="number-title">probability of snow</span>
 		</div>
 		<div class="col-md-1">
 		</div>
@@ -145,4 +145,9 @@
 	</div>
 </div>
 </div>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
 {% endblock %}
