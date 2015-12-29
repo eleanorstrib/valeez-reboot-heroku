@@ -84,6 +84,8 @@ def show_valeez(request):
 
 		# else:
 		forecast_alldays={}
+		day_pretty = 1
+
 		# get daily data for duration of trip if return date is 10 days or less in the future
 		for day in range(depart_delta, return_delta):
 			forecast_alldays[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
@@ -93,11 +95,12 @@ def show_valeez(request):
 				'pop_percent': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'pop']),
 				'snow_in': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'in']), 
 				'snow_cm': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'cm']), 
-				'icon': (api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'icon_url'])
+				'icon': (api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'icon_url']), 
+				'day_pretty': day_pretty
 				}
 			day = day + 1
-
-		day_pretty = 1
+			day_pretty = day_pretty + 1
+		
 
 		for day in forecast_alldays:
 			forecast['all_high_temp_f'] = forecast.get('all_high_temp_f', []) + [forecast_alldays[day]['high_temp_f']]
