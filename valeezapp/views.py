@@ -78,8 +78,9 @@ def show_valeez(request):
 	voyage_type = user_voyages[0].voyage_type
 	voyage_query[voyage_type] = True
 
-	# put together variables for the API call
-	forecast = {}
+	
+	day_pretty = 1
+
 	if depart_delta < 10 and return_delta < 10:
 		use_ten_day_forecast = True
 		api_call = API_URL_TEN_DAY % (WU_KEY, destination)
@@ -88,10 +89,8 @@ def show_valeez(request):
 		# TODO:		
 		# else: add back error handling
 
-		forecast_alldays={}
-		day_pretty = 1
-
-		# get daily data for duration of trip if return date is 10 days or less in the future
+		# get daily data from API call, used in daily forecast model
+		forecast_alldays = {}
 		for day in range(depart_delta, (return_delta+1)):
 			forecast_alldays[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
 				'low_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'fahrenheit']),
@@ -106,7 +105,8 @@ def show_valeez(request):
 			day = day + 1
 			day_pretty = day_pretty + 1
 		
-
+		# summarize the daily date for display on the main page
+		forecast = {}
 		for day in forecast_alldays:
 			forecast['all_high_temp_f'] = forecast.get('all_high_temp_f', []) + [forecast_alldays[day]['high_temp_f']]
 			forecast['high_temp_f'] = max(forecast['all_high_temp_f'])
@@ -122,9 +122,11 @@ def show_valeez(request):
 			forecast['snow'] = max(forecast['all_snow'])
 			forecast['icon'] = forecast.get('icon', []) + [forecast_alldays[day]['icon']]
 			forecast['day_pretty'] = forecast.get('day_pretty', []) + [day_pretty]
+			forecast['avg_temp_f'] = ((forecast['high_temp_f'] + forecast['low_temp_f'])/2)
 			day_pretty = day_pretty + 1
 
 
+	# this part of the code runs when the voyage takes place or ends more than 10 days in the future
 	else: 
 		use_ten_day_forecast = False
 		api_call = API_URL_PLAN % (WU_KEY, api_date_range, destination)
@@ -139,81 +141,77 @@ def show_valeez(request):
 				'precip': int(api_data[u'trip'][u'chance_of'][u'chanceofrainday'][u'percentage']),
 				'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
 				}
-		# empty since we only use this variable for trips being completed in the next 10 days
+		# pass empty dict since this is not used for trips that are further out
 		forecast_alldays = {}
-		# TODO: factor out this code block later
-		temperature_query = {}
+		
+	# calculate the temperature range using the average temp for the period
+	temperature_query = {}
+	if forecast['avg_temp_f'] >= 90:
+		temperature_query['temp_high'] = True
+	elif forecast['avg_temp_f'] < 90 and forecast['avg_temp_f'] >= 80:
+		temperature_query['temp_medhigh'] = True
+	elif forecast['avg_temp_f'] < 80 and forecast['avg_temp_f'] >= 60:
+		temperature_query['temp_temp'] = True
+	elif forecast['avg_temp_f'] < 60 and forecast['avg_temp_f'] >= 50:
+		temperature_query['temp_medcold'] = True
+	else:
+		temperature_query['temp_cold'] = True
 
-		if forecast['avg_temp_f'] >= 90:
-			temperature_query['temp_high'] = True
-		elif forecast['avg_temp_f'] < 90 and forecast['avg_temp_f'] >= 80:
-			temperature_query['temp_medhigh'] = True
-		elif forecast['avg_temp_f'] < 80 and forecast['avg_temp_f'] >= 60:
-			temperature_query['temp_temp'] = True
-		elif forecast['avg_temp_f'] < 60 and forecast['avg_temp_f'] >= 50:
-			temperature_query['temp_medcold'] = True
-		else:
-			temperature_query['temp_cold'] = True
-			# categorize forecast variables into temp categories, add  appropriate value to dict
-	
+	# create a dict, valeez, to hold info shown in the view
+	valeez = {}
 
-		# create a dict, valeez, to hold info shown in the view
-		valeez = {}
+	# query database
+	valeez_garments = list(Garment.objects.filter(Q(**gender_query), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
 
-		# query database
-		valeez_garments = list(Garment.objects.filter(Q(**gender_query), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
-
-		for item in valeez_garments:
-			if item.layer == 0 or item.layer == 1:
-				quantity = duration_int
-			elif item.layer == 2 or item.layer == 3:
-				if duration_int/2 < 1:
-					quantity = 1
-				else:
-					quantity = int(duration_int/2)
-			else:
+	for item in valeez_garments:
+		if item.layer == 0 or item.layer == 1:
+			quantity = duration
+		elif item.layer == 2 or item.layer == 3:
+			if duration/2 < 1:
 				quantity = 1
-			valeez[item.name] = quantity
-
-		toiletries = Toiletry.objects.filter(Q(**gender_query), trip_duration__lte=duration_int)
-
-		for item in toiletries:
-			valeez[item.name] = 1
-
-		# rain and snow items searched and added to another list if POP > 50%
-		rain_snow_items = []
-		if forecast['precip'] > 50:
-			rain_items = list(Garment.objects.filter(rain=True))
-			rain_snow_items = rain_snow_items + rain_items
-		if forecast['snow'] > 50:
-			snow_items = list(Garment.objects.filter(snow=True))
-			rain_snow_items = rain_snow_items + snow_items
-
-		for item in rain_snow_items:
-			valeez[item.name] = 1
-
-		item_count = sum(valeez.values())
-
-		# save the valeez object
-		vid = user_voyages[0].id
-		valeez_object = Valeez(voyage_id=vid, contents=valeez)
-		# check if vid is in db
-		try:
-			check_vid = Valeez.objects.get(voyage_id=vid)
-		except ObjectDoesNotExist:
-			check_vid = None
-		
-		if check_vid is None:
-			valeez_object.save()
+			else:
+				quantity = int(duration/2)
 		else:
-			return HttpResponseRedirect('/valeez_exists/', {})
-		
-		if 'error' in api_data:
-			return render(request, 'valeezapp/error.html')
+			quantity = 1
+		valeez[item.name] = quantity
 
-		# TODO add back item_count and valeez to return statement
+	toiletries = Toiletry.objects.filter(Q(**gender_query), trip_duration__lte=duration)
 
-	return render(request,'valeezapp/show_valeez.html', {'user_today_date': user_today_date,'depart_delta': depart_delta, 'return_delta': return_delta, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'forecast_alldays': forecast_alldays, 'use_ten_day_forecast': use_ten_day_forecast})
+	for item in toiletries:
+		valeez[item.name] = 1
+
+	# rain and snow items searched and added to another list if POP > 50%
+	rain_snow_items = []
+	if forecast['precip'] > 50:
+		rain_items = list(Garment.objects.filter(rain=True))
+		rain_snow_items = rain_snow_items + rain_items
+	if forecast['snow'] > 50:
+		snow_items = list(Garment.objects.filter(snow=True))
+		rain_snow_items = rain_snow_items + snow_items
+
+	for item in rain_snow_items:
+		valeez[item.name] = 1
+
+	item_count = sum(valeez.values())
+
+	# save the valeez object
+	vid = user_voyages[0].id
+	valeez_object = Valeez(voyage_id=vid, contents=valeez)
+	# check if vid is in db
+	try:
+		check_vid = Valeez.objects.get(voyage_id=vid)
+	except ObjectDoesNotExist:
+		check_vid = None
+	
+	if check_vid is None:
+		valeez_object.save()
+	else:
+		return HttpResponseRedirect('/valeez_exists/', {})
+	
+	if 'error' in api_data:
+		return render(request, 'valeezapp/error.html')
+
+	return render(request,'valeezapp/show_valeez.html', {'user_today_date': user_today_date,'depart_delta': depart_delta, 'return_delta': return_delta, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'forecast_alldays': forecast_alldays, 'use_ten_day_forecast': use_ten_day_forecast, 'valeez': valeez, 'item_count': item_count})
 
 def valeez_exists(request):
 	return render(request, 'valeezapp/valeez_exists.html', {})
