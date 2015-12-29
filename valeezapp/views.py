@@ -14,17 +14,26 @@ from .forms import UserForm, UserProfileForm, VoyageForm
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 
+
+# global variables, used in show_valeez
 WU_KEY = os.environ.get('WU_API_KEY')
 API_URL_TEN_DAY = "http://api.wunderground.com/api/%s/forecast10day/q/%s.json"
 API_URL_PLAN = "http://api.wunderground.com/api/%s/planner_%s/q/%s.json"
 
 
 def index(request):
+	"""
+	This view renders the index page and retrieves user data for display in the header.
+	"""
 	user = request.user
 	return render(request, 'valeezapp/index.html', {'user': user})
 
 
 def make_valeez(request):
+	"""
+	Shows form created with the model, associates user with destination, travel dates, etc
+	and saves data to the database.
+	"""
 	form = VoyageForm()
 	if request.method == 'POST':
 		form = VoyageForm(request.POST)
@@ -39,37 +48,35 @@ def make_valeez(request):
 
 def show_valeez(request):
 	""" 
-	This view runs the API call for the forecast and assembles a valeez for a new voyage.
+	This view takes data from the form in make_valeez, calls the Weather Underground API
+	and uses the weather data to create the packing list.
 	"""
+	# data about the user and the voyage needed to create the valeez and display data
 	this_user = request.user
 	user_today_date = datetime.date.today()
 	
-	# retrieving data about the last voyage created
+	# last voyage created by this user
 	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
 	
 	destination = user_voyages[0].destination
 	destination_pretty = (str(destination)[3:]).replace('_', ' ')
+	
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
-
 	depart_delta = (depart_date - user_today_date).days
 	return_delta = (return_date - user_today_date).days
+	duration = ((return_date - depart_date).days) + 1
+	# this line ensures that "0" characters are not ommitted
 	api_date_range = ("%02d" % depart_date.month) + ("%02d" % depart_date.day) + ("%02d" % return_date.month) + ("%02d" % return_date.day)
 
 	gender_query = {}
 	gender = user_voyages[0].gender
 	gender_query[gender] = True
 
-	# create a dict for the voyage type
+	# create a dict for the voyage type, find actual and set a value to True for that type
 	voyage_query = {}
-	#find actual voyage type
 	voyage_type = user_voyages[0].voyage_type
-	#set that value in dict to True
 	voyage_query[voyage_type] = True
-
-	#TODO: use the datetime delta attributes to get duration number
-	duration = str(return_date-depart_date)[:2]
-	duration_int = int(duration)
 
 	# put together variables for the API call
 	forecast = {}
@@ -78,16 +85,14 @@ def show_valeez(request):
 		api_call = API_URL_TEN_DAY % (WU_KEY, destination)
 		api_data = requests.get(api_call).json()
 
-		# TODO: add back error handling
-		# if api_data[u'response'][u'error']:
-		# 	return render(request, 'valeezapp/error.html')
+		# TODO:		
+		# else: add back error handling
 
-		# else:
 		forecast_alldays={}
 		day_pretty = 1
 
 		# get daily data for duration of trip if return date is 10 days or less in the future
-		for day in range(depart_delta, return_delta):
+		for day in range(depart_delta, (return_delta+1)):
 			forecast_alldays[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
 				'low_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'fahrenheit']),
 				'high_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'celsius']),
