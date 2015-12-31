@@ -57,6 +57,7 @@ body {
 
 table, td, th {
 	padding: 10px;
+	vertical-align: 'middle';
 }
 
 thead {
@@ -146,6 +147,12 @@ input[type="submit"]:hover {
 	color: white;
 	border: 5px solid  #FF8C80 !important;
 	background-color:  #FF8C80 !important;
+}
+
+#packing-list {
+	font-size: 1em;
+	padding: 10px;
+	text-align: 'left';
 }
 
 .jumbotron {

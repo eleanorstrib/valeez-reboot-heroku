@@ -45,7 +45,7 @@
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
-			<button type="button" class="btn-custom" data-toggle="modal" data-target="#dailyForecast">Daily Forecast</button>
+			<p><button type="button" class="btn-custom" data-toggle="modal" data-target="#dailyForecast">Daily Forecast</button></p>
 
 			<!-- Modal -->
 			<div id="dailyForecast" class="modal fade" role="dialog">
@@ -61,8 +61,8 @@
 					<div class="row">
 						<div class="col-md-1"></div>
 						<div class="col-md-2">
-							<img src="{{ value.icon }}"><br />
-							<span class="title-text">day {{ value.day_pretty }}</span>
+							<span class="title-text">day {{ value.day_pretty }}</span><br />
+							<img src="{{ value.icon }}">
 						</div>
 						<div class="col-md-2">
 							<span class="number">{{ value.high_temp_f }}&#8457</span><br />
@@ -94,6 +94,7 @@
 			</div>
 		</div>
 		<div class="col-md-4"></div>
+		</div>
 	</div>
 
 	{% else %}
@@ -131,20 +132,37 @@
 </div>
 
 <div class="container" align="center">
+
 	<div class="row title-row title-text">
 	{{ item_count }} items in your valeez
 	</div>
-
-	<div class="row">
-		{% for key, value in valeez.items %}
-			<div class="col-md-2">
-					<span class="number-blue">{{ value }}</span><br/>
-					<span class="number-title">{{ key }}</span>
-			</div>
-		{% endfor %}
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Packed</td>
+					<td>Quantity</td>
+					<td>Item</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% for key, value in valeez.items %}
+				<tr>
+					<td align="center"><div class="checkbox"><input type="checkbox" value=""></div></td>
+					<td><span class="number-blue">{{ value }}</span></td>
+					<td>{{ key }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</div>
+	<div class="col-md-3"></div>
 	</div>
 </div>
-</div>
+
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
