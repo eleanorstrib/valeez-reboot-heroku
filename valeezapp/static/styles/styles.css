@@ -83,9 +83,14 @@ input, select {
 	padding: 1em;
 }
 
+.show-checkbox {
+	margin: 0px auto;
+	text-align: center;
+}
+
 .number {
 	font-family: 'Abel', sans-serif;
-	font-size: 2em;
+	font-size: 1.5em;
 	color: #FF8C80;
 }
 
@@ -95,6 +100,7 @@ input, select {
 	color: #36D9D9;
 	text-align: right;
 }
+
 
 .number-blue-sm {
 	font-family: 'Abel', sans-serif;
@@ -153,6 +159,12 @@ input[type="submit"]:hover {
 	font-size: 1em;
 	padding: 10px;
 	text-align: 'left';
+}
+
+.table-show-valeez {
+	margin: 0 auto;
+	vertical-align: middle !importa;
+	text-align: center;
 }
 
 .jumbotron {

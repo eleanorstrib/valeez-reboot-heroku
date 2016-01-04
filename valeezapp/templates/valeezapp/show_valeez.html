@@ -148,11 +148,12 @@
 				</tr>
 			</thead>
 			<tbody>
+
 				{% for key, value in valeez.items %}
 				<tr>
-					<td align="center"><div class="checkbox"><input type="checkbox" value=""></div></td>
-					<td><span class="number-blue">{{ value }}</span></td>
-					<td>{{ key }}</td>
+					<h3><td><div class="checkbox show-checkbox"><input type="checkbox" value=""></div></td>
+					<td>{{ value }}</td>
+					<td>{{ key | lower }}</td></h3>
 				</tr>
 				{% endfor %}
 			</tbody>
@@ -164,8 +165,11 @@
 </div>
 
 <script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
-});
+	$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip();   
+	});
+
 </script>
+
+
 {% endblock %}
