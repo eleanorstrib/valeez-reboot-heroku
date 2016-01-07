@@ -12,13 +12,6 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password')
 
-    # def clean(self):
-    # 	cleaned_userform = super(UserProfileForm, self).clean()
-    # 	password = cleaned_userform.get('password')
-
-    # 	if len(password) < 8 or len(password) > 20:
-    # 		raise.forms.ValidationError('Password must be 8-20 characters long.')
-
 class VoyageForm(forms.ModelForm):
 	class Meta:
 		widgets = {'depart_date': DateInput(), 'return_date': DateInput()}

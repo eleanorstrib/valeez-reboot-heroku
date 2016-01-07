@@ -69,9 +69,13 @@ input, select {
     width: 100%;
 }
 
-.error {
-	font-family: 'Cherry Cream Soda', serif;
+.errorlist {
+    list-style-type: none;
+    padding: 0px;
+    color: #FF8C80;
+    font-weight: bold;
 }
+
 .title-text {
 	font-family: 'Cherry Cream Soda', serif;
 	font-size: 1.5em;
