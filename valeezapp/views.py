@@ -8,9 +8,9 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse 
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
-from valeezapp.models import UserProfile, Voyage, Valeez, Garment, Toiletry
+from valeezapp.models import Voyage, Valeez, Garment, Toiletry
 from django.template.defaultfilters import slugify
-from .forms import UserForm, UserProfileForm, VoyageForm
+from .forms import UserForm, VoyageForm
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 

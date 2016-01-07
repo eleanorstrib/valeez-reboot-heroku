@@ -151,9 +151,11 @@
 
 				{% for key, value in valeez.items %}
 				<tr>
-					<h3><td><div class="checkbox show-checkbox"><input type="checkbox" value=""></div></td>
+					<h3>
+					<td><div class="checkbox show-checkbox"><input type="checkbox" value=""></div></td>
 					<td>{{ value }}</td>
 					<td>{{ key | lower }}</td></h3>
+					
 				</tr>
 				{% endfor %}
 			</tbody>

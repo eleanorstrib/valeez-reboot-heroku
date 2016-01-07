@@ -2,7 +2,7 @@ from django import forms
 from registration.forms import RegistrationForm
 from registration.models import RegistrationProfile
 from django.contrib.auth.models import User
-from .models import UserProfile, Voyage
+from .models import Voyage
 from functools import partial 
 import datetime as dt
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
@@ -12,16 +12,19 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password')
 
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('mobile', 'gender')
+    # def clean(self):
+    # 	cleaned_userform = super(UserProfileForm, self).clean()
+    # 	password = cleaned_userform.get('password')
+
+    # 	if len(password) < 8 or len(password) > 20:
+    # 		raise.forms.ValidationError('Password must be 8-20 characters long.')
 
 class VoyageForm(forms.ModelForm):
 	class Meta:
 		widgets = {'depart_date': DateInput(), 'return_date': DateInput()}
 		model = Voyage
 		fields = ('destination', 'depart_date', 'return_date', 'voyage_type', 'gender')
+		error_css_class = 'error'
 
 	def clean(self):
 		cleaned_dates = super(VoyageForm, self).clean()
@@ -34,13 +37,13 @@ class VoyageForm(forms.ModelForm):
 
 		# all conditions for validation
 		if destination == None or depart_date == None or return_date == None:
-			raise forms.ValidationError('Try again - all fields are required!')
+			raise forms.ValidationError('All fields are required!')
 
 		if depart_date > return_date:
-			raise forms.ValidationError('Oops - try again! Your return date must be after your departure date.')
+			raise forms.ValidationError('Your return date must be after your departure date.')
 
 		if depart_date < today:
-			raise forms.ValidationError('Oops - try again! Your departure date must be in the future.')
+			raise forms.ValidationError('Your departure date must be in the future.')
 		
 
 

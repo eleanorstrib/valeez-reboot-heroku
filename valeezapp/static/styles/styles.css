@@ -69,6 +69,9 @@ input, select {
     width: 100%;
 }
 
+.error {
+	font-family: 'Cherry Cream Soda', serif;
+}
 .title-text {
 	font-family: 'Cherry Cream Soda', serif;
 	font-size: 1.5em;
@@ -90,7 +93,7 @@ input, select {
 
 .number {
 	font-family: 'Abel', sans-serif;
-	font-size: 1.5em;
+	font-size: 2em;
 	color: #FF8C80;
 }
 
