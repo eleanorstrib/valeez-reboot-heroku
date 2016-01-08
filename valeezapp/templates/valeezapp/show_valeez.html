@@ -54,7 +54,9 @@
 			    <!-- Modal content-->
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h3><i class="fa fa-suitcase"></i>&nbsp&nbsp<span class="modal-title">Your daily forecast for {{ destination_pretty }}</span></h3>
+			        <h3><i class="fa fa-suitcase"></i>&nbsp&nbsp<span class="modal-title">Your daily forecast for {{ destination_pretty }}<br />
+
+			        </span></h3>
 			      </div>
 			      <div class="modal-body">
 					{% for key, value in forecast_alldays.items %}
@@ -83,7 +85,11 @@
 						<div class="col-md-1"></div>
 					</div>
 					{% endfor %}
-			      
+					<div class="row">
+				      	<div class="col-md-1"></div>
+				      	<div class="col-md-10">Weather data by <img src="../static/images/wundergroundLogo_4c_horz.jpg" width="120px" /></div>
+				      	<div class="col-md-1"></div>
+			      	</div>
 
 			      <div class="modal-footer">
 			        <button type="button" class="btn-custom" data-dismiss="modal">Close</button>
