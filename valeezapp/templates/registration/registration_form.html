@@ -2,14 +2,14 @@
 {% load i18n %}
 
 {% block content %}
-<div class="jumbotron-open">
+<div class="jumbotron">
 <div class="container">
-	<div class="col-md-3" align="left">
-		<p><span class="title-text">Create your account</span></p>
-		<p>All fields are required.</p>
+	<div class="col-md-2" align="left">
+		<span class="title-text">Create your account</span>
+		
 	</div>
 	<div class="col-md-6">
-        <p><h3>Sign up then start building your valeez!</h3></p>
+        <p>Sign up then start building your valeez!</p>
         <p>If you already have an account, <a href="{% url 'login' %}">log in</a> or <a href="{% url 'password_reset' %}">reset your password</a>.</p>
         <form method="post" class="post-form">
             <div class="table-responsive">
@@ -21,7 +21,7 @@
 		<button type="submit" class="btn btn-custom">Sign up</button>
         </form>
      </div>
-     <div class="col-md-3">
+     <div class="col-md-4">
      </div>
 </div>
 </div>
