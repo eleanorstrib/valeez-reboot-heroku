@@ -69,6 +69,12 @@ input, select {
     width: 100%;
 }
 
+.weather-credit {
+	vertical-align: "middle";
+	text-align: "center";
+	padding-bottom: 20px;
+}
+
 .errorlist {
     list-style-type: none;
     padding: 0px;

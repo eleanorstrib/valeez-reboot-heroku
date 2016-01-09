@@ -54,7 +54,7 @@
 			    <!-- Modal content-->
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h3><i class="fa fa-suitcase"></i>&nbsp&nbsp<span class="modal-title">Your daily forecast for {{ destination_pretty }}<br />
+			        <h3><i class="fa fa-suitcase"></i>&nbsp&nbsp<span class="modal-title">Forecast for {{ destination_pretty }}<br />
 
 			        </span></h3>
 			      </div>
@@ -87,13 +87,13 @@
 					{% endfor %}
 					<div class="row">
 				      	<div class="col-md-1"></div>
-				      	<div class="col-md-10">Weather data by <img src="../static/images/wundergroundLogo_4c_horz.jpg" width="120px" /></div>
+				      	<div class="col-md-10 weather-credit"></div>
 				      	<div class="col-md-1"></div>
 			      	</div>
 
 			      <div class="modal-footer">
+			      	<span class="weather-credit">Weather data by <img src="../static/images/wundergroundLogo_4c_horz.jpg" width="200px" /></span>
 			        <button type="button" class="btn-custom" data-dismiss="modal">Close</button>
-			      </div>
 			    </div>
 
 			  </div>
