@@ -12,9 +12,9 @@
 	<div class="row title-row forecast">
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
-			<span class="title-text"> Weather Forecast&nbsp<a href="#" data-toggle="tooltip" data-placement="right" title="Recommendations for your valeez are based on the 10 day forecast for your destination -- see the 'how it works' section for details"><span class="glyphicon glyphicon-question-sign"></a></span>
+			<span class="title-text"> Weather Forecast&nbsp<a href="#" data-toggle="tooltip" data-placement="right" title="Based on the 10 day forecast for your destination by Weather Underground -- see the 'how it works' section for details"><span class="glyphicon glyphicon-question-sign"></a></span>
 		</div>
-		<div class="col-md-4 number">
+		<div class="col-md-4">
 		</div>
 	</div>
 
@@ -85,11 +85,6 @@
 						<div class="col-md-1"></div>
 					</div>
 					{% endfor %}
-					<div class="row">
-				      	<div class="col-md-1"></div>
-				      	<div class="col-md-10 weather-credit"></div>
-				      	<div class="col-md-1"></div>
-			      	</div>
 
 			      <div class="modal-footer">
 			      	<span class="weather-credit">Weather data by <img src="../static/images/wundergroundLogo_4c_horz.jpg" width="200px" /></span>
@@ -105,7 +100,7 @@
 
 	{% else %}
 	<div class="row title-row forecast">
-		<span class="title-text">Historical Weather Forecast&nbsp<a href="#" data-toggle="tooltip" data-placement="right" title="Recommendations for your valeez are based on historical data as a forecast is not available more than 10 days from today's date -- see the 'how it works' section for details"><span class="glyphicon glyphicon-question-sign"></a></span>
+		<span class="title-text">Historical Weather Forecast&nbsp<a href="#" data-toggle="tooltip" data-placement="right" title="Based on historical data from Weather Underground -- see the 'how it works' section for details"><span class="glyphicon glyphicon-question-sign"></a></span>
 	</div>
 	<div class="row">
 		<div class="col-md-1">
@@ -168,8 +163,9 @@
 		</table>
 	</div>
 	</div>
-	<div class="col-md-3"></div>
+	<div class="col-md-3"></span></div>
 	</div>
+	<span class="weather-credit">Weather data by <img src="../static/images/wundergroundLogo_4c_horz.jpg" width="200px" />
 </div>
 
 <script>
