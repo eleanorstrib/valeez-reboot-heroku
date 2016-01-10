@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="jumbotron">
+<div class="container">
+	<div class="col-md-2" align="left">
+		<p><span class="title-text">Login</span></p>
+		<h6><p>See your past trips or create a new valeez.</p>
+		<br />
+	</div>
+	<div class="col-md-5">
+         <p>No account yet? <a href="{% url 'registration_register' %}">Register</a>!</p>
+        <p>Forgot your password? <a href="{% url 'password_reset' %}"> Reset it</a>!</p></h6>
+        <form method="post" action=".">
+            <div class="table-responsive">
+                <table class="table">
+                    {% csrf_token %}
+                    {{ form.as_table }}
+                </table>
+            </div>
+                    <input type="submit" class="btn btn-custom" value="Log in" />
+                    <input type="hidden" name="next" value="{{ next }}" />
+        
+
+         </form>
+     </div>
+     <div class="col-md-5">
+     </div>
+</div>
+</div>      
+{% endblock %}

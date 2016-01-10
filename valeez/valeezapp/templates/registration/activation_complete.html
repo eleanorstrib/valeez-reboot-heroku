@@ -1,0 +1,21 @@
+
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="jumbotron">
+<div class="container">
+	<div class="col-md-3" align="left">
+		<p><span class="title-text">Success!</span></p>
+	</div>
+	<div class="col-md-6">
+        <p><h3>{% trans "Your account has been activated." %}</h3></p>
+        <p>Log in now to make your valeez -- awesomeness awaits!</p>
+        <p>&nbsp</p>
+        <p><button type="button" class="btn btn-custom"><a href="{% url 'auth_login' %}">log in</a></button></p>
+     </div>
+     <div class="col-md-3">
+     </div>
+</div>
+</div>
+{% endblock %}

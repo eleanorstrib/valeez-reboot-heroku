@@ -1,0 +1,80 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+	
+	<head>
+	 <link rel='shortcut icon' href='../../static/images/favicon.ico' type='image/icon'/ >
+		<title>valeez | get packing!</title>
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	</head>
+
+	<body>
+
+		<!-- navigation-->
+		<nav class="navbar" id="navbar-custom">
+			<div class="container-fluid">
+				
+				<div class="navbar-header" align="center">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="{% url 'home' %}">valeez <i class="fa fa-suitcase"></i></a>
+					&nbsp&nbsp
+				</div>
+
+				<div class="collapse navbar-collapse" id="navbar">
+					<ul class="nav navbar-nav">
+						{% if user.is_authenticated %}
+							<li><span class="navbar-text user-login">&nbsp&nbsp&nbspbienvenue, {{ user }}!</span></li>
+							<li class="active"><a href="{% url 'auth_logout' %}">log out<span class="sr-only">(current)</span></a></li>
+							<li><a href="{% url 'make_valeez' %}">make a valeez</a></li>
+							<li><a href="{% url 'past_voyages' %}">past voyages</a></li>
+						{% else %}
+							<li class="active"><a href="{% url 'auth_login' %}">log in<span class="sr-only">(current)</span></a></li>
+							<li><a href="{% url 'registration_register' %}">sign up</a>
+						{% endif %}
+						<li><a href="{% url 'how_it_works' %}">how it works</a></li>
+						<li><a href="{% url 'about' %}">about</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+		{% block content %}
+		{% endblock %}
+
+		<!--jQuery-->
+			<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+			<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+			<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+			
+		<!--bootstrap-->		
+			<!-- Latest compiled and minified CSS -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+			<!-- Optional theme -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+			<!-- Latest compiled and minified JavaScript -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		
+		<!--Font Awesome-->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		
+		<!--google fonts-->
+			<link href='https://fonts.googleapis.com/css?family=Cherry+Cream+Soda|Abel' rel='stylesheet' type='text/css'>
+
+		<!--project resources-->
+			<link rel="stylesheet" href={% static 'styles/styles.css' %}
+	</body>
+
+
+
+
+
+
+</html>
