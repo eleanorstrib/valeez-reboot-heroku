@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'evening-earth-7242.herokuapp.com', 'valeez.com']
 
@@ -61,15 +61,15 @@ WSGI_APPLICATION = 'valeez.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME', ''),
-        'USER':  os.environ.get('DB_USERNAME', ''),
-        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('DB_NAME', ''),
+#         'USER':  os.environ.get('DB_USERNAME', ''),
+#         'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
 }
 
 # Internationalization
@@ -123,5 +123,8 @@ EMAIL_PORT = 1025
 LOGIN_REDIRECT_URL = "home"
 
 #Postgres for heroku
+# Parse database configuration from $DATABASE_URL
 import dj_database_url
 DATABASES['default'] =  dj_database_url.config()
+# Enable Persistent Connections
+DATABASES['default']['CONN_MAX_AGE'] = 500

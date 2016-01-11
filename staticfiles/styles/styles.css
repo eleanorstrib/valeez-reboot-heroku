@@ -1,0 +1,233 @@
+/*STYLE GUIDE
+
+COLORS
+from: http://www.colourlovers.com/group/1960s/colors
+Swiss Teal  AABBBB  170,187,187
+Fabric Pink FF8C80  255,140,128
+Fabric Blue 36D9D9  54,217,217
+
+FONTS
+
+font-family: 'Cherry Cream Soda', serif;
+font-family: 'Abel', sans-serif;
+*/
+
+
+#navbar-custom {
+	background-color: #AABBBB ;
+	border-radius: 0;
+	font-family: 'Cherry Cream Soda', serif;
+	font-size: 1em;
+	margin-bottom: 0px;
+}
+
+#navbar-custom a {
+	color: #FFFFFF;
+}
+
+#navbar-custom a:hover {
+	color: #FF8C80 ;
+}
+
+.navbar-brand {
+	font-size: 2em;
+	color: #FFFFFF !important;
+}
+
+
+.icon-bar {
+	background-color: #FFFFFF;
+}
+
+.user-login {
+	color: white;
+}
+
+body {
+	font-family: 'Abel', sans-serif;
+}
+
+.container {
+	padding-top: 30px;
+}
+
+* {
+  border-radius: 0 !important;
+}
+
+table, td, th {
+	padding: 10px;
+	vertical-align: 'middle';
+}
+
+thead {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+input, select {
+    width: 100%;
+}
+
+.weather-credit {
+	vertical-align: "middle";
+	text-align: "center";
+}
+
+.errorlist {
+    list-style-type: none;
+    padding: 0px;
+    color: #FF8C80;
+    font-weight: bold;
+}
+
+.title-text {
+	font-family: 'Cherry Cream Soda', serif;
+	font-size: 1.5em;
+}
+
+.title-row {
+	padding: 1em;
+	border-bottom: 2px solid #AABBBB;
+}
+
+.col-md-2 {
+	padding: 1em;
+}
+
+.show-checkbox {
+	margin: 0px auto;
+	text-align: center;
+}
+
+.number {
+	font-family: 'Abel', sans-serif;
+	font-size: 2em;
+	color: #FF8C80;
+}
+
+.number-blue {
+	font-family: 'Abel', sans-serif;
+	font-size: 2em;
+	color: #36D9D9;
+	text-align: right;
+}
+
+
+.number-blue-sm {
+	font-family: 'Abel', sans-serif;
+	font-weight: bold;
+	color: #36D9D9;
+}
+
+.number-title {
+	font-family: 'Abel', sans-serif;
+	font-size: 1em;
+	text-transform: lowercase;
+}
+
+.btn-custom, input[type="submit"] {
+	font-family: 'Abel', sans-serif;
+	color:white;
+	border: 5px solid #AABBBB;
+	background-color: #AABBBB;
+	width: 40%;
+	margin:0 !important;
+	line-height: normal !important;
+	vertical-align: center !important;
+}
+
+input[type="submit"]:hover {
+	font-family: 'Abel', sans-serif;
+	color: white;
+	border: 5px solid  #FF8C80;
+	background-color:  #FF8C80;
+
+}
+
+.btn-custom a {
+	color: white;
+	text-decoration: none;
+}
+
+.btn-custom a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+.btn-custom a:focus {
+	color: white;
+	text-decoration: none;
+}
+
+.btn-custom:hover {
+	font-family: 'Abel', sans-serif;
+	color: white;
+	border: 5px solid  #FF8C80 !important;
+	background-color:  #FF8C80 !important;
+}
+
+#packing-list {
+	font-size: 1em;
+	padding: 10px;
+	text-align: 'left';
+}
+
+.table-show-valeez {
+	margin: 0 auto;
+	vertical-align: middle !importa;
+	text-align: center;
+}
+
+.jumbotron {
+	position: relative;
+    background: #000 url("../images/jumbotron_large.jpg") center center;
+    width: 100%;
+    min-height:600px;
+    background-size: cover !important;
+    overflow: hidden;
+    margin-bottom: 0px;
+}
+
+.jumbotron-code {
+	position: relative;
+    background: url("../images/valeez_cmdline_op40.png") center center;
+    width: 100%;
+    min-height:600px;
+    background-size: cover !important;
+    overflow: hidden;
+    margin-bottom: 0px;
+}
+
+.jumbotron-open {
+	position: relative;
+    background: url("../images/packed_suitcase_op40.png") center center;
+    width: 100%;
+    min-height:600px;
+    background-size: cover !important;
+/*    overflow: hidden;*/
+    margin-bottom: 0px;
+}
+
+.jumbotron-packed {
+	position: relative;
+    background: url("../images/row_suitcases_op40.png") center center;
+    width: 100%;
+    min-height:600px;
+    background-size: cover !important;
+    overflow: hidden;
+    margin-bottom: 0px;
+}
+
+.log-out {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	position: relative;
+    background: #000 url("../images/nyc_cp.jpg") center center;
+    width: 66%;
+    min-height:600px;
+    background-size: cover !important;
+    overflow: hidden;
+    margin-bottom: 0px;
+}
+
