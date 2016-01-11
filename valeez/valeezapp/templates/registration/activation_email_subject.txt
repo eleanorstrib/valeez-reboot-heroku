@@ -1,1 +1,0 @@
-{% load i18n %}{% trans "Time to activate your account on" %} {{ site.name }}
