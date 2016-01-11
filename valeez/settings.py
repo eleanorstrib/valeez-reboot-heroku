@@ -5,9 +5,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'evening-earth-7242.herokuapp.com', 'valeez.com']
+ALLOWED_HOSTS = ['localhost', 'evening-earth-7242.herokuapp.com', 'valeez.com']
 
 SITE_ID = 2
 # Application definition
@@ -122,3 +122,6 @@ EMAIL_PORT = 1025
 
 LOGIN_REDIRECT_URL = "home"
 
+#Postgres for heroku
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
