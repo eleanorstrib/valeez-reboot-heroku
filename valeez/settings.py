@@ -70,7 +70,7 @@ WSGI_APPLICATION = 'valeez.wsgi.application'
 #         'HOST': 'localhost',
 #         'PORT': '5432',
 #     }
-}
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
