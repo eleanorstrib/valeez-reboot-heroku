@@ -85,64 +85,67 @@ def show_valeez(request):
 		use_ten_day_forecast = True
 		api_call = API_URL_TEN_DAY % (WU_KEY, destination)
 		api_data = requests.get(api_call).json()
-
-		# TODO:		
-		# else: add back error handling
-
+		if 'forecast' in api_data:
 		# get daily data from API call, used in daily forecast model
-		forecast_alldays = {}
-		for day in range(depart_delta, (return_delta+1)):
-			forecast_alldays[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
-				'low_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'fahrenheit']),
-				'high_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'celsius']),
-				'low_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'celsius']),
-				'pop_percent': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'pop']),
-				'snow_in': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'in']), 
-				'snow_cm': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'cm']), 
-				'icon': (api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'icon_url']), 
-				'day_pretty': day_pretty
-				}
-			day = day + 1
-			day_pretty = day_pretty + 1
-		
-		# summarize the daily date for display on the main page
-		forecast = {}
-		for day in forecast_alldays:
-			forecast['all_high_temp_f'] = forecast.get('all_high_temp_f', []) + [forecast_alldays[day]['high_temp_f']]
-			forecast['high_temp_f'] = max(forecast['all_high_temp_f'])
-			forecast['all_low_temp_f'] = forecast.get('all_low_temp_f', []) + [forecast_alldays[day]['low_temp_f']]
-			forecast['low_temp_f'] = min(forecast['all_low_temp_f'])
-			forecast['all_high_temp_c'] = forecast.get('all_high_temp_c', []) + [forecast_alldays[day]['high_temp_c']]
-			forecast['high_temp_c'] = max(forecast['all_high_temp_c'])
-			forecast['all_low_temp_c'] = forecast.get('all_low_temp_c', []) + [forecast_alldays[day]['low_temp_c']]
-			forecast['low_temp_c'] = min(forecast['all_low_temp_c'])
-			forecast['all_pop'] = forecast.get('all_pop', []) + [forecast_alldays[day]['pop_percent']]
-			forecast['precip'] = max(forecast['all_pop'])
-			forecast['all_snow'] = forecast.get('all_snow', []) + [forecast_alldays[day]['snow_in']]
-			forecast['snow'] = max(forecast['all_snow'])
-			forecast['icon'] = forecast.get('icon', []) + [forecast_alldays[day]['icon']]
-			forecast['day_pretty'] = forecast.get('day_pretty', []) + [day_pretty]
-			forecast['avg_temp_f'] = ((forecast['high_temp_f'] + forecast['low_temp_f'])/2)
-			day_pretty = day_pretty + 1
+			forecast_alldays = {}
+			for day in range(depart_delta, (return_delta+1)):
+				forecast_alldays[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
+					'low_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'fahrenheit']),
+					'high_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'celsius']),
+					'low_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'celsius']),
+					'pop_percent': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'pop']),
+					'snow_in': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'in']), 
+					'snow_cm': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'cm']), 
+					'icon': (api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'icon_url']), 
+					'day_pretty': day_pretty
+					}
+				day = day + 1
+				day_pretty = day_pretty + 1
 
+			# summarize the daily date for display on the main page
+			forecast = {}
+			for day in forecast_alldays:
+				forecast['all_high_temp_f'] = forecast.get('all_high_temp_f', []) + [forecast_alldays[day]['high_temp_f']]
+				forecast['high_temp_f'] = max(forecast['all_high_temp_f'])
+				forecast['all_low_temp_f'] = forecast.get('all_low_temp_f', []) + [forecast_alldays[day]['low_temp_f']]
+				forecast['low_temp_f'] = min(forecast['all_low_temp_f'])
+				forecast['all_high_temp_c'] = forecast.get('all_high_temp_c', []) + [forecast_alldays[day]['high_temp_c']]
+				forecast['high_temp_c'] = max(forecast['all_high_temp_c'])
+				forecast['all_low_temp_c'] = forecast.get('all_low_temp_c', []) + [forecast_alldays[day]['low_temp_c']]
+				forecast['low_temp_c'] = min(forecast['all_low_temp_c'])
+				forecast['all_pop'] = forecast.get('all_pop', []) + [forecast_alldays[day]['pop_percent']]
+				forecast['precip'] = max(forecast['all_pop'])
+				forecast['all_snow'] = forecast.get('all_snow', []) + [forecast_alldays[day]['snow_in']]
+				forecast['snow'] = max(forecast['all_snow'])
+				forecast['icon'] = forecast.get('icon', []) + [forecast_alldays[day]['icon']]
+				forecast['day_pretty'] = forecast.get('day_pretty', []) + [day_pretty]
+				forecast['avg_temp_f'] = ((forecast['high_temp_f'] + forecast['low_temp_f'])/2)
+				day_pretty = day_pretty + 1
+		
+		else:
+			return render(request, 'valeezapp/error.html')
 
 	# this part of the code runs when the voyage takes place or ends more than 10 days in the future
 	else: 
 		use_ten_day_forecast = False
 		api_call = API_URL_PLAN % (WU_KEY, api_date_range, destination)
 		api_data = requests.get(api_call).json()
-		forecast = {
-				'max_temp_f': int(api_data[u'trip'][u'temp_high'][u'max'][u'F']),
-				'max_temp_c': int(api_data[u'trip'][u'temp_high'][u'max'][u'C']),
-				'avg_temp_f': int(api_data[u'trip'][u'temp_high'][u'avg'][u'F']),
-				'avg_temp_c': int(api_data[u'trip'][u'temp_high'][u'avg'][u'C']),
-				'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'F']),
-				'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'C']),					
-				'precip': int(api_data[u'trip'][u'chance_of'][u'chanceofrainday'][u'percentage']),
-				'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
-				}
-		# pass empty dict since this is not used for trips that are further out
-		forecast_alldays = {}
+
+		if 'trip' in api_data:
+			forecast = {
+					'max_temp_f': int(api_data[u'trip'][u'temp_high'][u'max'][u'F']),
+					'max_temp_c': int(api_data[u'trip'][u'temp_high'][u'max'][u'C']),
+					'avg_temp_f': int(api_data[u'trip'][u'temp_high'][u'avg'][u'F']),
+					'avg_temp_c': int(api_data[u'trip'][u'temp_high'][u'avg'][u'C']),
+					'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'F']),
+					'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'C']),					
+					'precip': int(api_data[u'trip'][u'chance_of'][u'chanceofrainday'][u'percentage']),
+					'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
+					}
+			# pass empty dict since this is not used for trips that are further out
+			forecast_alldays = {}
+		else:
+			return render(request, 'valeezapp/error.html')
 		
 	# calculate the temperature range using the average temp for the period
 	temperature_query = {}

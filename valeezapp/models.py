@@ -1,10 +1,13 @@
 from django.db import models as m
 from django.contrib.auth.models import User
-from phonenumber_field.modelfields import PhoneNumberField
 import datetime
 
 
 class Voyage(m.Model):
+	"""
+	This is the model for the form the user completes to make a
+	new valeez.
+	"""
 	user = m.ForeignKey(User, unique=False)
 	DESTINATION_CHOICES = (
 		('TX/Austin', 'Austin, TX'),
@@ -50,14 +53,23 @@ class Voyage(m.Model):
 		return self.destination
 
 class Valeez(m.Model):
+	"""
+	Instances of this class are instantiated when a Valeez is created
+	and saved in the database.
+	"""
 	voyage = m.OneToOneField(Voyage, related_name="voyage")
-	contents= m.CharField(max_length=2000, default=1)
+	contents = m.CharField(max_length=2000, default=1)
 
 	def __str__(self):
 		return self.contents
 
 
 class Garment(m.Model):
+	"""
+	This is the model for all garments that will go in the valeez.
+	These are stored in the database, queried and added to the valeez
+	when the user submits the Voyage form.
+	"""
 	name = m.CharField(max_length=75)
 	male = m.BooleanField()
 	female = m.BooleanField()
@@ -81,6 +93,12 @@ class Garment(m.Model):
 
 
 class Toiletry(m.Model):
+	"""
+	This is the model for all toiletries (anything that's not clothing 
+	or an accessory) that will go in the valeez.
+	These are stored in the database, queried and added to the valeez
+	when the user submits the Voyage form.
+	"""
 	name = m.CharField(max_length=50)
 	male = m.BooleanField()
 	female = m.BooleanField()
