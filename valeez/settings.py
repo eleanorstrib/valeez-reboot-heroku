@@ -106,7 +106,7 @@ EMAIL_HOST_PASSWORD = 'SENDGRID_PASSWORD'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 #TO DO fix this line
-send_mail('../valeezapp/templates/registration/activation_email_subject.txt', '../valeezapp/templates/registration/activation_email_subject.txt', os.environ.get('APP_EMAIL'), [''], fail_silently=False)
+# send_mail('../valeezapp/templates/registration/activation_email_subject.txt', '../valeezapp/templates/registration/activation_email_subject.txt', os.environ.get('APP_EMAIL'), [''], fail_silently=False)
 
 LOGIN_REDIRECT_URL = "home"
 
