@@ -7,7 +7,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'evening-earth-7242.herokuapp.com', 'valeez.com']
+ALLOWED_HOSTS = ['*']
 
 SITE_ID = 2
 # Application definition
