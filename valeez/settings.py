@@ -1,5 +1,6 @@
 import os
 import sys
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -64,7 +65,7 @@ WSGI_APPLICATION = 'valeez.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': os.environ.get('DB_NAME', ''),
+        'NAME': os.environ.get('DB_NAME', ''),
     #     'USER':  os.environ.get('DB_USERNAME', ''),
     #     'PASSWORD': os.environ.get('DB_PASSWORD', ''),
     #     'HOST': 'localhost',
@@ -89,19 +90,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-# -- these are the original static url and root
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-# # these are for heroku deployment
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# STATIC_ROOT = 'staticfiles'
+# # -- these are the original static url and root
 # STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, '../valeezapp/static'),
-# )
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# these are for heroku deployment
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, '../valeezapp/static'),
+)
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 # registration redux
@@ -124,9 +125,8 @@ LOGIN_REDIRECT_URL = "home"
 
 # #Postgres for heroku
 # # Parse database configuration from $DATABASE_URL
-import dj_database_url
 DATABASES['default'] =  dj_database_url.config()
-# # Enable Persistent Connections
-# DATABASES['default']['CONN_MAX_AGE'] = 500
+# Enable Persistent Connections
+DATABASES['default']['CONN_MAX_AGE'] = 500
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
