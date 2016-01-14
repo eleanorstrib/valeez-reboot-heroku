@@ -6,9 +6,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['valeez.herokuapp.com', 'valeez.com']
 
 SITE_ID = 2
 # Application definition
@@ -59,22 +59,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'valeez.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'valeezdb2',
-    #     'USER':  os.environ.get('DB_USERNAME', ''),
-    #     'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
     }
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-US'
 
@@ -86,13 +77,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-
-# # -- these are the original static url and root
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # these are for heroku deployment
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
