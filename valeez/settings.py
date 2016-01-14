@@ -1,6 +1,8 @@
 import os
 import sys
 import dj_database_url
+import sendgrid
+from django.core.mail import send_mail
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -96,14 +98,16 @@ REGISTRATION_AUTO_LOGIN = True
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'accounts/login/'
 
-# email login
-EMAIL_HOST='localhost'
+# email login// adding in sendgrid
+EMAIL_HOST='smtp.sendgrid.net'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = os.environ.get('APP_EMAIL')
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = False
-EMAIL_PORT = 1025
+EMAIL_HOST_USER = 'SENDGRID_USERNAME'
+EMAIL_HOST_PASSWORD = 'SENDGRID_PASSWORD'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+#TO DO fix this line
+send_mail('Subject here', 'Here is the message.', 'from@example.com', ['to@example.com'], fail_silently=False)
 
 LOGIN_REDIRECT_URL = "home"
 
