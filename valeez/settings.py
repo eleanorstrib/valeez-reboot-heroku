@@ -108,15 +108,15 @@ EMAIL_PORT = 1025
 
 LOGIN_REDIRECT_URL = "home"
 
-#sendgrid
-sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD')
+# #sendgrid
+# sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD')
 
-message = sendgrid.Mail()
-message.add_to('Valeez Traveller')
-message.set_subject('../valeezapp/templates/registration/activation_email_subject.txt')
-message.set_text('../valeezapp/templates/registration/activation_email.txt')
-message.set_from('Valeez')
-status, msg = sg.send(message)
+# message = sendgrid.Mail()
+# message.add_to('Valeez Traveller')
+# message.set_subject('../valeezapp/templates/registration/activation_email_subject.txt')
+# message.set_text('../valeezapp/templates/registration/activation_email.txt')
+# message.set_from('Valeez')
+# status, msg = sg.send(message)
 
 # #Postgres for heroku
 # # Parse database configuration from $DATABASE_URL
