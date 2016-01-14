@@ -65,7 +65,7 @@ WSGI_APPLICATION = 'valeez.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME', ''),
+        'NAME': 'valeezdb2',
     #     'USER':  os.environ.get('DB_USERNAME', ''),
     #     'PASSWORD': os.environ.get('DB_PASSWORD', ''),
     #     'HOST': 'localhost',
