@@ -101,12 +101,10 @@ LOGIN_URL = 'accounts/login/'
 EMAIL_HOST='smtp.sendgrid.net'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = os.environ.get('APP_EMAIL')
-EMAIL_HOST_USER = 'SENDGRID_USERNAME'
-EMAIL_HOST_PASSWORD = 'SENDGRID_PASSWORD'
+EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
+EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-#TO DO fix this line
-send_mail('', '../valeezapp/templates/registration/activation_email_subject.txt', os.environ.get('APP_EMAIL'), ['eleanor@sloan.mit.edu'], fail_silently=False)
 
 LOGIN_REDIRECT_URL = "home"
 
