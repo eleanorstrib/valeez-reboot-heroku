@@ -99,7 +99,7 @@ LOGIN_URL = 'accounts/login/'
 
 # email login// adding in sendgrid
 EMAIL_HOST='smtp.sendgrid.net'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.stmp.EmailBackend'
 DEFAULT_FROM_EMAIL = os.environ.get('APP_EMAIL')
 EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
