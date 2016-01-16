@@ -1,5 +1,5 @@
 {% load i18n %}
-<p>{% trans "Let's activate your account at" %} {{ site.name }}:</p>
+<p>{% trans "Let's get you started on" %} {{ site.name }}.</p>
 
 <p>Thanks for signing up!  Click on this link to confirm your acccount:<br />
 
@@ -7,6 +7,8 @@ http://{{ site.domain }}{% url 'registration_activate' activation_key %}
 </p>
 
 <p>{% blocktrans %}This link  will be valid for {{ expiration_days }} days.</p>
+
+<p>Please let us know if there's anything we can do to make you use of this app more enjoyable by replying to this email.</p>
 
 <p>Bonne voyage, <br />
 

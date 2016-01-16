@@ -174,7 +174,7 @@ input[type="submit"]:hover {
 
 .table-show-valeez {
 	margin: 0 auto;
-	vertical-align: middle !importa;
+	vertical-align: middle !important;
 	text-align: center;
 }
 
