@@ -189,16 +189,6 @@ input[type="submit"]:hover {
     margin-bottom: 0px;
 }
 
-.jumbotron-code {
-	position: relative;
-    background: url("../images/valeez_cmdline_op40.png") center center;
-    width: 100%;
-    min-height:600px;
-    background-size: cover !important;
-    overflow: hidden;
-    margin-bottom: 0px;
-}
-
 .jumbotron-open {
 	position: relative;
     background: url("../images/packed_suitcase_op40.png") center center;
@@ -219,15 +209,4 @@ input[type="submit"]:hover {
     margin-bottom: 0px;
 }
 
-.log-out {
-	-webkit-filter: grayscale(100%);
-	filter: grayscale(100%);
-	position: relative;
-    background: #000 url("../images/nyc_cp.jpg") center center;
-    width: 66%;
-    min-height:600px;
-    background-size: cover !important;
-    overflow: hidden;
-    margin-bottom: 0px;
-}
 
