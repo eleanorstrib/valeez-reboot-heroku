@@ -180,7 +180,7 @@ input[type="submit"]:hover {
 
 .jumbotron {
 	position: relative;
-    background: url("../images/jumbotron.jpg") center center;
+    background: url("../images/jumbotron.a3b0f1f860d4.jpg") center center;
     width: 100%;
     min-height:600px;
     background-size: cover !important;
@@ -190,7 +190,7 @@ input[type="submit"]:hover {
 
 .jumbotron-open {
 	position: relative;
-    background: url("../images/packed_suitcase_op40.png") center center;
+    background: url("../images/packed_suitcase_op40.65aff3e7518a.png") center center;
     width: 100%;
     min-height:600px;
     background-size: cover !important;
@@ -200,7 +200,7 @@ input[type="submit"]:hover {
 
 .jumbotron-packed {
 	position: relative;
-    background: url("../images/row_suitcases_op40.png") center center;
+    background: url("../images/row_suitcases_op40.a245d23cdb69.png") center center;
     width: 100%;
     min-height:600px;
     background-size: cover !important;
