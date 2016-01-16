@@ -1,12 +1,15 @@
 {% load i18n %}
-{% trans "Activate your account at" %} {{ site.name }}:
+<p>{% trans "Let's activate your account at" %} {{ site.name }}:</p>
 
-Thanks for signing up!  Click on this link to confirm your acccount:
+<p>Thanks for signing up!  Click on this link to confirm your acccount:<br />
 
 http://{{ site.domain }}{% url 'registration_activate' activation_key %}
+</p>
 
-{% blocktrans %}This link  will be valid for {{ expiration_days }} days.
+<p>{% blocktrans %}This link  will be valid for {{ expiration_days }} days.</p>
 
-- The valeez.com team
+<p>Bonne voyage, <br />
+
+- The valeez.com team</p>
 
 {% endblocktrans %}
