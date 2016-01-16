@@ -1,1 +1,12 @@
-subl
+{% load i18n %}
+{% trans "Activate your account at" %} {{ site.name }}:
+
+Thanks for signing up!  Click on this link to confirm your acccount:
+
+http://{{ site.domain }}{% url 'registration_activate' activation_key %}
+
+{% blocktrans %}This link  will be valid for {{ expiration_days }} days.
+
+- The valeez.com team
+
+{% endblocktrans %}
