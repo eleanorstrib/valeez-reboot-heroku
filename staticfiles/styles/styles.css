@@ -142,7 +142,6 @@ input[type="submit"]:hover {
 	color: white;
 	border: 5px solid  #FF8C80;
 	background-color:  #FF8C80;
-
 }
 
 .btn-custom a {
@@ -175,23 +174,13 @@ input[type="submit"]:hover {
 
 .table-show-valeez {
 	margin: 0 auto;
-	vertical-align: middle !importa;
+	vertical-align: middle !important;
 	text-align: center;
 }
 
 .jumbotron {
 	position: relative;
-    background: #000 url("../images/jumbotron_large.jpg") center center;
-    width: 100%;
-    min-height:600px;
-    background-size: cover !important;
-    overflow: hidden;
-    margin-bottom: 0px;
-}
-
-.jumbotron-code {
-	position: relative;
-    background: url("../images/valeez_cmdline_op40.png") center center;
+    background: url("/images/jumbotron.jpg") center center;
     width: 100%;
     min-height:600px;
     background-size: cover !important;
@@ -201,7 +190,7 @@ input[type="submit"]:hover {
 
 .jumbotron-open {
 	position: relative;
-    background: url("../images/packed_suitcase_op40.png") center center;
+    background: url("/images/packed_suitcase_op40.png") center center;
     width: 100%;
     min-height:600px;
     background-size: cover !important;
@@ -211,7 +200,7 @@ input[type="submit"]:hover {
 
 .jumbotron-packed {
 	position: relative;
-    background: url("../images/row_suitcases_op40.png") center center;
+    background: url("/images/row_suitcases_op40.png") center center;
     width: 100%;
     min-height:600px;
     background-size: cover !important;
@@ -219,15 +208,4 @@ input[type="submit"]:hover {
     margin-bottom: 0px;
 }
 
-.log-out {
-	-webkit-filter: grayscale(100%);
-	filter: grayscale(100%);
-	position: relative;
-    background: #000 url("../images/nyc_cp.jpg") center center;
-    width: 66%;
-    min-height:600px;
-    background-size: cover !important;
-    overflow: hidden;
-    margin-bottom: 0px;
-}
 
