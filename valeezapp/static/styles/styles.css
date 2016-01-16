@@ -142,7 +142,6 @@ input[type="submit"]:hover {
 	color: white;
 	border: 5px solid  #FF8C80;
 	background-color:  #FF8C80;
-
 }
 
 .btn-custom a {
@@ -181,7 +180,7 @@ input[type="submit"]:hover {
 
 .jumbotron {
 	position: relative;
-    background: #000 url("../images/jumbotron_large.jpg") center center;
+    background: #000 url("../images/jumbotron.jpg") center center;
     width: 100%;
     min-height:600px;
     background-size: cover !important;
