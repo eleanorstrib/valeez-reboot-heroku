@@ -180,7 +180,7 @@ input[type="submit"]:hover {
 
 .jumbotron {
 	position: relative;
-    background: url("../images/jumbotron_large.jpg") center center;
+    background: url("../images/jumbotron_op.jpg") center center;
     width: 100%;
     min-height:600px;
     background-size: cover !important;
