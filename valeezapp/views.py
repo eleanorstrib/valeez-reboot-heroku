@@ -57,24 +57,27 @@ def make_demo_valeez(request):
 		form = DemovoyageForm(request.POST)
 		if form.is_valid():
 			request.session['voyage'] = {}
+			
+			# perform all depart/return calcs and put them into session
+			# did this to avoid having to convert items to and from datetime objects
+			depart_delta = ((form.cleaned_data['depart_date'])-(datetime.date.today())).days
+			request.session['voyage']['depart_delta'] = depart_delta
+			return_delta = ((form.cleaned_data['return_date'])-(datetime.date.today())).days
+			request.session['voyage']['return_delta'] = return_delta
+			duration = ((form.cleaned_data['return_date']) - (form.cleaned_data['depart_date'])).days + 1
+			request.session['voyage']['duration'] = duration
+			api_date_range = ("%02d" % form.cleaned_data['depart_date'].month) + ("%02d" % form.cleaned_data['depart_date'].day) + ("%02d" % form.cleaned_data['return_date'].month) + ("%02d" % form.cleaned_data['return_date'].day)
+			request.session['voyage']['api_date_range'] = api_date_range
+			
+			# iterate through form values and add to session
 			for key, value in form.cleaned_data.items():
 				print(key, value)
 				if type(value) == datetime.date:
 					request.session['voyage'][key] = value.strftime("%Y-%m-%d")
-					print(request.session['voyage'][key])
 				else:
 					request.session['voyage'][key] = value
-					print(request.session['voyage'][key])
-			for key, value in request.session['voyage'].items():
-				print(key, value)
-				# if type(value) == datetime.date:
-				# 	print(value)
-				# else: 
-				# 	print(key, value)
-				# 	# request.session['voyage'][key] = value
-				# 	# print(request.session['voyage'])
-			print(request.session)
 
+			print(request.session['voyage']['destination'])
 
 			return HttpResponseRedirect('/show_demo_valeez/')
 	return render(request, 'valeezapp/make_demo_valeez.html', {'form': form})
@@ -94,7 +97,7 @@ def show_valeez(request):
 	
 	destination = user_voyages[0].destination
 	destination_pretty = (str(destination)[3:]).replace('_', ' ')
-	
+
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
 	depart_delta = (depart_date - user_today_date).days
@@ -260,38 +263,34 @@ def show_demo_valeez(request):
 	# data about the user and the voyage needed to create the valeez and display data
 	user_today_date = datetime.date.today()
 	
-	# get data from session
-	#TODO remove test code
-	if request.session.test_cookie_worked():
-		print(request.COOKIES)
-		request.session.delete_test_cookie()
-	destination = request.session['destination']
+	destination = request.session['voyage']['destination']
 	destination_pretty = (str(destination)[3:]).replace('_', ' ')
-	
-	depart_date = user_voyages[0].depart_date
-	return_date = user_voyages[0].return_date
-	depart_delta = (depart_date - user_today_date).days
-	return_delta = (return_date - user_today_date).days
-	duration = ((return_date - depart_date).days) + 1
-	# this line ensures that "0" characters are not ommitted
-	api_date_range = ("%02d" % depart_date.month) + ("%02d" % depart_date.day) + ("%02d" % return_date.month) + ("%02d" % return_date.day)
+
+	depart_date = request.session['voyage']['depart_date']
+	return_date = request.session['voyage']['return_date']
+	duration = request.session['voyage']['duration']
 
 	gender_query = {}
-	gender = user_voyages[0].gender
+	gender = request.session['voyage']['gender']
 	gender_query[gender] = True
 
 	# create a dict for the voyage type, find actual and set a value to True for that type
 	voyage_query = {}
-	voyage_type = user_voyages[0].voyage_type
+	voyage_type = request.session['voyage']['voyage_type']
 	voyage_query[voyage_type] = True
 
-	
+	# create vars for relevent dates
+	depart_delta = int(request.session['voyage']['depart_delta'])
+	return_delta = int(request.session['voyage']['return_delta'])
+	print (depart_delta, return_delta, "deltas")
 	day_pretty = 1
 
 	if depart_delta < 10 and return_delta < 10:
 		use_ten_day_forecast = True
 		api_call = API_URL_TEN_DAY % (WU_KEY, destination)
+		print(api_call)
 		api_data = requests.get(api_call).json()
+		print(api_data)
 		if 'forecast' in api_data:
 		# get daily data from API call, used in daily forecast model
 			forecast_alldays = {}
@@ -369,7 +368,7 @@ def show_demo_valeez(request):
 
 	# create a dict, valeez, to hold info shown in the view
 	valeez = {}
-
+	print('got to valeez')
 	# query database
 	valeez_garments = list(Garment.objects.filter(Q(**gender_query), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
 
@@ -407,7 +406,7 @@ def show_demo_valeez(request):
 	if 'error' in api_data:
 		return render(request, 'valeezapp/error.html')
 
-	return render(request,'valeezapp/show_valeez.html', {'user_today_date': user_today_date,'depart_delta': depart_delta, 'return_delta': return_delta, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'forecast_alldays': forecast_alldays, 'use_ten_day_forecast': use_ten_day_forecast, 'valeez': valeez, 'item_count': item_count})
+	return render(request,'valeezapp/show_demo_valeez.html', {'user_today_date': user_today_date,'depart_delta': depart_delta, 'return_delta': return_delta, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'forecast_alldays': forecast_alldays, 'use_ten_day_forecast': use_ten_day_forecast, 'valeez': valeez, 'item_count': item_count})
 
 def valeez_exists(request):
 	return render(request, 'valeezapp/valeez_exists.html', {})
