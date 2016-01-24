@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['valeez.herokuapp.com', 'valeez.com']
 
@@ -110,7 +110,7 @@ LOGIN_REDIRECT_URL = "home"
 
 # #Postgres for heroku
 # # Parse database configuration from $DATABASE_URL
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config(default='postgres://suitcase:pass@localhost/valeezdb2')
 # Enable Persistent Connections
 DATABASES['default']['CONN_MAX_AGE'] = 500
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()

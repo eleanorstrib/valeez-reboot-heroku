@@ -2,7 +2,7 @@ from django import forms
 from registration.forms import RegistrationForm
 from registration.models import RegistrationProfile
 from django.contrib.auth.models import User
-from .models import Voyage
+from .models import Voyage, Demovoyage
 from functools import partial 
 import datetime as dt
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
@@ -38,6 +38,31 @@ class VoyageForm(forms.ModelForm):
 		if depart_date < today:
 			raise forms.ValidationError('Your departure date must be in the future.')
 		
+class DemovoyageForm(forms.ModelForm):
+	class Meta:
+		widgets = {'depart_date': DateInput(), 'return_date': DateInput()}
+		model = Demovoyage
+		fields = ('destination', 'depart_date', 'return_date', 'voyage_type', 'gender')
+		error_css_class = 'error'
 
+	def clean(self):
+		cleaned_dates = super(DemovoyageForm, self).clean()
+		destination = cleaned_dates.get('destination')
+		depart_date = cleaned_dates.get('depart_date')
+		return_date = cleaned_dates.get('return_date')
+		trip_type = cleaned_dates.get('trip_type')
+		gender = cleaned_dates.get('gender')
+		today = dt.date.today()
+
+		# all conditions for validation
+		if destination == None or depart_date == None or return_date == None:
+			raise forms.ValidationError('All fields are required!')
+
+		if depart_date > return_date:
+			raise forms.ValidationError('Your return date must be after your departure date.')
+
+		if depart_date < today:
+			raise forms.ValidationError('Your departure date must be in the future.')
+		
 
 

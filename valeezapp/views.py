@@ -4,13 +4,14 @@ import time
 import requests
 import ast
 import datetime
+import json
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse 
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from valeezapp.models import Voyage, Valeez, Garment, Toiletry
 from django.template.defaultfilters import slugify
-from .forms import UserForm, VoyageForm
+from .forms import UserForm, VoyageForm, DemovoyageForm
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -26,6 +27,8 @@ def index(request):
 	This view renders the index page and retrieves user data for display in the header.
 	"""
 	user = request.user
+	# TODO REmove
+	request.session.set_test_cookie()
 	return render(request, 'valeezapp/index.html', {'user': user})
 
 
@@ -44,6 +47,26 @@ def make_valeez(request):
 			link_user.save()
 			return HttpResponseRedirect('/show_valeez/')
 	return render(request, 'valeezapp/make_valeez.html', {'form': form})
+
+def make_demo_valeez(request):
+	"""
+	Makes a demo valeez when the user is not logged in.
+	"""
+	form = DemovoyageForm()
+	if request.method == 'POST':
+		form = DemovoyageForm(request.POST)
+		if form.is_valid():
+			for key, value in form.cleaned_data.items():
+				if type(value) == datetime.date:
+					print(value)
+				else: 
+					print(key, value)
+					# request.session['voyage'][key] = value
+					# print(request.session['voyage'])
+			print(request.session['voyage'])
+
+			return HttpResponseRedirect('/show_demo_valeez/')
+	return render(request, 'valeezapp/make_demo_valeez.html', {'form': form})
 
 
 def show_valeez(request):
@@ -211,6 +234,165 @@ def show_valeez(request):
 	else:
 		return HttpResponseRedirect('/valeez_exists/', {})
 	
+	if 'error' in api_data:
+		return render(request, 'valeezapp/error.html')
+
+	return render(request,'valeezapp/show_demo_valeez.html', {'user_today_date': user_today_date,'depart_delta': depart_delta, 'return_delta': return_delta, 'this_user':this_user, 'destination_pretty': destination_pretty, 'depart_date': depart_date, 'return_date': return_date, 'duration': duration, 'forecast': forecast, 'forecast_alldays': forecast_alldays, 'use_ten_day_forecast': use_ten_day_forecast, 'valeez': valeez, 'item_count': item_count})
+
+
+
+def show_demo_valeez(request):
+	""" 
+	This view takes data from the form in make_demo_valeez, calls the Weather Underground API
+	and uses the weather data to create the packing list.
+	"""
+	# data about the user and the voyage needed to create the valeez and display data
+	user_today_date = datetime.date.today()
+	
+	# get data from session
+	#TODO remove test code
+	if request.session.test_cookie_worked():
+		print(request.COOKIES)
+		request.session.delete_test_cookie()
+	destination = request.session['destination']
+	destination_pretty = (str(destination)[3:]).replace('_', ' ')
+	
+	depart_date = user_voyages[0].depart_date
+	return_date = user_voyages[0].return_date
+	depart_delta = (depart_date - user_today_date).days
+	return_delta = (return_date - user_today_date).days
+	duration = ((return_date - depart_date).days) + 1
+	# this line ensures that "0" characters are not ommitted
+	api_date_range = ("%02d" % depart_date.month) + ("%02d" % depart_date.day) + ("%02d" % return_date.month) + ("%02d" % return_date.day)
+
+	gender_query = {}
+	gender = user_voyages[0].gender
+	gender_query[gender] = True
+
+	# create a dict for the voyage type, find actual and set a value to True for that type
+	voyage_query = {}
+	voyage_type = user_voyages[0].voyage_type
+	voyage_query[voyage_type] = True
+
+	
+	day_pretty = 1
+
+	if depart_delta < 10 and return_delta < 10:
+		use_ten_day_forecast = True
+		api_call = API_URL_TEN_DAY % (WU_KEY, destination)
+		api_data = requests.get(api_call).json()
+		if 'forecast' in api_data:
+		# get daily data from API call, used in daily forecast model
+			forecast_alldays = {}
+			for day in range(depart_delta, (return_delta+1)):
+				forecast_alldays[day] = {'high_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'fahrenheit']),
+					'low_temp_f': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'fahrenheit']),
+					'high_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'high'][u'celsius']),
+					'low_temp_c': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'low'][u'celsius']),
+					'pop_percent': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'pop']),
+					'snow_in': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'in']), 
+					'snow_cm': int(api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'snow_allday'][u'cm']), 
+					'icon': (api_data[u'forecast'][u'simpleforecast'][u'forecastday'][day][u'icon_url']), 
+					'day_pretty': day_pretty
+					}
+				day = day + 1
+				day_pretty = day_pretty + 1
+
+			# summarize the daily date for display on the main page
+			forecast = {}
+			for day in forecast_alldays:
+				forecast['all_high_temp_f'] = forecast.get('all_high_temp_f', []) + [forecast_alldays[day]['high_temp_f']]
+				forecast['high_temp_f'] = max(forecast['all_high_temp_f'])
+				forecast['all_low_temp_f'] = forecast.get('all_low_temp_f', []) + [forecast_alldays[day]['low_temp_f']]
+				forecast['low_temp_f'] = min(forecast['all_low_temp_f'])
+				forecast['all_high_temp_c'] = forecast.get('all_high_temp_c', []) + [forecast_alldays[day]['high_temp_c']]
+				forecast['high_temp_c'] = max(forecast['all_high_temp_c'])
+				forecast['all_low_temp_c'] = forecast.get('all_low_temp_c', []) + [forecast_alldays[day]['low_temp_c']]
+				forecast['low_temp_c'] = min(forecast['all_low_temp_c'])
+				forecast['all_pop'] = forecast.get('all_pop', []) + [forecast_alldays[day]['pop_percent']]
+				forecast['precip'] = max(forecast['all_pop'])
+				forecast['all_snow'] = forecast.get('all_snow', []) + [forecast_alldays[day]['snow_in']]
+				forecast['snow'] = max(forecast['all_snow'])
+				forecast['icon'] = forecast.get('icon', []) + [forecast_alldays[day]['icon']]
+				forecast['day_pretty'] = forecast.get('day_pretty', []) + [day_pretty]
+				forecast['avg_temp_f'] = ((forecast['high_temp_f'] + forecast['low_temp_f'])/2)
+				day_pretty = day_pretty + 1
+		
+		else:
+			return render(request, 'valeezapp/error.html')
+
+	# this part of the code runs when the voyage takes place or ends more than 10 days in the future
+	else: 
+		use_ten_day_forecast = False
+		api_call = API_URL_PLAN % (WU_KEY, api_date_range, destination)
+		api_data = requests.get(api_call).json()
+
+		if 'trip' in api_data:
+			forecast = {
+					'max_temp_f': int(api_data[u'trip'][u'temp_high'][u'max'][u'F']),
+					'max_temp_c': int(api_data[u'trip'][u'temp_high'][u'max'][u'C']),
+					'avg_temp_f': int(api_data[u'trip'][u'temp_high'][u'avg'][u'F']),
+					'avg_temp_c': int(api_data[u'trip'][u'temp_high'][u'avg'][u'C']),
+					'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'F']),
+					'min_temp_f': int(api_data[u'trip'][u'temp_low'][u'min'][u'C']),					
+					'precip': int(api_data[u'trip'][u'chance_of'][u'chanceofrainday'][u'percentage']),
+					'snow': int(api_data[u'trip'][u'chance_of'][u'chanceofsnowday'][u'percentage'])
+					}
+			# pass empty dict since this is not used for trips that are further out
+			forecast_alldays = {}
+		else:
+			return render(request, 'valeezapp/error.html')
+		
+	# calculate the temperature range using the average temp for the period
+	temperature_query = {}
+	if forecast['avg_temp_f'] >= 90:
+		temperature_query['temp_high'] = True
+	elif forecast['avg_temp_f'] < 90 and forecast['avg_temp_f'] >= 80:
+		temperature_query['temp_medhigh'] = True
+	elif forecast['avg_temp_f'] < 80 and forecast['avg_temp_f'] >= 60:
+		temperature_query['temp_temp'] = True
+	elif forecast['avg_temp_f'] < 60 and forecast['avg_temp_f'] >= 50:
+		temperature_query['temp_medcold'] = True
+	else:
+		temperature_query['temp_cold'] = True
+
+	# create a dict, valeez, to hold info shown in the view
+	valeez = {}
+
+	# query database
+	valeez_garments = list(Garment.objects.filter(Q(**gender_query), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
+
+	for item in valeez_garments:
+		if item.layer == 0 or item.layer == 1:
+			quantity = duration
+		elif item.layer == 2 or item.layer == 3:
+			if duration/2 < 1:
+				quantity = 1
+			else:
+				quantity = int(duration/2)
+		else:
+			quantity = 1
+		valeez[item.name] = quantity
+
+	toiletries = Toiletry.objects.filter(Q(**gender_query), trip_duration__lte=duration)
+
+	for item in toiletries:
+		valeez[item.name] = 1
+
+	# rain and snow items searched and added to another list if POP > 50%
+	rain_snow_items = []
+	if forecast['precip'] > 50:
+		rain_items = list(Garment.objects.filter(rain=True))
+		rain_snow_items = rain_snow_items + rain_items
+	if forecast['snow'] > 50:
+		snow_items = list(Garment.objects.filter(snow=True))
+		rain_snow_items = rain_snow_items + snow_items
+
+	for item in rain_snow_items:
+		valeez[item.name] = 1
+
+	item_count = sum(valeez.values())
+
 	if 'error' in api_data:
 		return render(request, 'valeezapp/error.html')
 
