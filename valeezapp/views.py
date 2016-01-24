@@ -56,14 +56,25 @@ def make_demo_valeez(request):
 	if request.method == 'POST':
 		form = DemovoyageForm(request.POST)
 		if form.is_valid():
+			request.session['voyage'] = {}
 			for key, value in form.cleaned_data.items():
+				print(key, value)
 				if type(value) == datetime.date:
-					print(value)
-				else: 
-					print(key, value)
-					# request.session['voyage'][key] = value
-					# print(request.session['voyage'])
-			print(request.session['voyage'])
+					request.session['voyage'][key] = value.strftime("%Y-%m-%d")
+					print(request.session['voyage'][key])
+				else:
+					request.session['voyage'][key] = value
+					print(request.session['voyage'][key])
+			for key, value in request.session['voyage'].items():
+				print(key, value)
+				# if type(value) == datetime.date:
+				# 	print(value)
+				# else: 
+				# 	print(key, value)
+				# 	# request.session['voyage'][key] = value
+				# 	# print(request.session['voyage'])
+			print(request.session)
+
 
 			return HttpResponseRedirect('/show_demo_valeez/')
 	return render(request, 'valeezapp/make_demo_valeez.html', {'form': form})
