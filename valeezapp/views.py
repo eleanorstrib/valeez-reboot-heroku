@@ -15,6 +15,10 @@ from .forms import UserForm, VoyageForm, DemovoyageForm
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 
+"""
+This file currently has a lot of repeated code for show_valeez & show_demo_valeez 
+functions and needs to be refactored
+"""
 
 # global variables, used in show_valeez
 WU_KEY = os.environ.get('WU_API_KEY')
@@ -48,6 +52,7 @@ def make_valeez(request):
 			return HttpResponseRedirect('/show_valeez/')
 	return render(request, 'valeezapp/make_valeez.html', {'form': form})
 
+
 def make_demo_valeez(request):
 	"""
 	Makes a demo valeez when the user is not logged in.
@@ -56,10 +61,12 @@ def make_demo_valeez(request):
 	if request.method == 'POST':
 		form = DemovoyageForm(request.POST)
 		if form.is_valid():
+			# this will overwrite each valeez created unless the user logs in
 			request.session['voyage'] = {}
 			
 			# perform all depart/return calcs and put them into session
 			# did this to avoid having to convert items to and from datetime objects
+			# as the data is passed between views
 			depart_delta = ((form.cleaned_data['depart_date'])-(datetime.date.today())).days
 			request.session['voyage']['depart_delta'] = depart_delta
 			return_delta = ((form.cleaned_data['return_date'])-(datetime.date.today())).days
@@ -71,13 +78,10 @@ def make_demo_valeez(request):
 			
 			# iterate through form values and add to session
 			for key, value in form.cleaned_data.items():
-				print(key, value)
 				if type(value) == datetime.date:
 					request.session['voyage'][key] = value.strftime("%Y-%m-%d")
 				else:
 					request.session['voyage'][key] = value
-
-			print(request.session['voyage']['destination'])
 
 			return HttpResponseRedirect('/show_demo_valeez/')
 	return render(request, 'valeezapp/make_demo_valeez.html', {'form': form})
@@ -279,18 +283,18 @@ def show_demo_valeez(request):
 	voyage_type = request.session['voyage']['voyage_type']
 	voyage_query[voyage_type] = True
 
-	# create vars for relevent dates
+	# create vars for relevent date info
 	depart_delta = int(request.session['voyage']['depart_delta'])
 	return_delta = int(request.session['voyage']['return_delta'])
-	print (depart_delta, return_delta, "deltas")
+
 	day_pretty = 1
 
 	if depart_delta < 10 and return_delta < 10:
 		use_ten_day_forecast = True
 		api_call = API_URL_TEN_DAY % (WU_KEY, destination)
-		print(api_call)
+
 		api_data = requests.get(api_call).json()
-		print(api_data)
+
 		if 'forecast' in api_data:
 		# get daily data from API call, used in daily forecast model
 			forecast_alldays = {}
@@ -334,6 +338,7 @@ def show_demo_valeez(request):
 	# this part of the code runs when the voyage takes place or ends more than 10 days in the future
 	else: 
 		use_ten_day_forecast = False
+		api_date_range = request.session['voyage']['api_date_range']
 		api_call = API_URL_PLAN % (WU_KEY, api_date_range, destination)
 		api_data = requests.get(api_call).json()
 
@@ -368,7 +373,7 @@ def show_demo_valeez(request):
 
 	# create a dict, valeez, to hold info shown in the view
 	valeez = {}
-	print('got to valeez')
+
 	# query database
 	valeez_garments = list(Garment.objects.filter(Q(**gender_query), Q(**voyage_query), Q(**temperature_query), Q(snow=False), Q(rain=False)))
 
