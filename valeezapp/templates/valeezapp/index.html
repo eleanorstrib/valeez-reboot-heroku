@@ -22,13 +22,20 @@
 					</div>
 					
 					{% else %}
-					<div class="col-sm-6 col-lg-6" align="center">
+
+					<div class="col-md-4" align="center">
+						<p>
+							<button type="button" class="btn btn-custom"><a href="{% url 'make_demo_valeez' %}">try it</a></button>
+						</p>
+					</div>
+
+					<div class="col-md-4" align="center">
 						<p>
 							<button type="button" class="btn btn-custom"><a href="{% url 'auth_login' %}">log in</a></button>
 						</p>
 					</div>
 
-					<div class="col-sm-6 col-lg-6" align="center">
+					<div class="col-md-4" align="center">
 						<p>
 							<button type="button" class="btn btn-custom"><a href="{% url 'registration_register' %}">sign up</a></button>
 						</p>

@@ -31,8 +31,6 @@ def index(request):
 	This view renders the index page and retrieves user data for display in the header.
 	"""
 	user = request.user
-	# TODO REmove
-	request.session.set_test_cookie()
 	return render(request, 'valeezapp/index.html', {'user': user})
 
 
