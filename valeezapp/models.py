@@ -11,6 +11,7 @@ class Voyage(m.Model):
 	user = m.ForeignKey(User, unique=False)
 	DESTINATION_CHOICES = (
 		('TX/Austin', 'Austin, TX'),
+		('Canada/Calgary', 'Calgary, AB'),
 		('NC/Charlotte', 'Charlotte, NC'),
 		('IL/Chicago', 'Chicago, IL'),
 		('OH/Columbus', 'Columbus, OH'),
@@ -18,11 +19,13 @@ class Voyage(m.Model):
 		('CO/Denver', 'Denver, CO'),
 		('MI/Detroit', 'Detroit, MI'),
 		('TX/El_Paso', 'El Paso, TX'),
+		('Canada/Halifax', 'Halifax, NS'),
 		('TX/Houston', 'Houston, TX'),
 		('IN/Indianapolis', 'Indianapolis, IN'),
 		('FL/Jacksonville', 'Jacksonville, FL'),
 		('NV/Las_Vegas', 'Las Vegas, NV'),
 		('CA/Los_Angeles', 'Los Angeles, CA'),
+		('Canada/Montreal', 'Montreal, PQ'),
 		('AZ/Phoenix', 'Phoenix, AZ'),
 		('PA/Philadelphia', 'Philadelphia, PA'),
 		('NY/New_York', 'New York, NY'),
@@ -31,7 +34,10 @@ class Voyage(m.Model):
 		('CA/San_Francisco', 'San Francisco, CA'),
 		('CA/San_Jose', 'San Jose, CA'),
 		('WA/Seattle', 'Seattle, WA'),
+		('Canada/Toronto', 'Toronto, ON'),
+		('Canada/Vancouver', 'Vancouver, BC'),
 		('DC/Washington', 'Washington, DC'),
+		('Canada/Winnipeg', 'Winnipeg, MB')
 		)
 	destination = m.CharField(max_length=100, choices=DESTINATION_CHOICES)
 	depart_date = m.DateField()
@@ -60,6 +66,7 @@ class Demovoyage(m.Model):
 	"""
 	DESTINATION_CHOICES = (
 		('TX/Austin', 'Austin, TX'),
+		('Canada/Calgary', 'Calgary, AB'),
 		('NC/Charlotte', 'Charlotte, NC'),
 		('IL/Chicago', 'Chicago, IL'),
 		('OH/Columbus', 'Columbus, OH'),
@@ -67,11 +74,13 @@ class Demovoyage(m.Model):
 		('CO/Denver', 'Denver, CO'),
 		('MI/Detroit', 'Detroit, MI'),
 		('TX/El_Paso', 'El Paso, TX'),
+		('Canada/Halifax', 'Halifax, NS'),
 		('TX/Houston', 'Houston, TX'),
 		('IN/Indianapolis', 'Indianapolis, IN'),
 		('FL/Jacksonville', 'Jacksonville, FL'),
 		('NV/Las_Vegas', 'Las Vegas, NV'),
 		('CA/Los_Angeles', 'Los Angeles, CA'),
+		('Canada/Montreal', 'Montreal, PQ'),
 		('AZ/Phoenix', 'Phoenix, AZ'),
 		('PA/Philadelphia', 'Philadelphia, PA'),
 		('NY/New_York', 'New York, NY'),
@@ -80,7 +89,10 @@ class Demovoyage(m.Model):
 		('CA/San_Francisco', 'San Francisco, CA'),
 		('CA/San_Jose', 'San Jose, CA'),
 		('WA/Seattle', 'Seattle, WA'),
+		('Canada/Toronto', 'Toronto, ON'),
+		('Canada/Vancouver', 'Vancouver, BC'),
 		('DC/Washington', 'Washington, DC'),
+		('Canada/Winnipeg', 'Winnipeg, MB')
 		)
 	destination = m.CharField(max_length=100, choices=DESTINATION_CHOICES)
 	depart_date = m.DateField()
