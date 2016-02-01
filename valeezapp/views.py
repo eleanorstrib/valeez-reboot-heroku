@@ -265,8 +265,9 @@ def show_demo_valeez(request):
 	# data about the user and the voyage needed to create the valeez and display data
 	user_today_date = datetime.date.today()
 	
-	destination = request.session['voyage']['destination']
-	destination_pretty = (str(destination)[3:]).replace('_', ' ')
+	destination = str(request.session['voyage']['destination'])
+	slash_ind = destination.find('/')
+	destination_pretty = destination[(slash_ind + 1):]
 
 	depart_date = request.session['voyage']['depart_date']
 	return_date = request.session['voyage']['return_date']
