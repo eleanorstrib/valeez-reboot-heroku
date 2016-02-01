@@ -98,7 +98,8 @@ def show_valeez(request):
 	user_voyages = Voyage.objects.filter(user=this_user).order_by('-id')
 	
 	destination = user_voyages[0].destination
-	destination_pretty = (str(destination)[3:]).replace('_', ' ')
+	slash_ind = destination.find('/')
+	destination_pretty = destination[(slash_ind + 1):]
 
 	depart_date = user_voyages[0].depart_date
 	return_date = user_voyages[0].return_date
